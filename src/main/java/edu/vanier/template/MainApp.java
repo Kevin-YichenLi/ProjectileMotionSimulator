@@ -14,11 +14,6 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Group root = new Group();
-        Button btnClickMe = new Button("Click me!");
-        root.getChildren().add(btnClickMe);
-        Scene scene = new Scene(root, 300, 300);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
     }
 }
