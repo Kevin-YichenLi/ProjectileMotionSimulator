@@ -9,14 +9,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
-
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(new MainView(primaryStage), 1800, 1000);
+        Scene scene = new Scene(new MainView(primaryStage), MainView.stageWidth, MainView.stageHeight);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

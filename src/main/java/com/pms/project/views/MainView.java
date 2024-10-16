@@ -1,5 +1,6 @@
 package com.pms.project.views;
 
+import com.pms.project.controllers.MainController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -15,13 +16,24 @@ import javafx.stage.Stage;
 
 public class MainView extends BorderPane {
     private Stage primaryStage;
+    private MainController mainController;
+
+    // When defining new scene when switching scenes, please use these two constant for width and height
+    public static final double stageWidth = 1800;
+    public static final double stageHeight = 1000;
 
     public MainView(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        mainController = new MainController(primaryStage);
         this.setTop(createMenu());
         this.setCenter(createContent());
     }
 
+    /**
+     * create the menubar on top of the scene
+     *
+     * @return the menubar
+     */
     private MenuBar createMenu() {
         MenuBar menuBar = new MenuBar();
 
@@ -41,6 +53,11 @@ public class MainView extends BorderPane {
         return menuBar;
     }
 
+    /**
+     * create images of the scene and buttons to switch scene
+     *
+     * @return the VBox containing these elements
+     */
     private Region createContent() {
         VBox container = new VBox(10);
         Label title = new Label("Projectile Motion Simulation");
@@ -76,8 +93,12 @@ public class MainView extends BorderPane {
         Button vectorButton = new Button("Vectors");
         vectorButton.setPrefSize(150, 20);
 
+        // button to base scene to test, please delete at the end
+        Button test = new Button("test");
+        test.setOnAction(event -> mainController.onTestButtonPressed());
+
         HBox buttons = new HBox(20);
-        buttons.getChildren().addAll(targetGameButton, simulationButton, vectorButton);
+        buttons.getChildren().addAll(targetGameButton, simulationButton, vectorButton, test);
         buttons.setAlignment(Pos.CENTER);
 
         container.getChildren().addAll(title, sceneImages, buttons);
