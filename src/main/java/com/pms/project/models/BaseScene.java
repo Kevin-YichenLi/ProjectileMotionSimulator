@@ -8,6 +8,10 @@ public abstract class BaseScene {
     double gravity;
     double distance;
     double changeInHeight;
+    double initialX;
+    double initialY;
+    double finalX;
+    double finalY;
 
     public double getInitialVelocity() {
         return initialVelocity;
@@ -37,6 +41,30 @@ public abstract class BaseScene {
         return initialHeight;
     }
 
+    public double getFinalY() {
+        return finalY;
+    }
+
+    public void setFinalY(double finalY) {
+        this.finalY = finalY;
+    }
+
+    public double getFinalX() {
+        return finalX;
+    }
+
+    public void setFinalX(double finalX) {
+        this.finalX = finalX;
+    }
+
+    public double getInitialY() {
+        return initialY;
+    }
+
+    public void setInitialY(double initialY) {
+        this.initialY = initialY;
+    }
+
     public void setInitialHeight(double initialHeight) {
         this.initialHeight = initialHeight;
     }
@@ -63,5 +91,13 @@ public abstract class BaseScene {
 
     public void setChangeInHeight(double changeInHeight) {
         this.changeInHeight = changeInHeight;
+    }
+
+    public double getInitialX() {
+        return initialX;
+    }
+
+    public void setInitialX(double initialX) {
+        this.initialX = initialX;
     }
 }
