@@ -1,6 +1,7 @@
 package com.pms.project.views;
 
 import com.pms.project.controllers.MainController;
+import com.pms.project.models.BaseScene;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;

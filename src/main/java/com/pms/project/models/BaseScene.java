@@ -1,6 +1,6 @@
 package com.pms.project.models;
 
-public abstract class BaseScene {
+public class BaseScene {
     double initialVelocity;
     double initialAngle;
     double time;
@@ -12,6 +12,15 @@ public abstract class BaseScene {
     double initialY;
     double finalX;
     double finalY;
+    double mass;
+
+    public double getMass() {
+        return mass;
+    }
+
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
 
     public double getInitialVelocity() {
         return initialVelocity;

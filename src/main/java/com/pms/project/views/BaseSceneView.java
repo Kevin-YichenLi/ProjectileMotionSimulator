@@ -1,5 +1,12 @@
 package com.pms.project.views;
 
+import com.pms.project.controllers.BaseSceneController;
+import com.pms.project.models.BaseScene;
+import com.sun.jdi.Value;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -13,14 +20,20 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class BaseSceneView extends BorderPane {
+    // the value displayed with the change of the initial speed slider
+    private StringProperty speedValue = new SimpleStringProperty();
+    // the instance of the model used to store data
+    private BaseScene baseScene = new BaseScene();
     // the Y position of bottom component
     private double bottomYPosition;
+    private BaseSceneController controller;
     private Stage primaryStage;
     public BaseSceneView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.setTop(createTop());
         this.setCenter(createCenter());
         this.setBottom(createBottom());
+        controller = new BaseSceneController(primaryStage, baseScene);
     }
 
     protected Region createCenter() {
@@ -64,10 +77,15 @@ public class BaseSceneView extends BorderPane {
         VBox container = new VBox();
 
         Label massLabel = new Label("Mass");
-        TextField textField = new TextField();
-        textField.setPromptText("Enter mass here");
+        Spinner<Double> spinner = createDoubleSpinner(100);
+        spinner.valueProperty().addListener(new ChangeListener<Double>() {
+            @Override
+            public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
+                controller.updateMass(newValue);
+            }
+        });
 
-        container.getChildren().addAll(massLabel, textField);
+        container.getChildren().addAll(massLabel, spinner);
         return container;
     }
 
@@ -76,9 +94,13 @@ public class BaseSceneView extends BorderPane {
 
         Label gravityLabel = new Label("Gravity");
         Button earthButton = new Button("Earth");
+        earthButton.setOnAction(event -> controller.onEarthButtonPressed());
         Button moonButton = new Button("Moon");
+        moonButton.setOnAction(event -> controller.onMoonButtonPressed());
         Button marsButton = new Button("Mars");
+        marsButton.setOnAction(event -> controller.onMarsButtonPressed());
         Button jupiterButton = new Button("Jupiter");
+        jupiterButton.setOnAction(event -> controller.onJupiterButtonPressed());
 
         container.getChildren().addAll(gravityLabel, earthButton, moonButton, marsButton, jupiterButton);
         return container;
@@ -100,24 +122,53 @@ public class BaseSceneView extends BorderPane {
         VBox container = new VBox();
 
         Label initialAngleLabel = new Label("Initial Angle");
-        TextField initialAngleTextField = new TextField();
-        initialAngleTextField.setPromptText("Enter initial angle here");
+        Spinner<Double> spinner = createDoubleSpinner(101);
+        spinner.valueProperty().addListener(new ChangeListener<Double>() {
+            @Override
+            public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
+                controller.updateInitialAngle(newValue);
+            }
+        });
 
-        container.getChildren().addAll(initialAngleLabel, initialAngleTextField);
+        container.getChildren().addAll(initialAngleLabel, spinner);
         return container;
+    }
+
+    protected Spinner<Double> createDoubleSpinner(double maxValue) {
+        Spinner<Double> spinner = new Spinner<>();
+        SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0,
+                maxValue, 0.0, 0.1);
+        spinner.setValueFactory(valueFactory);
+        spinner.setEditable(true);
+        return spinner;
     }
 
     protected Region createInitialSpeedComponent() {
         VBox container = new VBox();
 
         Label initialSpeedLabel = new Label("Initial Speed");
+
         Slider speedSlider = new Slider(0, 500, 20);
-        speedSlider.setShowTickLabels(true);
-        speedSlider.setShowTickMarks(true);
         speedSlider.setMajorTickUnit(1);
         speedSlider.setMinorTickCount(5);
 
-        container.getChildren().addAll(initialSpeedLabel, speedSlider);
+        Label speedValueLabel = new Label();
+        speedValueLabel.textProperty().bind(speedValue);
+
+        // set the initial value for the displayed value and the data in model class
+        speedValue.set(String.valueOf(speedSlider.getValue()));
+        controller.updateInitialSpeed(speedSlider.getValue());
+
+        // update the data in model class dynamically and update the displayed value dynamically
+        speedSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                speedValue.set(String.format("%.2f", newValue.doubleValue()));
+                controller.updateInitialSpeed(newValue.doubleValue());
+            }
+        });
+
+        container.getChildren().addAll(initialSpeedLabel, speedSlider, speedValueLabel);
         return container;
     }
 
@@ -125,6 +176,7 @@ public class BaseSceneView extends BorderPane {
         HBox topBar = new HBox();
 
         Button backButton = new Button("Back to Main");
+        backButton.setOnAction(event -> controller.onBackToMainPressed());
         Button zoomInButton = new Button("Zoom in");
         Button zoomOutButton = new Button("Zoom out");
 
@@ -162,10 +214,15 @@ public class BaseSceneView extends BorderPane {
         HBox container = new HBox(20);
 
         Label initialHeightLabel = new Label("Initial Height");
-        TextField initialHeightTextField = new TextField();
-        initialHeightTextField.setPromptText("Enter height here");
+        Spinner<Double> spinner = createDoubleSpinner(100);
+        spinner.valueProperty().addListener(new ChangeListener<Double>() {
+            @Override
+            public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
+                controller.updateInitialHeight(newValue);
+            }
+        });
 
-        container.getChildren().addAll(initialHeightLabel, initialHeightTextField);
+        container.getChildren().addAll(initialHeightLabel, spinner);
         return container;
     }
 

@@ -8,8 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+
 public class MainApp extends Application {
     public static void main(String[] args) {
+        Locale.setDefault(Locale.ENGLISH);
         launch(args);
     }
 
