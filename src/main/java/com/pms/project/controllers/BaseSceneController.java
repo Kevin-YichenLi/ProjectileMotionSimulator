@@ -9,5 +9,4 @@ public class BaseSceneController {
         primaryStage.show();
         primaryStage.centerOnScreen();
     }
-
 }
