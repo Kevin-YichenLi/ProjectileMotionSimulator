@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 public class MainController {
     private Util util = new Util();
     private Stage primaryStage;
+    private ThemeController themeController;
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }

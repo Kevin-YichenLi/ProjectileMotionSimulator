@@ -30,6 +30,7 @@ public class BaseSceneView extends BorderPane {
     private BaseSceneController controller;
     private Stage primaryStage;
     private MainController mainController;
+    
     public BaseSceneView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.setTop(createTop());
@@ -189,7 +190,7 @@ public class BaseSceneView extends BorderPane {
         MenuItem animationMenuItem = new MenuItem("Animation");
         MenuItem generalMenuItem = new MenuItem("General");
         
-        themeMenuItem.setOnAction(e-> mainController.onThemeButtonPressed() );
+        themeMenuItem.setOnAction(e -> mainController.onThemeButtonPressed());
 
         settingsButton.getItems().addAll(themeMenuItem, animationMenuItem, generalMenuItem);
         settingsButton.setAlignment(Pos.TOP_RIGHT);
@@ -205,17 +206,18 @@ public class BaseSceneView extends BorderPane {
     }
 
     protected Region createBottom() {
-        HBox hBox = new HBox();
-        hBox.setPrefSize(MainView.stageWidth, bottomYPosition);
-        hBox.setBackground(Background.fill(Color.LIGHTGREEN));
+        HBox hBox  = new HBox();
+        hBox .setPrefSize(MainView.stageWidth, bottomYPosition);
+        hBox .setBackground(Background.fill(Color.LIGHTGREEN));
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        hBox.getChildren().addAll(createInitialHeightComponent(), spacer, createStartAndStopButton());
-        return hBox;
+        hBox .getChildren().addAll(createInitialHeightComponent(), spacer, createStartAndStopButton());
+        return hBox ;
+        
     }
-
+   
     protected Region createInitialHeightComponent() {
         HBox container = new HBox(20);
 
