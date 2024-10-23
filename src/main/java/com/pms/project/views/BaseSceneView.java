@@ -1,6 +1,7 @@
 package com.pms.project.views;
 
 import com.pms.project.controllers.BaseSceneController;
+import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
 import com.sun.jdi.Value;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,13 +29,16 @@ public class BaseSceneView extends BorderPane {
     private double bottomYPosition;
     private BaseSceneController controller;
     private Stage primaryStage;
+    private MainController mainController;
     public BaseSceneView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.setTop(createTop());
         this.setCenter(createCenter());
         this.setBottom(createBottom());
         controller = new BaseSceneController(primaryStage, baseScene);
+        mainController = new MainController(primaryStage);
     }
+   
 
     protected Region createCenter() {
         Pane centerPane = new Pane();
@@ -184,6 +188,8 @@ public class BaseSceneView extends BorderPane {
         MenuItem themeMenuItem = new MenuItem("Theme");
         MenuItem animationMenuItem = new MenuItem("Animation");
         MenuItem generalMenuItem = new MenuItem("General");
+        
+        themeMenuItem.setOnAction(e-> mainController.onThemeButtonPressed() );
 
         settingsButton.getItems().addAll(themeMenuItem, animationMenuItem, generalMenuItem);
         settingsButton.setAlignment(Pos.TOP_RIGHT);
