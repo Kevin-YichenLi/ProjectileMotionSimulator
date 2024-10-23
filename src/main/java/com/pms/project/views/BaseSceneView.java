@@ -157,7 +157,7 @@ public class BaseSceneView extends BorderPane {
 
         // set the initial value for the displayed value and the data in model class
         speedValue.set(String.valueOf(speedSlider.getValue()));
-        controller.updateInitialSpeed(speedSlider.getValue());
+        //controller.updateInitialSpeed(speedSlider.getValue());
 
         // update the data in model class dynamically and update the displayed value dynamically
         speedSlider.valueProperty().addListener(new ChangeListener<Number>() {

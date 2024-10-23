@@ -20,6 +20,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         Scene scene = new Scene(new MainView(primaryStage), MainView.stageWidth, MainView.stageHeight);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Projectile Motion Simulator");
         primaryStage.show();
     }
 }
