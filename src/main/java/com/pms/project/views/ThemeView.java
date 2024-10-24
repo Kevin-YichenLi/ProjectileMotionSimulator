@@ -142,7 +142,7 @@ public class ThemeView extends GridPane {
 
         // Add the Back and Confirm Buttons to the GridPane
         this.add(backButton, 0, 12);
-        this.add(confirmButton, 1, 12); // Place confirm button next to the back button
+        this.add(confirmButton, 1, 12); 
     }
 
     public void goBack() {
