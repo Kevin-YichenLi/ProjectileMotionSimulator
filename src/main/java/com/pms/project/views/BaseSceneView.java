@@ -1,5 +1,8 @@
 package com.pms.project.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pms.project.controllers.BaseSceneController;
 import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
@@ -9,6 +12,7 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -251,5 +255,18 @@ public class BaseSceneView extends BorderPane {
 
         container.getChildren().addAll(startButton, refreshButton, stopButton);
         return container;
+    }
+    public List<Label> getLabels() {
+        List<Label> labels = new ArrayList<>();
+        for (Node node : this.getChildren()) {
+            if (node instanceof VBox) {
+                for (Node child : ((VBox) node).getChildren()) {
+                    if (child instanceof Label) {
+                        labels.add((Label) child);
+                    }
+                }
+            }
+        }
+        return labels;
     }
 }

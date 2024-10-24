@@ -2,6 +2,8 @@ package com.pms.project.views;
 
 import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
+
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -37,20 +39,25 @@ public class MainView extends BorderPane {
      */
     private MenuBar createMenu() {
         MenuBar menuBar = new MenuBar();
-
-        Menu quit = new Menu("Quit");
-        Menu aboutUs = new Menu("About us");
-        Menu help = new Menu("Help");
+        Menu fileMenu = new Menu("File");
+        MenuItem quit = new MenuItem("Quit");
+        MenuItem aboutUs = new MenuItem("About us");
+        MenuItem help = new MenuItem("Help");
         Menu settings = new Menu("Settings");
+        
+        quit.setOnAction(e -> mainController.onQuitButtonPressed());
 
         MenuItem theme = new MenuItem("Theme");
         MenuItem animation = new MenuItem("Animation");
         MenuItem resources = new MenuItem("Resources");
+        
         theme.setOnAction(e -> mainController.onThemeButtonPressed());
 
+        fileMenu.getItems().addAll(quit,aboutUs, help);
+        
         settings.getItems().addAll(theme, animation, resources);
 
-        menuBar.getMenus().addAll(quit, aboutUs, help, settings);
+        menuBar.getMenus().addAll(fileMenu,settings );
 
         return menuBar;
     }
