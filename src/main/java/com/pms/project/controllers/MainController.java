@@ -9,7 +9,11 @@ import com.sun.tools.javac.Main;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -44,11 +48,23 @@ public class MainController {
                 // Close the application
                 primaryStage.close();
             }
-            // No action needed for ButtonType.CANCEL, just let the dialog close
+            
         });
     }
+    public void onAboutUsPressed() {
+    	GridPane grid  = new GridPane();
+    	Scene scene = new Scene (grid,MainView.stageWidth,MainView.stageHeight);
+    	util.switchScene(primaryStage, scene);
+    }
     
-    
+    public void onHelpPressed() {
+    	HBox hbox  = new HBox();
+    	Scene scene = new Scene (hbox,MainView.stageWidth,MainView.stageHeight);
+    	Image formulas = new Image(this.getClass().getResource("/images/formulas.png").toExternalForm());
+        ImageView formulasImageView = new ImageView(formulas);
+        hbox.getChildren().add(formulasImageView);
+    	util.switchScene(primaryStage, scene);
+    }
     
     public void onThemeButtonPressed() {
     	ThemeView themeView = new ThemeView(primaryStage);
