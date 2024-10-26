@@ -6,7 +6,8 @@ import java.util.List;
 import com.pms.project.controllers.BaseSceneController;
 import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
-import com.sun.jdi.Value;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -17,25 +18,32 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.QuadCurve;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class BaseSceneView extends BorderPane {
+    // The object of animation
+    private Circle object = new Circle(3);
+    private Timeline timeline = new Timeline();
     // the value displayed with the change of the initial speed slider
     private StringProperty speedValue = new SimpleStringProperty();
     // the instance of the model used to store data
     private BaseScene baseScene = new BaseScene();
-    // the Y position of bottom component
+    // the Y position of ”bottom“ component
     private double bottomYPosition;
     private BaseSceneController controller;
     private Stage primaryStage;
     private MainController mainController;
     
     public BaseSceneView(Stage primaryStage) {
+        object.setFill(Color.BLACK);
         this.primaryStage = primaryStage;
         this.setTop(createTop());
         this.setCenter(createCenter());
@@ -117,8 +125,10 @@ public class BaseSceneView extends BorderPane {
 
     protected Region createAnimationPane() {
         Pane animationPane = new Pane();
-        animationPane.setPrefSize(1300, 670);
-        bottomYPosition += 670;
+
+        double panePrefHeight = 670;
+        animationPane.setPrefSize(1300, panePrefHeight);
+        bottomYPosition += panePrefHeight;
         // code for animation....
 
         // for testing, to be deleted
