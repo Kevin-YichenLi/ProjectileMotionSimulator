@@ -19,6 +19,7 @@ public class ThemeController {
     private BaseSceneView baseSceneView;
     private ThemeView themeView;
 
+
     public ThemeController(BaseSceneView baseSceneView, ThemeView themeView) {
         this.baseSceneView = baseSceneView;
         this.themeView = themeView;

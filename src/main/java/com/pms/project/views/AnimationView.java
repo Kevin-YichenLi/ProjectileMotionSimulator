@@ -5,9 +5,10 @@ import com.pms.project.utils.Util;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class AnimationView extends GridPane {
+public class AnimationView extends Pane {
     private Util util = new Util();
     private Stage primaryStage;
     private AnimationController animationController;
@@ -34,13 +35,24 @@ public class AnimationView extends GridPane {
 
         // Create Rotate Button
         Button rotateButton = new Button("Rotate");
-        rotateButton.setOnAction(event -> animationController.rotate(90));
+        //rotateButton.setOnAction(event -> animationController.rotate(90));
 
         // Add the Back and Confirm Buttons to the GridPane
-        this.add(backButton, 0, 12);
-        this.add(confirmButton, 1, 12);
-        this.add(zoomInButton, 2, 12);
-        this.add(zoomOutButton, 3, 12);
-        this.add(rotateButton, 4, 12);
+        backButton.setLayoutX(20);
+        backButton.setLayoutY(900);
+
+        confirmButton.setLayoutX(1700);
+        confirmButton.setLayoutY(900);
+
+        zoomInButton.setLayoutX(0);
+        zoomInButton.setLayoutY(0);
+
+        zoomOutButton.setLayoutX(70);
+        zoomOutButton.setLayoutY(0);
+
+        rotateButton.setLayoutX(150);
+        rotateButton.setLayoutY(0);
+
+        this.getChildren().addAll(backButton,confirmButton,zoomInButton,zoomOutButton,rotateButton);
     }
 }

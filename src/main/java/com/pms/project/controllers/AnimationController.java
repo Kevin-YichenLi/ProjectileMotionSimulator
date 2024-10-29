@@ -33,10 +33,10 @@ public class AnimationController {
         animationView.getTransforms().add(scaleTransform);
     }
 
-    public void rotate(double angle) {
+    /*public void rotate(double angle) {
         rotateTransform.setAngle(rotateTransform.getAngle() + angle);
         animationView.getTransforms().add(rotateTransform);
-    }
+    }*/
 
     public void goBack() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
