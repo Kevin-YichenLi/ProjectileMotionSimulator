@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.pms.project.MainApp;
 import com.pms.project.utils.Util;
+import com.pms.project.views.AnimationView;
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
 import com.pms.project.views.ThemeView;
@@ -153,5 +154,10 @@ public class MainController {
     	Scene scene = new Scene(themeView,MainView.stageWidth,MainView.stageHeight);
     	util.switchScene(primaryStage, scene);
     	
+    }
+    public void onAnimationButtonPressed(){
+        AnimationView animationView = new AnimationView(primaryStage);
+        Scene scene = new Scene(animationView,MainView.stageWidth,MainView.stageHeight);
+        util.switchScene(primaryStage, scene);
     }
 }

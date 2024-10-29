@@ -54,6 +54,7 @@ public class MainView extends BorderPane {
         MenuItem resources = new MenuItem("Resources");
         
         theme.setOnAction(e -> mainController.onThemeButtonPressed());
+        animation.setOnAction(e-> mainController.onAnimationButtonPressed());
 
         fileMenu.getItems().addAll(quit,aboutUs, help);
         

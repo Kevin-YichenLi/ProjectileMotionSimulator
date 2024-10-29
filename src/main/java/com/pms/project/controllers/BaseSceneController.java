@@ -6,6 +6,7 @@ import com.pms.project.views.MainView;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.util.Optional;
@@ -16,9 +17,11 @@ public class BaseSceneController {
     private Util util = new Util();
     private Stage primaryStage;
 
+
     public BaseSceneController(Stage primaryStage, BaseScene baseScene) {
         this.primaryStage = primaryStage;
         this.baseScene = baseScene;
+
     }
 
     public void onBackToMainPressed() {
@@ -160,4 +163,7 @@ public class BaseSceneController {
             return root2;
         }
     }
+
+
+
 }

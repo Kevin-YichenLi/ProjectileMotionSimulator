@@ -25,6 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.QuadCurve;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -41,6 +43,8 @@ public class BaseSceneView extends BorderPane {
     private BaseSceneController controller;
     private Stage primaryStage;
     private MainController mainController;
+    private Scale scaleTransform;
+    private Rotate rotateTransform;
     
     public BaseSceneView(Stage primaryStage) {
         object.setFill(Color.BLACK);
@@ -50,6 +54,7 @@ public class BaseSceneView extends BorderPane {
         this.setBottom(createBottom());
         controller = new BaseSceneController(primaryStage, baseScene);
         mainController = new MainController(primaryStage);
+
     }
    
 
@@ -192,12 +197,16 @@ public class BaseSceneView extends BorderPane {
     }
 
     protected Region createTop() {
+        scaleTransform = new Scale(1, 1);
+        rotateTransform = new Rotate(0);
         HBox topBar = new HBox();
 
         Button backButton = new Button("Back to Main");
         backButton.setOnAction(event -> controller.onBackToMainPressed());
         Button zoomInButton = new Button("Zoom in");
         Button zoomOutButton = new Button("Zoom out");
+        zoomInButton.setOnAction(event -> zoom(1.1));
+        zoomOutButton.setOnAction(event -> zoom(0.9));
 
         MenuButton settingsButton = new MenuButton("Settings");
         MenuItem themeMenuItem = new MenuItem("Theme");
@@ -205,7 +214,7 @@ public class BaseSceneView extends BorderPane {
         MenuItem generalMenuItem = new MenuItem("General");
         
         themeMenuItem.setOnAction(e -> mainController.onThemeButtonPressed());
-
+        animationMenuItem.setOnAction(e-> mainController.onAnimationButtonPressed());
         settingsButton.getItems().addAll(themeMenuItem, animationMenuItem, generalMenuItem);
         settingsButton.setAlignment(Pos.TOP_RIGHT);
 
@@ -213,12 +222,15 @@ public class BaseSceneView extends BorderPane {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         topBar.getChildren().addAll(backButton, zoomInButton, zoomOutButton, spacer, settingsButton);
-
+        this.getTransforms().addAll(scaleTransform);
         // this line is for testing only, please delete at the end
         topBar.setBorder(Border.stroke(Color.BLACK));
         return topBar;
     }
-
+    private void zoom(double factor) {
+        scaleTransform.setX(scaleTransform.getX() * factor);
+        scaleTransform.setY(scaleTransform.getY() * factor);
+    }
     protected Region createBottom() {
         HBox hBox  = new HBox();
         hBox .setPrefSize(MainView.stageWidth, bottomYPosition);
