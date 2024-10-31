@@ -3,11 +3,18 @@ package com.pms.project.controllers;
 import com.pms.project.models.BaseScene;
 import com.pms.project.utils.Util;
 import com.pms.project.views.MainView;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Optional;
 
@@ -16,12 +23,21 @@ public class BaseSceneController {
     private BaseScene baseScene;
     private Util util = new Util();
     private Stage primaryStage;
+    // Animation related fields
+    private Circle object;
+    private Timeline timeline;
+    private KeyFrame[] keyFrames = new KeyFrame[9];
+    private int animationPaneWidth;
+    private int animationPaneHeight;
 
-
-    public BaseSceneController(Stage primaryStage, BaseScene baseScene) {
+    public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight) {
+        object = new Circle(3);
+        object.setFill(Color.BLACK);
+        timeline = new Timeline();
         this.primaryStage = primaryStage;
         this.baseScene = baseScene;
-
+        this.animationPaneHeight = animationPaneHeight;
+        this.animationPaneWidth = animationPaneWidth;
     }
 
     public void onBackToMainPressed() {
@@ -87,7 +103,7 @@ public class BaseSceneController {
      * This method would use formulas to calculate other properties of projectile motion such as time,
      * final Y, max height, etc.
      */
-    private void calculateAndSetPhysicalProperties() {
+    protected void calculateAndSetPhysicalProperties() {
         baseScene.setInitialX(3); // the radius of the circle object
         baseScene.setFinalY(0);
 
@@ -115,6 +131,7 @@ public class BaseSceneController {
             baseScene.setFinalYVelocity(finalYVelocity);
             baseScene.setFinalX(baseScene.getInitialX() + distance);
             hasMotion = true;
+            createAnimation();
         } else {
             // the case of normal projectile motion
             double initialXVelocity = baseScene.getInitialVelocity() * Math.cos(baseScene.getInitialAngle());
@@ -136,6 +153,7 @@ public class BaseSceneController {
             baseScene.setFinalXVelocity(baseScene.getInitialXVelocity());
             baseScene.setFinalX(baseScene.getInitialX() + distance);
             hasMotion = true;
+            createAnimation();
         }
     }
 
@@ -147,7 +165,7 @@ public class BaseSceneController {
      * @param c coefficient of the constant
      * @return the value of time
      */
-    private double timeCalculator(double a, double b, double c) {
+    protected double timeCalculator(double a, double b, double c) {
         double discriminant = b * b - 4 * a * c;
 
         if (discriminant == 0) {
@@ -164,6 +182,29 @@ public class BaseSceneController {
         }
     }
 
+    public void onStartButtonPressed() {
+        if (hasMotion) {
+            timeline.play();
+        } else {
+            // tell the user that there's no action taking place
+        }
+    }
 
+    protected void createAnimation() {
+        KeyFrame initialFrame = new KeyFrame(Duration.seconds(0), event -> {
+            object.setTranslateX(3);
+            object.setTranslateY(3);
+        });
 
+        KeyFrame finalFrame = new KeyFrame(Duration.seconds(3), event -> {
+            object.setTranslateX(300);
+            object.setTranslateY(300);
+        });
+
+        timeline.getKeyFrames().addAll(initialFrame, finalFrame);
+    }
+
+    public Circle getObject() {
+        return object;
+    }
 }

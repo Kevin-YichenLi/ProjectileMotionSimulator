@@ -6,12 +6,11 @@ import java.util.List;
 import com.pms.project.controllers.BaseSceneController;
 import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -22,41 +21,33 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.QuadCurve;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class BaseSceneView extends BorderPane {
-    // The object of animation
-    private Circle object = new Circle(3);
-    private Timeline timeline = new Timeline();
     // the value displayed with the change of the initial speed slider
     private StringProperty speedValue = new SimpleStringProperty();
     // the instance of the model used to store data
     private BaseScene baseScene = new BaseScene();
-    // the Y position of ”bottom“ component
+    // the Y position of "bottom" component
     private double bottomYPosition;
     private BaseSceneController controller;
     private Stage primaryStage;
     private MainController mainController;
     private Scale scaleTransform;
     private Rotate rotateTransform;
-    
+    private int animationPaneHeight = 670;
+    private int animationPaneWidth = 1300;
+
     public BaseSceneView(Stage primaryStage) {
-        object.setFill(Color.BLACK);
         this.primaryStage = primaryStage;
+        controller = new BaseSceneController(primaryStage, baseScene, animationPaneWidth, animationPaneHeight);
         this.setTop(createTop());
         this.setCenter(createCenter());
         this.setBottom(createBottom());
-        controller = new BaseSceneController(primaryStage, baseScene);
         mainController = new MainController(primaryStage);
-
     }
-   
 
     protected Region createCenter() {
         Pane centerPane = new Pane();
@@ -131,13 +122,12 @@ public class BaseSceneView extends BorderPane {
     protected Region createAnimationPane() {
         Pane animationPane = new Pane();
 
-        double panePrefHeight = 670;
-        animationPane.setPrefSize(1300, panePrefHeight);
-        bottomYPosition += panePrefHeight;
-        // code for animation....
+        animationPane.setPrefSize(animationPaneWidth, animationPaneHeight);
+        bottomYPosition += animationPaneHeight;
 
         // for testing, to be deleted
         animationPane.setBorder(Border.stroke(Color.BLACK));
+        animationPane.getChildren().addAll(controller.getObject());
 
         return animationPane;
     }
@@ -225,23 +215,29 @@ public class BaseSceneView extends BorderPane {
         this.getTransforms().addAll(scaleTransform);
         // this line is for testing only, please delete at the end
         topBar.setBorder(Border.stroke(Color.BLACK));
+
+        double prefHeight = 27;
+        topBar.setPrefHeight(prefHeight);
+        bottomYPosition += prefHeight;
+
         return topBar;
     }
-    private void zoom(double factor) {
+
+    protected void zoom(double factor) {
         scaleTransform.setX(scaleTransform.getX() * factor);
         scaleTransform.setY(scaleTransform.getY() * factor);
     }
+
     protected Region createBottom() {
-        HBox hBox  = new HBox();
-        hBox .setPrefSize(MainView.stageWidth, bottomYPosition);
-        hBox .setBackground(Background.fill(Color.LIGHTGREEN));
+        HBox hBox = new HBox();
+        hBox.setPrefSize(MainView.stageWidth, bottomYPosition);
+        hBox.setBorder(Border.stroke(Color.BLACK));
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        hBox .getChildren().addAll(createInitialHeightComponent(), spacer, createStartAndStopButton());
+        hBox.getChildren().addAll(createInitialHeightComponent(), spacer, createStartAndStopButton());
         return hBox ;
-        
     }
    
     protected Region createInitialHeightComponent() {
@@ -264,6 +260,7 @@ public class BaseSceneView extends BorderPane {
         HBox container = new HBox(20);
 
         Button startButton = new Button("Start");
+        startButton.setOnAction(event -> controller.onStartButtonPressed());
 
         Button refreshButton = new Button();
         Image refreshImage = new Image(this.getClass().getResource("/images/refresh.png").toExternalForm());
@@ -278,6 +275,7 @@ public class BaseSceneView extends BorderPane {
         container.getChildren().addAll(startButton, refreshButton, stopButton);
         return container;
     }
+
     public List<Label> getLabels() {
         List<Label> labels = new ArrayList<>();
         for (Node node : this.getChildren()) {
