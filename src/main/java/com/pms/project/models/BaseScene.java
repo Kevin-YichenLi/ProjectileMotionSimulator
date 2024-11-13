@@ -161,4 +161,27 @@ public class BaseScene {
     public void setInitialX(double initialX) {
         this.initialX = initialX;
     }
+
+    @Override
+    public String toString() {
+        return "BaseScene{" +
+                "initialVelocity=" + initialVelocity +
+                ", initialAngle=" + initialAngle +
+                ", time=" + time +
+                ", initialHeight=" + initialHeight +
+                ", gravity=" + gravity +
+                ", distance=" + distance +
+                ", changeInHeight=" + changeInHeight +
+                ", initialX=" + initialX +
+                ", initialY=" + initialY +
+                ", finalX=" + finalX +
+                ", finalY=" + finalY +
+                ", mass=" + mass +
+                ", maxHeight=" + maxHeight +
+                ", initialXVelocity=" + initialXVelocity +
+                ", initialYVelocity=" + initialYVelocity +
+                ", finalXVelocity=" + finalXVelocity +
+                ", finalYVelocity=" + finalYVelocity +
+                '}';
+    }
 }
