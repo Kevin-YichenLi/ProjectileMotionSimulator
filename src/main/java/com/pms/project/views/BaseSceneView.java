@@ -127,7 +127,7 @@ public class BaseSceneView extends BorderPane {
 
         // for testing, to be deleted
         animationPane.setBorder(Border.stroke(Color.BLACK));
-        animationPane.getChildren().addAll(controller.getObject(), controller.getTrajectory());
+        animationPane.getChildren().addAll(controller.getObject());
 
         return animationPane;
     }
