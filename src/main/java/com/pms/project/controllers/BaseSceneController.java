@@ -19,11 +19,13 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.security.Key;
 import java.util.List;
 import java.util.Optional;
 
 public class BaseSceneController {
     private boolean hasMotion = false;
+    private boolean isHorizontalProjectileMotion;
     private BaseScene baseScene;
     private Util util = new Util();
     private Stage primaryStage;
@@ -33,9 +35,9 @@ public class BaseSceneController {
     private KeyFrame[] keyFrames = new KeyFrame[9];
     private int animationPaneWidth;
     private int animationPaneHeight;
-    private List<Circle> trails;
+    private Circle[] trails;
 
-    public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight) {
+    public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight, Circle[] trails) {
         object = new Circle(3);
         object.setFill(Color.BLACK);
         timeline = new Timeline();
@@ -43,6 +45,7 @@ public class BaseSceneController {
         this.baseScene = baseScene;
         this.animationPaneHeight = animationPaneHeight;
         this.animationPaneWidth = animationPaneWidth;
+        this.trails = trails;
     }
 
     public void onBackToMainPressed() {
@@ -125,6 +128,7 @@ public class BaseSceneController {
             baseScene.setFinalYVelocity(finalYVelocity);
             baseScene.setFinalX(baseScene.getInitialX() + distance);
             hasMotion = true;
+            isHorizontalProjectileMotion = true;
         } else {
             // the case of normal projectile motion
             double initialXVelocity = baseScene.getInitialVelocity() * Math.cos(Math.toRadians(baseScene.getInitialAngle()));
@@ -147,6 +151,7 @@ public class BaseSceneController {
             baseScene.setFinalX(baseScene.getInitialX() + distance);
             baseScene.setInitialY(baseScene.getInitialHeight());
             hasMotion = true;
+            isHorizontalProjectileMotion = false;
         }
     }
 
@@ -189,64 +194,79 @@ public class BaseSceneController {
     }
 
     protected void createAnimation() {
-        KeyFrame initialFrame = new KeyFrame(Duration.seconds(0),
-                new KeyValue(object.translateXProperty(), baseScene.getInitialX(), Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), animationPaneHeight - baseScene.getInitialHeight(), Interpolator.LINEAR)
-        );
+        KeyFrame currentFrame;
+        KeyValue xValue;
+        KeyValue yValue;
+        double x;
+        double y;
 
-        double currentTime = baseScene.getTime();
-        double currentHeight1 = calculateCurrentHeight(currentTime / 8);
-        KeyFrame frame1 = new KeyFrame(Duration.seconds(currentTime / 8),
-                new KeyValue(object.translateXProperty(), baseScene.getDistance() / 8, Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), currentHeight1, Interpolator.LINEAR)
-        );
+        for (int i = 0; i < 1000; i++) {
+            x = baseScene.getDistance() * i / 999;
+            y = calculateCurrentHeight(baseScene.getTime() * i / 999);
+            currentFrame = new KeyFrame(Duration.seconds(baseScene.getTime() * i / 999),
+                xValue = new KeyValue(object.translateXProperty(), x, Interpolator.LINEAR),
+                yValue = new KeyValue(object.translateYProperty(), y, Interpolator.LINEAR)
+            );
 
-        currentTime = baseScene.getTime() * 2 / 8;
-        double currentHeight2 = calculateCurrentHeight(currentTime);
-        KeyFrame frame2 = new KeyFrame(Duration.seconds(currentTime),
-                new KeyValue(object.translateXProperty(), baseScene.getDistance() * 2 / 8, Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), currentHeight2, Interpolator.LINEAR)
-        );
+            switch (i) {
+                case 0: {
+                    trails[0].setStroke(Color.BLACK);
+                    trails[0].setCenterX(x);
+                    trails[0].setCenterY(y);
+                    break;
+                }
+                case 1000 / 8: {
+                    trails[1].setStroke(Color.BLACK);
+                    trails[1].setCenterX(x);
+                    trails[1].setCenterY(y);
+                    break;
+                }
+                case 1000 / 8 * 2: {
+                    trails[2].setStroke(Color.BLACK);
+                    trails[2].setCenterX(x);
+                    trails[2].setCenterY(y);
+                    break;
+                }
+                case 1000 / 8 * 3: {
+                    trails[3].setStroke(Color.BLACK);
+                    trails[3].setCenterX(x);
+                    trails[3].setCenterY(y);
+                    break;
+                }
+                case 1000 / 8 * 4: {
+                    trails[4].setStroke(Color.BLACK);
+                    trails[4].setCenterX(x);
+                    trails[4].setCenterY(y);
+                    break;
+                }
+                case 1000 / 8 * 5: {
+                    trails[5].setStroke(Color.BLACK);
+                    trails[5].setCenterX(x);
+                    trails[5].setCenterY(y);
+                    break;
+                }
+                case 1000 / 8 * 6: {
+                    trails[6].setStroke(Color.BLACK);
+                    trails[6].setCenterX(x);
+                    trails[6].setCenterY(y);
+                    break;
+                }
+                case 1000 / 8 * 7: {
+                    trails[7].setStroke(Color.BLACK);
+                    trails[7].setCenterX(x);
+                    trails[7].setCenterY(y);
+                    break;
+                }
+                case 999: {
+                    trails[8].setStroke(Color.BLACK);
+                    trails[8].setCenterX(x);
+                    trails[8].setCenterY(y);
+                    break;
+                }
+            }
+            timeline.getKeyFrames().add(currentFrame);
+        }
 
-        currentTime = baseScene.getTime() * 3 / 8;
-        double currentHeight3 = calculateCurrentHeight(currentTime);
-        KeyFrame frame3 = new KeyFrame(Duration.seconds(currentTime),
-                new KeyValue(object.translateXProperty(), baseScene.getDistance() * 3 / 8, Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), currentHeight3, Interpolator.LINEAR)
-        );
-
-        KeyFrame middleFrame = new KeyFrame(Duration.seconds(baseScene.getTime() / 2),
-                new KeyValue(object.translateXProperty(), baseScene.getDistance() / 2, Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), animationPaneHeight - baseScene.getMaxHeight(), Interpolator.LINEAR)
-        );
-
-        currentTime = baseScene.getTime() * 5 / 8;
-        double currentHeight4 = calculateCurrentHeight(currentTime);
-        KeyFrame frame4 = new KeyFrame(Duration.seconds(currentTime),
-                new KeyValue(object.translateXProperty(), baseScene.getDistance() * 5 / 8, Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), currentHeight4, Interpolator.LINEAR)
-        );
-
-        currentTime = baseScene.getTime() * 6 / 8;
-        double currentHeight5 = calculateCurrentHeight(currentTime);
-        KeyFrame frame5 = new KeyFrame(Duration.seconds(currentTime),
-                new KeyValue(object.translateXProperty(), baseScene.getDistance() * 6 / 8, Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), currentHeight5, Interpolator.LINEAR)
-        );
-
-        currentTime = baseScene.getTime() * 7 / 8;
-        double currentHeight6 = calculateCurrentHeight(currentTime);
-        KeyFrame frame6 = new KeyFrame(Duration.seconds(currentTime),
-                new KeyValue(object.translateXProperty(), baseScene.getDistance() * 7 / 8, Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), currentHeight6, Interpolator.LINEAR)
-        );
-
-        KeyFrame finalFrame = new KeyFrame(Duration.seconds(baseScene.getTime()),
-                new KeyValue(object.translateXProperty(), baseScene.getDistance(), Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), animationPaneHeight - baseScene.getFinalY(), Interpolator.LINEAR)
-        );
-
-        timeline.getKeyFrames().addAll(initialFrame, frame1, frame2, frame3, middleFrame, frame4, frame5, frame6, finalFrame);
         timeline.setOnFinished(event -> timeline.getKeyFrames().clear());
     }
 

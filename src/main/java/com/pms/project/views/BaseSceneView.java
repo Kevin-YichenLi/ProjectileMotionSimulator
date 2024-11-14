@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -39,10 +40,17 @@ public class BaseSceneView extends BorderPane {
     private Rotate rotateTransform;
     private int animationPaneHeight = 670;
     private int animationPaneWidth = 1300;
+    // path of the animation
+    private Circle[] trails = new Circle[9];
 
     public BaseSceneView(Stage primaryStage) {
+        // paths of the animation
+        for (int i = 0; i < 9; i++) {
+            Circle circle = new Circle(3, Color.TRANSPARENT);
+            trails[i] = circle;
+        }
         this.primaryStage = primaryStage;
-        controller = new BaseSceneController(primaryStage, baseScene, animationPaneWidth, animationPaneHeight);
+        controller = new BaseSceneController(primaryStage, baseScene, animationPaneWidth, animationPaneHeight, trails);
         this.setTop(createTop());
         this.setCenter(createCenter());
         this.setBottom(createBottom());
@@ -128,6 +136,9 @@ public class BaseSceneView extends BorderPane {
         // for testing, to be deleted
         animationPane.setBorder(Border.stroke(Color.BLACK));
         animationPane.getChildren().addAll(controller.getObject());
+        for (Circle circle : trails) {
+            animationPane.getChildren().add(circle);
+        }
 
         return animationPane;
     }
