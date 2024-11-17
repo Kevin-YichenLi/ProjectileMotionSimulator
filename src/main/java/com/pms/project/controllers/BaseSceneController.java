@@ -40,6 +40,8 @@ public class BaseSceneController {
     public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight, Circle[] trails) {
         object = new Circle(3);
         object.setFill(Color.BLACK);
+        object.setTranslateX(8);
+        object.setTranslateY(animationPaneHeight - 3);
         timeline = new Timeline();
         this.primaryStage = primaryStage;
         this.baseScene = baseScene;
@@ -114,6 +116,7 @@ public class BaseSceneController {
                 hasMotion = false;
                 return; // no motion takes place
             }
+            baseScene.setInitialY(baseScene.getInitialHeight() + 3);
             baseScene.setMaxHeight(baseScene.getInitialHeight());
             baseScene.setInitialXVelocity(baseScene.getInitialVelocity());
             baseScene.setInitialYVelocity(0);
@@ -131,6 +134,7 @@ public class BaseSceneController {
             isHorizontalProjectileMotion = true;
         } else {
             // the case of normal projectile motion
+            baseScene.setInitialY(baseScene.getInitialHeight() + 3);
             double initialXVelocity = baseScene.getInitialVelocity() * Math.cos(Math.toRadians(baseScene.getInitialAngle()));
             baseScene.setInitialXVelocity(initialXVelocity);
             double initialYVelocity = baseScene.getInitialVelocity() * Math.sin(Math.toRadians(baseScene.getInitialAngle()));
@@ -149,7 +153,6 @@ public class BaseSceneController {
             baseScene.setDistance(distance);
             baseScene.setFinalXVelocity(baseScene.getInitialXVelocity());
             baseScene.setFinalX(baseScene.getInitialX() + distance);
-            baseScene.setInitialY(baseScene.getInitialHeight());
             hasMotion = true;
             isHorizontalProjectileMotion = false;
         }
@@ -195,73 +198,25 @@ public class BaseSceneController {
 
     protected void createAnimation() {
         KeyFrame currentFrame;
-        KeyValue xValue;
-        KeyValue yValue;
         double x;
         double y;
 
-        for (int i = 0; i < 1000; i++) {
-            x = baseScene.getDistance() * i / 999;
-            y = calculateCurrentHeight(baseScene.getTime() * i / 999);
-            currentFrame = new KeyFrame(Duration.seconds(baseScene.getTime() * i / 999),
-                xValue = new KeyValue(object.translateXProperty(), x, Interpolator.LINEAR),
-                yValue = new KeyValue(object.translateYProperty(), y, Interpolator.LINEAR)
+        int n = 1000;
+        int[] trailIndices = {0, n / 8, n / 8 * 2, n / 8 * 3, n / 8 * 4, n / 8 * 5, n / 8 * 6, n / 8 * 7, n - 1};
+
+        for (int i = 0; i < n; i++) {
+            x = (baseScene.getDistance() * i / (n - 1)) + baseScene.getInitialX();
+            y = calculateCurrentHeight(baseScene.getTime() * i / (n - 1));
+            currentFrame = new KeyFrame(Duration.seconds(baseScene.getTime() * i / (n - 1)),
+                new KeyValue(object.translateXProperty(), x, Interpolator.LINEAR),
+                new KeyValue(object.translateYProperty(), y, Interpolator.LINEAR)
             );
 
-            switch (i) {
-                case 0: {
-                    trails[0].setStroke(Color.BLACK);
-                    trails[0].setCenterX(x);
-                    trails[0].setCenterY(y);
-                    break;
-                }
-                case 1000 / 8: {
-                    trails[1].setStroke(Color.BLACK);
-                    trails[1].setCenterX(x);
-                    trails[1].setCenterY(y);
-                    break;
-                }
-                case 1000 / 8 * 2: {
-                    trails[2].setStroke(Color.BLACK);
-                    trails[2].setCenterX(x);
-                    trails[2].setCenterY(y);
-                    break;
-                }
-                case 1000 / 8 * 3: {
-                    trails[3].setStroke(Color.BLACK);
-                    trails[3].setCenterX(x);
-                    trails[3].setCenterY(y);
-                    break;
-                }
-                case 1000 / 8 * 4: {
-                    trails[4].setStroke(Color.BLACK);
-                    trails[4].setCenterX(x);
-                    trails[4].setCenterY(y);
-                    break;
-                }
-                case 1000 / 8 * 5: {
-                    trails[5].setStroke(Color.BLACK);
-                    trails[5].setCenterX(x);
-                    trails[5].setCenterY(y);
-                    break;
-                }
-                case 1000 / 8 * 6: {
-                    trails[6].setStroke(Color.BLACK);
-                    trails[6].setCenterX(x);
-                    trails[6].setCenterY(y);
-                    break;
-                }
-                case 1000 / 8 * 7: {
-                    trails[7].setStroke(Color.BLACK);
-                    trails[7].setCenterX(x);
-                    trails[7].setCenterY(y);
-                    break;
-                }
-                case 999: {
-                    trails[8].setStroke(Color.BLACK);
-                    trails[8].setCenterX(x);
-                    trails[8].setCenterY(y);
-                    break;
+            for (int j = 0; j < trailIndices.length; j++) {
+                if (i == trailIndices[j]) {
+                    trails[j].setStroke(Color.BLACK);
+                    trails[j].setCenterX(x);
+                    trails[j].setCenterY(y);
                 }
             }
             timeline.getKeyFrames().add(currentFrame);
@@ -272,7 +227,11 @@ public class BaseSceneController {
 
     private double calculateCurrentHeight(double currentTime) {
         double currentChangeInHeight = baseScene.getInitialYVelocity() * currentTime - baseScene.getGravity() / 2 * Math.pow(currentTime, 2);
-        return animationPaneHeight - baseScene.getInitialHeight() - currentChangeInHeight;
+        return animationPaneHeight - baseScene.getInitialHeight() - currentChangeInHeight - 3;
+    }
+
+    public void onStopButtonPressed() {
+        timeline.pause();
     }
 
     public Circle getObject() {
