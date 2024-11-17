@@ -4,10 +4,7 @@ import java.util.Optional;
 
 import com.pms.project.MainApp;
 import com.pms.project.utils.Util;
-import com.pms.project.views.AnimationView;
-import com.pms.project.views.BaseSceneView;
-import com.pms.project.views.MainView;
-import com.pms.project.views.ThemeView;
+import com.pms.project.views.*;
 import com.sun.tools.javac.Main;
 
 import javafx.geometry.Insets;
@@ -83,7 +80,7 @@ public class MainController {
 
       
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> goBack());
+        backButton.setOnAction(e -> util.goBack(primaryStage));
         
         VBox.setMargin(backButton, new Insets(10, 0, 10, 0)); 
 
@@ -120,7 +117,7 @@ public class MainController {
 
         
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> goBack());
+        backButton.setOnAction(e -> util.goBack(primaryStage));
 
        
         VBox.setMargin(backButton, new Insets(10, 0, 10, 0)); 
@@ -134,30 +131,22 @@ public class MainController {
         util.switchScene(primaryStage, scene);
     }
 
-    
-    public void goBack() {
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to the main scene?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            MainView mainView = new MainView(primaryStage);
-            Scene scene = new Scene(mainView, MainView.stageWidth, MainView.stageHeight);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        }
-    }
-    
     public void onThemeButtonPressed() {
     	ThemeView themeView = new ThemeView(primaryStage);
     	Scene scene = new Scene(themeView,MainView.stageWidth,MainView.stageHeight);
     	util.switchScene(primaryStage, scene);
     	
     }
+
     public void onAnimationButtonPressed(){
         AnimationView animationView = new AnimationView(primaryStage);
         Scene scene = new Scene(animationView,MainView.stageWidth,MainView.stageHeight);
+        util.switchScene(primaryStage, scene);
+    }
+
+    public void onGeneralSettingButtonPressed() {
+        GeneralSettingView generalSettingView = new GeneralSettingView(primaryStage);
+        Scene scene = new Scene(generalSettingView, MainView.stageWidth, MainView.stageHeight);
         util.switchScene(primaryStage, scene);
     }
 }

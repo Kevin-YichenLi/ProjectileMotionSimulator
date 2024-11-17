@@ -2,6 +2,7 @@ package com.pms.project.controllers;
 
 import com.pms.project.models.BaseScene;
 import com.pms.project.utils.Util;
+import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -10,17 +11,11 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.QuadCurve;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.security.Key;
-import java.util.List;
 import java.util.Optional;
 
 public class BaseSceneController {
@@ -32,7 +27,6 @@ public class BaseSceneController {
     // Animation related fields
     private Circle object;
     private Timeline timeline;
-    private KeyFrame[] keyFrames = new KeyFrame[9];
     private int animationPaneWidth;
     private int animationPaneHeight;
     private Circle[] trails;
@@ -232,6 +226,11 @@ public class BaseSceneController {
 
     public void onStopButtonPressed() {
         timeline.pause();
+    }
+
+    public void onRefreshButtonPressed() {
+        Scene scene = new Scene(new BaseSceneView(primaryStage), MainView.stageWidth, MainView.stageHeight);
+        util.switchScene(primaryStage, scene);
     }
 
     public Circle getObject() {

@@ -183,7 +183,7 @@ public class BaseSceneView extends BorderPane {
 
         Label initialSpeedLabel = new Label("Initial Speed");
 
-        Slider speedSlider = new Slider(0, 150, 20);
+        Slider speedSlider = new Slider(0, 130, 20);
         speedSlider.setMajorTickUnit(1);
         speedSlider.setMinorTickCount(5);
 
@@ -226,6 +226,8 @@ public class BaseSceneView extends BorderPane {
         
         themeMenuItem.setOnAction(e -> mainController.onThemeButtonPressed());
         animationMenuItem.setOnAction(e-> mainController.onAnimationButtonPressed());
+        generalMenuItem.setOnAction(event -> mainController.onGeneralSettingButtonPressed());
+
         settingsButton.getItems().addAll(themeMenuItem, animationMenuItem, generalMenuItem);
         settingsButton.setAlignment(Pos.TOP_RIGHT);
 
@@ -287,6 +289,7 @@ public class BaseSceneView extends BorderPane {
         startButton.setOnAction(event -> controller.onStartButtonPressed());
 
         Button refreshButton = new Button();
+        refreshButton.setOnAction(event -> controller.onRefreshButtonPressed());
         Image refreshImage = new Image(this.getClass().getResource("/images/refresh.png").toExternalForm());
         ImageView refreshImageView = new ImageView(refreshImage);
         refreshImageView.setPreserveRatio(true);
