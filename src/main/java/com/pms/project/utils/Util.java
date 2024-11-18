@@ -9,6 +9,7 @@ import com.pms.project.views.TargetGameView;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
@@ -19,15 +20,12 @@ public class Util {
     private Stage primaryStage;
 	private String selectedFont;
 	private String selectedBackground;
-
+	 private boolean isRotated = false;
     public Util(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    /**
-     * Adjusts the global zoom level and applies it to the current scene's wrapper.
-     * @param factor The zoom factor. Values > 1 zoom in, values < 1 zoom out.
-     */
+    
     public void zoom(double factor) {
         globalScaleTransform.setX(globalScaleTransform.getX() * factor);
         globalScaleTransform.setY(globalScaleTransform.getY() * factor);
@@ -41,10 +39,7 @@ public class Util {
         }
     }
 
-    /**
-     * Swaps the width and height of the scene and repositions the buttons accordingly.
-     * @param scaleFactor The scaling factor to adjust the buttons after swapping width and height.
-     */
+   
     public void rotate() {
         Scene currentScene = primaryStage.getScene();
         if (currentScene == null) return;
@@ -53,51 +48,45 @@ public class Util {
         double currentWidth = currentScene.getWidth();
         double currentHeight = currentScene.getHeight();
 
-        // Swap the width and height
-        double newWidth = currentHeight;
-        double newHeight = currentWidth;
+        if (isRotated) {
+            // Return to the original state (swap back width and height)
+            double newWidth = currentHeight;
+            double newHeight = currentWidth;
 
-        // Apply new width and height to the scene
-        currentScene.getWindow().setWidth(newWidth);
-        currentScene.getWindow().setHeight(newHeight);
+            // Apply new width and height to the scene
+            currentScene.getWindow().setWidth(newWidth);
+            currentScene.getWindow().setHeight(newHeight);
 
-        // Calculate the scale factor: ensure no zooming in occurs
-        double scaleFactor = Math.min(newWidth / currentWidth, newHeight / currentHeight);
+            // Reset scale to normal (no zoom)
+            applyScale(1); // Reset scaling to 100%
 
-        // Apply scale factor to prevent zooming in
-        scaleFactor = Math.max(1, scaleFactor); // Prevent zooming in
+            isRotated = false; // Reset rotation state
+        } else {
+            // Swap width and height
+            double newWidth = currentHeight;
+            double newHeight = currentWidth;
 
-        // Apply scale to the scene
-        applyScale(scaleFactor);
+            // Apply new width and height to the scene
+            currentScene.getWindow().setWidth(newWidth);
+            currentScene.getWindow().setHeight(newHeight);
 
-        // Reposition buttons and other elements
-        Pane root = (Pane) currentScene.getRoot();
-        for (Node node : root.getChildren()) {
-            if (node instanceof javafx.scene.control.Button) {
-                // Adjust the layout of each button based on new dimensions
-                double newX = node.getLayoutY() * scaleFactor; // Swap x and y
-                double newY = node.getLayoutX() * scaleFactor;
+            // Calculate scale factor to fit everything and make it more zoomed out
+            double scaleFactor = Math.min(newWidth / currentWidth, newHeight / currentHeight);
+            
+            // Make the zoom more zoomed out by multiplying the scaleFactor with a constant factor (e.g., 0.8)
+            scaleFactor *= 0.99; // Adjust this factor to get the desired zoom level
 
-                // Ensure that buttons stay within the bounds of the scene
-                double buttonWidth = node.getLayoutBounds().getWidth();
-                double buttonHeight = node.getLayoutBounds().getHeight();
+            // Apply scale to the scene
+            applyScale(scaleFactor);
 
-                newX = Math.min(newX, newWidth - buttonWidth);
-                newY = Math.min(newY, newHeight - buttonHeight);
-
-                
-
-                // Update layout
-                node.setLayoutX(newX);
-                node.setLayoutY(newY);
-            }
+            isRotated = true; // Set rotation state to true
         }
+
+        // Adjust layout after rotation
+        adjustLayout();
     }
 
-    /**
-     * Apply scaling to fit the content properly within the new scene dimensions.
-     * @param scaleFactor The scale factor to apply.
-     */
+   
     private void applyScale(double scaleFactor) {
         Scene currentScene = primaryStage.getScene();
         if (currentScene == null) return;
@@ -113,11 +102,39 @@ public class Util {
         }
     }
 
-    /**
-     * Switches the current scene of the primary stage and applies global transformations.
-     * @param primaryStage The primary stage of the application.
-     * @param scene The new scene to display.
-     */
+    
+    private void adjustLayout() {
+        Scene currentScene = primaryStage.getScene();
+        if (currentScene == null) return;
+
+        Pane root = (Pane) currentScene.getRoot();
+        double newWidth = currentScene.getWidth();
+        double newHeight = currentScene.getHeight();
+
+        // Adjust buttons and other layout elements
+        for (Node node : root.getChildren()) {
+            if (node instanceof Button) {
+                // Adjust the layout of each button based on new dimensions
+                double newX = node.getLayoutY();
+                double newY = node.getLayoutX();
+
+                // Ensure that buttons stay within the bounds of the scene
+                double buttonWidth = node.getLayoutBounds().getWidth();
+                double buttonHeight = node.getLayoutBounds().getHeight();
+
+                newX = Math.min(newX, newWidth - buttonWidth);
+                newY = Math.min(newY, newHeight - buttonHeight);
+
+                // Update layout
+                node.setLayoutX(newX);
+                node.setLayoutY(newY);
+            }
+        }
+    }
+
+
+
+   
     public void switchScene(Stage primaryStage, Scene scene) {
         Pane root = (Pane) scene.getRoot();
 

@@ -1,19 +1,19 @@
 package com.pms.project.models;
 
 public class TargetGame extends BaseScene {
-    private double targetX;  // X coordinate of the target
-    private double targetY;  // Y coordinate of the target (constant)
-    private double targetRadius = 20;  // Target's radius
-    private boolean isHit;  // Boolean to check if the projectile hits the target
+    private double targetX;  
+    private double targetY;  
+    private double targetRadius = 20;  
+    private boolean isHit;  
 
     public TargetGame() {
-        super(); // Calls the constructor of BaseScene
-        this.targetX = Math.random() * 1200;  // Randomize X position of target
-        this.targetY = 580;  // Fixed Y position (horizontal)
-        this.isHit = false;  // Initially not hit
+        super(); 
+        this.targetX = Math.random() * 1200;  
+        this.targetY = 580;  
+        this.isHit = false; 
     }
 
-    // Getter and Setter for targetX and targetY
+  
     public double getTargetX() {
         return targetX;
     }
@@ -48,7 +48,7 @@ public class TargetGame extends BaseScene {
         System.out.println("Target Position: (" + targetX + ", " + targetY + ")");
         
         double distance = Math.sqrt(Math.pow(projectileX - targetX, 2) + Math.pow(projectileY - targetY, 2));
-        isHit = distance <= (targetRadius + 5);  // Assuming projectile radius is 5
+        isHit = distance <= (targetRadius + 5); 
         return isHit;
     }
 

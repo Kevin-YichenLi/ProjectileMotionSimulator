@@ -39,13 +39,19 @@ public class AnimationView extends Pane {
         // Create Rotate Button
         Button rotateButton = new Button("Rotate");
         rotateButton.setOnAction(event -> animationController.rotate());
+        
+        Button targetButton =new Button("Target");
+        targetButton.setOnAction(e-> util.goToTargetScene(primaryStage));
 
-        // Add the Back and Confirm Buttons to the GridPane
+       
         backButton.setLayoutX(20);
         backButton.setLayoutY(900);
 
         confirmButton.setLayoutX(1700);
         confirmButton.setLayoutY(900);
+        
+        targetButton.setLayoutX(1700);
+        targetButton.setLayoutY(950);
 
         zoomInButton.setLayoutX(0);
         zoomInButton.setLayoutY(0);
@@ -56,6 +62,6 @@ public class AnimationView extends Pane {
         rotateButton.setLayoutX(150);
         rotateButton.setLayoutY(0);
 
-        this.getChildren().addAll(backButton,confirmButton,zoomInButton,zoomOutButton,rotateButton);
+        this.getChildren().addAll(backButton,confirmButton,zoomInButton,zoomOutButton,rotateButton,targetButton);
     }
 }

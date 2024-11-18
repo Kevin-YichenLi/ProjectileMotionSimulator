@@ -14,23 +14,23 @@ public class TargetGameController extends BaseSceneController {
         this.targetGame = targetGame;
         this.targetGameView = targetGameView;
 
-        // Set up click event for projectile (simulate shooting)
+       
         targetGameView.getProjectile().setOnMouseClicked(this::onProjectileShot);
     }
 
-    // Getters for the model
+ 
     public TargetGame getTargetGame() {
         return targetGame;
     }
 
-    // Set the new target randomly on the x-axis
+ 
     public void onNewTargetButtonPressed() {
-        double newX = Math.random() * 1200;  // Randomize new target position on X
+        double newX = Math.random() * 1200;  
         targetGame.setTargetX(newX);
-        targetGameView.getTarget().setCenterX(newX);  // Update the target's X position
+        targetGameView.getTarget().setCenterX(newX);  
     }
 
-    // Handle the shot (simulating a projectile being fired)
+   
     public void onProjectileShot(MouseEvent event) {
         double projectileX = targetGameView.getProjectile().getCenterX();
         double projectileY = targetGameView.getProjectile().getCenterY();

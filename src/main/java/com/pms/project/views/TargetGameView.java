@@ -22,10 +22,10 @@ public class TargetGameView extends BaseSceneView {
     public TargetGameView(Stage primaryStage) {
         super(primaryStage);
 
-        // Create the model (TargetGame) first
+        
         TargetGame targetGame = new TargetGame();
 
-        // Create and initialize the projectile circle
+       
         projectile = new Circle(5, Color.BLACK);
         projectile.setCenterX(400);  // Set initial position
         projectile.setCenterY(550);  // Set initial position
@@ -80,6 +80,6 @@ public class TargetGameView extends BaseSceneView {
     }
 
     public Label getFeedbackLabel() {
-        return feedbackLabel;  // Return the label so the controller can update it
+        return feedbackLabel;  
     }
 }
