@@ -1,42 +1,39 @@
 package com.pms.project.controllers;
 
 import com.pms.project.utils.Util;
-import com.pms.project.views.AnimationView;
 import com.pms.project.views.MainView;
 import com.pms.project.views.BaseSceneView;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.util.Optional;
 
 public class AnimationController {
-    private Scale scaleTransform;
-    private Rotate rotateTransform;
-    private AnimationView animationView;
-    private Util util = new Util();
     private Stage primaryStage;
+    private Util util;
 
-    public AnimationController(AnimationView animationView, Stage primaryStage) {
-        this.animationView = animationView;
+    public AnimationController(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.scaleTransform = new Scale(1, 1);
-        this.rotateTransform = new Rotate(0);
+        this.util = new Util(primaryStage); // Pass Stage to Util
     }
 
+    /**
+     * Adjusts the global zoom level dynamically for the current scene.
+     * @param factor The zoom factor. Values > 1 zoom in, values < 1 zoom out.
+     */
     public void zoom(double factor) {
-        scaleTransform.setX(scaleTransform.getX() * factor);
-        scaleTransform.setY(scaleTransform.getY() * factor);
-        animationView.getTransforms().add(scaleTransform);
+        util.zoom(factor);
     }
 
-    /*public void rotate(double angle) {
-        rotateTransform.setAngle(rotateTransform.getAngle() + angle);
-        animationView.getTransforms().add(rotateTransform);
-    }*/
+    /**
+     * Rotates the current scene by a specified angle.
+     * @param angle The angle to rotate the scene by, in degrees.
+     */
+    public void rotate( ) {
+        util.rotate();
+    }
 
     public void goBack() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -47,8 +44,7 @@ public class AnimationController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             MainView mainView = new MainView(primaryStage);
             Scene scene = new Scene(mainView, MainView.stageWidth, MainView.stageHeight);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            util.switchScene(primaryStage, scene);
         }
     }
 
@@ -61,9 +57,7 @@ public class AnimationController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             BaseSceneView baseSceneView = new BaseSceneView(primaryStage);
             Scene scene = new Scene(baseSceneView, MainView.stageWidth, MainView.stageHeight);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            util.switchScene(primaryStage, scene);
         }
     }
 }
-

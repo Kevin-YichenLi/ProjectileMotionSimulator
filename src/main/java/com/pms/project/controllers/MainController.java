@@ -28,8 +28,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class MainController {
-    private Util util = new Util();
+   
     private Stage primaryStage;
+    private Util util = new Util(primaryStage);
     private ThemeView themeView = new ThemeView(primaryStage);
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;

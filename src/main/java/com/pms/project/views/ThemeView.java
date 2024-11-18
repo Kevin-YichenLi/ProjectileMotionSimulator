@@ -15,9 +15,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class ThemeView extends GridPane {
-    private Util util = new Util();
+   
     private Stage primaryStage;
-
+    private Util util;
     // Constructor that accepts a Stage
     public ThemeView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -93,6 +93,7 @@ public class ThemeView extends GridPane {
             if (times.isSelected()) {
                 calibri.setSelected(false);
                 comicSans.setSelected(false);
+                applyFont("times-font");
             }
         });
 
@@ -100,6 +101,7 @@ public class ThemeView extends GridPane {
             if (calibri.isSelected()) {
                 times.setSelected(false);
                 comicSans.setSelected(false);
+                applyFont("calibri-font");
             }
         });
 
@@ -107,6 +109,7 @@ public class ThemeView extends GridPane {
             if (comicSans.isSelected()) {
                 times.setSelected(false);
                 calibri.setSelected(false);
+                applyFont("comic-sans-font");
             }
         });
 
@@ -115,6 +118,7 @@ public class ThemeView extends GridPane {
             if (size10.isSelected()) {
                 size12.setSelected(false);
                 size14.setSelected(false);
+                applyFontSize(10);
             }
         });
 
@@ -122,6 +126,7 @@ public class ThemeView extends GridPane {
             if (size12.isSelected()) {
                 size10.setSelected(false);
                 size14.setSelected(false);
+                applyFontSize(12);
             }
         });
 
@@ -129,6 +134,7 @@ public class ThemeView extends GridPane {
             if (size14.isSelected()) {
                 size10.setSelected(false);
                 size12.setSelected(false);
+                applyFontSize(14);
             }
         });
 
@@ -145,17 +151,31 @@ public class ThemeView extends GridPane {
         this.add(confirmButton, 1, 12); 
     }
 
-    public void goBack() {
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to the main scene?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
+    // Method to apply font class to the scene root element
+    private void applyFont(String fontClass) {
+        // Create a new BaseSceneView (or reuse if necessary)
+        BaseSceneView baseSceneView = new BaseSceneView(primaryStage);
+        
+        // Create a new Scene with BaseSceneView and apply the style sheet
+        Scene scene = new Scene(baseSceneView, MainView.stageWidth, MainView.stageHeight);
+        
+        // Apply the selected font class
+        scene.getRoot().getStyleClass().clear();  // Remove any previously set styles
+        scene.getRoot().getStyleClass().add(fontClass); // Add the selected font class
 
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            MainView mainView = new MainView(primaryStage);
-            Scene scene = new Scene(mainView, MainView.stageWidth, MainView.stageHeight);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+        // Apply the theme stylesheet
+        scene.getStylesheets().add(getClass().getResource("/com/pms/project/views/theme.css").toExternalForm());
+
+        // Set the scene for the primaryStage
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    // Method to apply font size to the scene
+    private void applyFontSize(int size) {
+        Scene currentScene = primaryStage.getScene();
+        if (currentScene != null) {
+            currentScene.getRoot().setStyle("-fx-font-size: " + size + "px;");
         }
     }
 
@@ -168,12 +188,22 @@ public class ThemeView extends GridPane {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             BaseSceneView baseSceneView = new BaseSceneView(primaryStage);
             Scene scene = new Scene(baseSceneView, MainView.stageWidth, MainView.stageHeight);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            scene.getRoot().getStyleClass().add("default-font");
+            util.switchScene(primaryStage, scene);
+        }
+    }
+
+    // Method to handle going back to the main scene
+    public void goBack() {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setContentText("Do you really want to go back to the main scene?");
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            MainView mainView = new MainView(primaryStage);
+            Scene scene = new Scene(mainView, MainView.stageWidth, MainView.stageHeight);
+            util.switchScene(primaryStage, scene);
         }
     }
 }
-
-    
-
-

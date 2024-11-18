@@ -9,13 +9,14 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class AnimationView extends Pane {
-    private Util util = new Util();
+    
     private Stage primaryStage;
+  
     private AnimationController animationController;
 
     public AnimationView(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        animationController = new AnimationController(this, primaryStage);
+        animationController = new AnimationController(primaryStage);
 
         // Create Back Button
         Button backButton = new Button("Back");
@@ -35,7 +36,7 @@ public class AnimationView extends Pane {
 
         // Create Rotate Button
         Button rotateButton = new Button("Rotate");
-        //rotateButton.setOnAction(event -> animationController.rotate(90));
+        rotateButton.setOnAction(event -> animationController.rotate());
 
         // Add the Back and Confirm Buttons to the GridPane
         backButton.setLayoutX(20);

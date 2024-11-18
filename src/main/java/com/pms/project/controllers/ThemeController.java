@@ -1,66 +1,54 @@
 package com.pms.project.controllers;
 
-import java.util.Optional;
-
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
 import com.pms.project.views.ThemeView;
-import com.pms.project.utils.Util;
-
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 
 public class ThemeController {
-    private BaseSceneView baseSceneView;
-    private ThemeView themeView;
+    private Stage primaryStage;
+    private String selectedBackground = "default-background";
+    private String selectedFont = "default-font";
+    private int selectedFontSize = 12;
 
-
-    public ThemeController(BaseSceneView baseSceneView, ThemeView themeView) {
-        this.baseSceneView = baseSceneView;
-        this.themeView = themeView;
-
-        // Initialize listeners for font checkboxes
-        initializeFontCheckboxListeners();
+    public ThemeController(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
-    private void initializeFontCheckboxListeners() {
-        CheckBox times = (CheckBox) themeView.lookup("#times");
-        CheckBox calibri = (CheckBox) themeView.lookup("#calibri");
-        CheckBox comicSans = (CheckBox) themeView.lookup("#comicSans");
-
-        // Add listeners to the font checkboxes
-        times.setOnAction(event -> updateFont("Times New Roman", times.isSelected()));
-        calibri.setOnAction(event -> updateFont("Calibri", calibri.isSelected()));
-        comicSans.setOnAction(event -> updateFont("Comic Sans MS", comicSans.isSelected()));
-    }
-
-    private void updateFont(String font, boolean isSelected) {
-        if (isSelected) {
-            // Clear other selections
-            if (font.equals("Times New Roman")) {
-                ((CheckBox) themeView.lookup("#calibri")).setSelected(false);
-                ((CheckBox) themeView.lookup("#comicSans")).setSelected(false);
-            } else if (font.equals("Calibri")) {
-                ((CheckBox) themeView.lookup("#times")).setSelected(false);
-                ((CheckBox) themeView.lookup("#comicSans")).setSelected(false);
-            } else if (font.equals("Comic Sans MS")) {
-                ((CheckBox) themeView.lookup("#times")).setSelected(false);
-                ((CheckBox) themeView.lookup("#calibri")).setSelected(false);
-            }
-
-            // Apply the selected font to all labels in BaseSceneView
-            for (Label label : baseSceneView.getLabels()) {
-                label.setStyle("-fx-font-family: '" + font + "';");
-            }
+    // Preview theme changes (background, font, font-size)
+    public void previewTheme(String theme) {
+        if (theme.startsWith("background-")) {
+            selectedBackground = theme;
+        } else if (theme.startsWith("font-")) {
+            selectedFont = theme;
         }
     }
+
+    public void previewFontSize(int size) {
+        selectedFontSize = size;
+    }
+
+    // Apply confirmed theme changes
+    public void applyConfirmedTheme() {
+        BaseSceneView baseSceneView = new BaseSceneView(primaryStage);
+
+        // Create a new Scene with BaseSceneView
+        Scene scene = new Scene(baseSceneView, MainView.stageWidth, MainView.stageHeight);
+
+        // Apply selected background, font, and font size
+        scene.getRoot().getStyleClass().clear();
+        scene.getRoot().getStyleClass().add(selectedBackground);
+        scene.getRoot().getStyleClass().add(selectedFont);
+        scene.getRoot().setStyle("-fx-font-size: " + selectedFontSize + "px;");
+
+        // Apply the theme stylesheet
+        scene.getStylesheets().add(getClass().getResource("/com/pms/project/views/theme.css").toExternalForm());
+
+        // Set the scene for the primaryStage
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 }
-
-
-    
-

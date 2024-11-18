@@ -1,0 +1,149 @@
+/* theme.css */
+
+/* Default font class */
+.default-font {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Times font class */
+.times-font {
+    -fx-font-family: "Times New Roman", serif;
+    -fx-font-size: 14px;
+}
+
+/* Calibri font class */
+.calibri-font {
+    -fx-font-family: "Calibri", sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Comic Sans font class */
+.comic-sans-font {
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Button Styles */
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.button:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: #D3D3D3;
+}
+
+.button:pressed {
+    -fx-background-color: transparent;
+    -fx-border-color: #D3D3D3;
+}
+
+.button:disabled {
+    -fx-background-color: transparent;
+    -fx-text-fill: #A9A9A9;
+    -fx-border-color: #D3D3D3;
+}
+
+/* Slider Styles */
+.slider {
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1px;
+    -fx-background-color: #F5F5F5;
+    -fx-padding: 0 0 0 0;
+}
+
+.slider .track {
+    -fx-background-color: #A9A9A9;
+}
+
+.slider .thumb {
+    -fx-background-color: #808080;
+    -fx-border-color: #A9A9A9;
+    -fx-border-width: 2px;
+}
+
+/* TextField and PasswordField Styles */
+.text-field, .password-field {
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-padding: 5px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #D3D3D3;
+    -fx-background-color: #FFFFFF;
+}
+
+/* TextArea Styles */
+.text-area {
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-padding: 5px;
+}
+
+.text-area:focused {
+    -fx-border-color: #D3D3D3;
+    -fx-background-color: #FFFFFF;
+}
+
+/* MenuButton Styles */
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial", sans-serif;
+}
+
+.menu-button > .label {
+    -fx-text-fill: black;
+}
+
+/* Spinner Styles */
+.spinner {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1px;
+}
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: #F5F5F5;
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1px;
+}
+
+/* TextField in Spinner */
+.spinner > .text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial", sans-serif;
+}
+
+/* Text Input Highlight Color */
+.text-input:focused {
+    -fx-highlight-fill: #A9A9A9; /* Ensure valid color */
+    -fx-highlight-text-fill: white; /* Set text highlight color */
+}
+
+/* General Fix for Text Input and Text Area */
+.text-input, .text-area, .spinner, .menu-button {
+    -fx-text-background-color: transparent; /* Avoid using internal color properties */
+    -fx-text-inner-color: black; /* Set the inner text color to a valid color */
+}

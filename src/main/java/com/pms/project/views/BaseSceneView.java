@@ -49,6 +49,7 @@ public class BaseSceneView extends BorderPane {
             Circle circle = new Circle(3, Color.TRANSPARENT);
             trails[i] = circle;
         }
+        this.getStyleClass().add("default-font");
         this.primaryStage = primaryStage;
         controller = new BaseSceneController(primaryStage, baseScene, animationPaneWidth, animationPaneHeight, trails);
         this.setTop(createTop());

@@ -27,8 +27,9 @@ public class BaseSceneController {
     private boolean hasMotion = false;
     private boolean isHorizontalProjectileMotion;
     private BaseScene baseScene;
-    private Util util = new Util();
+  
     private Stage primaryStage;
+    private Util util = new Util(primaryStage);
     // Animation related fields
     private Circle object;
     private Timeline timeline;
