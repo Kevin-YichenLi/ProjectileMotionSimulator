@@ -35,18 +35,7 @@ public class AnimationController {
         util.rotate();
     }
 
-    public void goBack() {
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to the main scene?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            MainView mainView = new MainView(primaryStage);
-            Scene scene = new Scene(mainView, MainView.stageWidth, MainView.stageHeight);
-            util.switchScene(primaryStage, scene);
-        }
-    }
+ 
 
     public void goToBaseScene() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);

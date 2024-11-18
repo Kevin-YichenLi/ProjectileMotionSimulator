@@ -13,14 +13,16 @@ public class AnimationView extends Pane {
     private Stage primaryStage;
   
     private AnimationController animationController;
+    private Util util;
 
-    public AnimationView(Stage primaryStage) {
+    public AnimationView(Stage primaryStage,Util util) {
         this.primaryStage = primaryStage;
+        this.util = util;
         animationController = new AnimationController(primaryStage);
 
         // Create Back Button
         Button backButton = new Button("Back");
-        backButton.setOnAction(event -> animationController.goBack());
+        backButton.setOnAction(event -> util.goBack(primaryStage));
 
         // Create Confirm Button
         Button confirmButton = new Button("Confirm");

@@ -28,7 +28,8 @@ public class MainController {
    
     private Stage primaryStage;
     private Util util = new Util(primaryStage);
-    private ThemeView themeView = new ThemeView(primaryStage);
+    private ThemeView themeView = new ThemeView(primaryStage,util);
+    
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -133,14 +134,14 @@ public class MainController {
     }
 
     public void onThemeButtonPressed() {
-    	ThemeView themeView = new ThemeView(primaryStage);
+    	ThemeView themeView = new ThemeView(primaryStage,util);
     	Scene scene = new Scene(themeView,MainView.stageWidth,MainView.stageHeight);
     	util.switchScene(primaryStage, scene);
     	
     }
 
     public void onAnimationButtonPressed(){
-        AnimationView animationView = new AnimationView(primaryStage);
+        AnimationView animationView = new AnimationView(primaryStage,util);
         Scene scene = new Scene(animationView,MainView.stageWidth,MainView.stageHeight);
         util.switchScene(primaryStage, scene);
     }

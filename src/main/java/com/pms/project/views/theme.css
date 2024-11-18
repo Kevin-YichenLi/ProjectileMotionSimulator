@@ -1,27 +1,29 @@
-/* theme.css */
+/* Default background color for the top bar */
+.top-bar {
+    -fx-background-color: #F5F5F5; /* Light blue background for top bar */
+    -fx-border-color: black;       /* Optional border for the top bar */
+    -fx-border-width: 1px;         /* Border width */
+    -fx-padding: 5px;              /* Padding for spacing */
+}
 
 /* Default font class */
 .default-font {
     -fx-font-family: "Arial", sans-serif;
-    -fx-font-size: 14px;
 }
 
 /* Times font class */
 .times-font {
     -fx-font-family: "Times New Roman", serif;
-    -fx-font-size: 14px;
 }
 
 /* Calibri font class */
 .calibri-font {
     -fx-font-family: "Calibri", sans-serif;
-    -fx-font-size: 14px;
 }
 
 /* Comic Sans font class */
 .comic-sans-font {
     -fx-font-family: "Comic Sans MS", cursive, sans-serif;
-    -fx-font-size: 14px;
 }
 
 /* Button Styles */
@@ -31,7 +33,6 @@
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
     -fx-text-fill: black;
-    -fx-font-size: 14px;
 }
 
 .button:hover {
@@ -74,7 +75,6 @@
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
     -fx-background-color: #FFFFFF;
-    -fx-font-size: 14px;
     -fx-font-family: "Arial", sans-serif;
     -fx-padding: 5px;
 }
@@ -90,7 +90,6 @@
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
     -fx-background-color: #FFFFFF;
-    -fx-font-size: 14px;
     -fx-font-family: "Arial", sans-serif;
     -fx-padding: 5px;
 }
@@ -127,23 +126,20 @@
     -fx-border-width: 1px;
 }
 
-/* TextField in Spinner */
-.spinner > .text-field {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #D3D3D3;
-    -fx-border-width: 1px;
-    -fx-font-size: 14px;
-    -fx-font-family: "Arial", sans-serif;
+/* Background color classes */
+.background-light-blue {
+    -fx-background-color: #C5D3E8; /* Light blue */
 }
 
-/* Text Input Highlight Color */
-.text-input:focused {
-    -fx-highlight-fill: #A9A9A9; /* Ensure valid color */
-    -fx-highlight-text-fill: white; /* Set text highlight color */
+.background-dark-blue {
+    -fx-background-color: #A6AEBF; /* Dark blue */
 }
 
-/* General Fix for Text Input and Text Area */
-.text-input, .text-area, .spinner, .menu-button {
-    -fx-text-background-color: transparent; /* Avoid using internal color properties */
-    -fx-text-inner-color: black; /* Set the inner text color to a valid color */
+.background-sunset {
+    -fx-background-color: #FFF8DE; /* Sunset orange */
+}
+
+/* Green grass background color */
+.bottom-green-grass {
+    -fx-background-color: #D0E8C5; /* LawnGreen */
 }

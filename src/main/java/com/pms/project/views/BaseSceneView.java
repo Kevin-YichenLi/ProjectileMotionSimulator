@@ -213,6 +213,7 @@ public class BaseSceneView extends BorderPane {
         rotateTransform = new Rotate(0);
         HBox topBar = new HBox();
 
+        // Buttons and Menu setup
         Button backButton = new Button("Back to Main");
         backButton.setOnAction(event -> controller.onBackToMainPressed());
         Button zoomInButton = new Button("Zoom in");
@@ -224,7 +225,7 @@ public class BaseSceneView extends BorderPane {
         MenuItem themeMenuItem = new MenuItem("Theme");
         MenuItem animationMenuItem = new MenuItem("Animation");
         MenuItem generalMenuItem = new MenuItem("General");
-        
+
         themeMenuItem.setOnAction(e -> mainController.onThemeButtonPressed());
         animationMenuItem.setOnAction(e-> mainController.onAnimationButtonPressed());
         generalMenuItem.setOnAction(event -> mainController.onGeneralSettingButtonPressed());
@@ -237,9 +238,11 @@ public class BaseSceneView extends BorderPane {
 
         topBar.getChildren().addAll(backButton, zoomInButton, zoomOutButton, spacer, settingsButton);
         this.getTransforms().addAll(scaleTransform);
-        // this line is for testing only, please delete at the end
-        topBar.setBorder(Border.stroke(Color.BLACK));
+        
+        // Apply the 'top-bar' style to ensure default background color
+        topBar.getStyleClass().add("top-bar");
 
+        // Set the height of the top bar and update position
         double prefHeight = 27;
         topBar.setPrefHeight(prefHeight);
         bottomYPosition += prefHeight;
@@ -255,13 +258,17 @@ public class BaseSceneView extends BorderPane {
     protected Region createBottom() {
         HBox hBox = new HBox();
         hBox.setPrefSize(MainView.stageWidth, bottomYPosition);
+
+        // Set the background color of the bottom section to a green grass color
+        hBox.setStyle("-fx-background-color: #D0E8C5;");  // Green grass color (LawnGreen)
+
         hBox.setBorder(Border.stroke(Color.BLACK));
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         hBox.getChildren().addAll(createInitialHeightComponent(), spacer, createStartAndStopButton());
-        return hBox ;
+        return hBox;
     }
    
     protected Region createInitialHeightComponent() {
@@ -305,17 +312,5 @@ public class BaseSceneView extends BorderPane {
         return container;
     }
 
-    public List<Label> getLabels() {
-        List<Label> labels = new ArrayList<>();
-        for (Node node : this.getChildren()) {
-            if (node instanceof VBox) {
-                for (Node child : ((VBox) node).getChildren()) {
-                    if (child instanceof Label) {
-                        labels.add((Label) child);
-                    }
-                }
-            }
-        }
-        return labels;
-    }
+  
 }

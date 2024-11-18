@@ -3,6 +3,7 @@ package com.pms.project.utils;
 
 import java.util.Optional;
 
+import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
 
 import javafx.scene.Node;
@@ -16,6 +17,8 @@ import javafx.stage.Stage;
 public class Util {
     private Scale globalScaleTransform = new Scale(1, 1);
     private Stage primaryStage;
+	private String selectedFont;
+	private String selectedBackground;
 
     public Util(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -139,6 +142,50 @@ public class Util {
             MainView mainView = new MainView(primaryStage);
             Scene scene = new Scene(mainView, MainView.stageWidth, MainView.stageHeight);
             switchScene(primaryStage, scene);
+        }
+    }
+    
+    public void previewFont(String fontClass) {
+        this.selectedFont = fontClass;
+        // Optionally update the font preview immediately in the current scene (if needed)
+        Scene currentScene = primaryStage.getScene();
+        if (currentScene != null) {
+            currentScene.getRoot().getStyleClass().clear();
+            currentScene.getRoot().getStyleClass().add(fontClass);
+        }
+    }
+
+    public void previewBackground(String backgroundClass) {
+        this.selectedBackground = backgroundClass;
+        // Optionally update the background preview immediately in the current scene
+        Scene currentScene = primaryStage.getScene();
+        if (currentScene != null) {
+            currentScene.getRoot().getStyleClass().clear();
+            currentScene.getRoot().getStyleClass().add(backgroundClass);
+        }
+    }
+
+    public void goToBaseScene(Stage primaryStage) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setContentText("Do you really want to go back to the base scene?");
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            BaseSceneView baseSceneView = new BaseSceneView(primaryStage);
+            Scene scene = new Scene(baseSceneView, MainView.stageWidth, MainView.stageHeight);
+
+            // Apply the selected font and background
+            scene.getRoot().getStyleClass().clear();
+            scene.getRoot().getStyleClass().add(selectedFont);
+            scene.getRoot().getStyleClass().add(selectedBackground);
+
+            // Apply the theme stylesheet
+            scene.getStylesheets().add(getClass().getResource("/com/pms/project/views/theme.css").toExternalForm());
+
+            // Set the scene for the primaryStage
+            primaryStage.setScene(scene);
+            primaryStage.show();
         }
     }
 }
