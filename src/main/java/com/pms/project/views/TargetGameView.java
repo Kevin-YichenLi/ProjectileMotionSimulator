@@ -60,9 +60,10 @@ public class TargetGameView extends BaseSceneView {
         projectile.setLayoutY(550);  // Set projectile Y position
         System.out.println("Projectile position: " + projectile.getLayoutX() + ", " + projectile.getLayoutY());
 
-        newTargetButton.setLayoutX(0); // Position button
-        newTargetButton.setLayoutY(200); // Position button below the projectile
-
+        newTargetButton.setLayoutX(5); // Position button
+        newTargetButton.setLayoutY(350); // Position button below the projectile
+        newTargetButton.setStyle("-fx-background-color: #f4cccc; -fx-text-fill: black; -fx-border-color: #b45454;");
+        
         // Set up event listener for the projectile after it has been initialized
         projectile.setOnMouseClicked(event -> controller.onProjectileShot(event));
     }

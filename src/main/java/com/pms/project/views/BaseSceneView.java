@@ -70,35 +70,41 @@ public class BaseSceneView extends BorderPane {
     protected Region createCenter() {
         Pane centerPane = new Pane();
 
+        // Set the X position of the mass component to 0 (aligns to the left)
         Region massComponent = createMassComponent();
-        massComponent.setLayoutX(0);
-        massComponent.setLayoutY(80);
+        massComponent.setLayoutX(0);  // X position set to 0
+        massComponent.setLayoutY(450);
 
-        // set the absolute position of components within the center of the main stack pane
+        // Set the X position of the gravity component to 0 (aligns to the left)
         Region gravityComponent = createGravityComponent();
-        gravityComponent.widthProperty().addListener((observable, oldValue, newValue) ->
-            gravityComponent.setLayoutX(MainView.stageWidth - newValue.doubleValue())
+        gravityComponent.widthProperty().addListener((observable, oldValue, newValue) -> 
+            gravityComponent.setLayoutX(5) // X position set to 0
         );
-        gravityComponent.setLayoutY(80);
+        gravityComponent.setLayoutY(500);
 
+        // Set the X position of the initial angle component to 0 (aligns to the left)
         Region initialAngleComponent = createInitialAngleComponent();
-        initialAngleComponent.widthProperty().addListener((observable, oldValue, newValue) ->
-                initialAngleComponent.setLayoutX(MainView.stageWidth - newValue.doubleValue())
+        initialAngleComponent.widthProperty().addListener((observable, oldValue, newValue) -> 
+            initialAngleComponent.setLayoutX(0) // X position set to 0
         );
-        initialAngleComponent.setLayoutY(250);
+        initialAngleComponent.setLayoutY(650);
 
+        // Set the X position of the initial speed component to 0 (aligns to the left)
         Region initialSpeedComponent = createInitialSpeedComponent();
-        initialSpeedComponent.widthProperty().addListener((observable, oldValue, newValue) ->
-                initialSpeedComponent.setLayoutX(MainView.stageWidth - newValue.doubleValue())
+        initialSpeedComponent.widthProperty().addListener((observable, oldValue, newValue) -> 
+            initialSpeedComponent.setLayoutX(5) // X position set to 0
         );
-        initialSpeedComponent.setLayoutY(400);
+        initialSpeedComponent.setLayoutX(5);  // X position set to 0
+        initialSpeedComponent.setLayoutY(700);
 
+        // Set the X position of the animation pane to 0 (aligns to the left)
         Region animationPane = createAnimationPane();
-        animationPane.setLayoutX(150);
+        animationPane.setLayoutX(150);  // X position set to 0
         animationPane.setLayoutY(120);
         bottomYPosition += 120;
         bottomYPosition = MainView.stageHeight - bottomYPosition;
 
+        // Add all components to the center pane
         centerPane.getChildren().addAll(massComponent, gravityComponent, initialAngleComponent, initialSpeedComponent, animationPane);
 
         return centerPane;
