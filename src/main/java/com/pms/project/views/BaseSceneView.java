@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -22,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -42,8 +42,14 @@ public class BaseSceneView extends BorderPane {
     private int animationPaneWidth = 1300;
     // path of the animation
     private Circle[] trails = new Circle[9];
+    // base of the animation object, varying depending on the initial height
+    private Rectangle base = new Rectangle();
 
     public BaseSceneView(Stage primaryStage) {
+        base.setX(0);
+        base.setWidth(15);
+        base.setFill(Color.TRANSPARENT);
+        base.setFill(Color.LIGHTGRAY);
         // paths of the animation
         for (int i = 0; i < 9; i++) {
             Circle circle = new Circle(3, Color.TRANSPARENT);
@@ -134,9 +140,13 @@ public class BaseSceneView extends BorderPane {
         animationPane.setPrefSize(animationPaneWidth, animationPaneHeight);
         bottomYPosition += animationPaneHeight;
 
+        // make overflow components invisible
+        Rectangle clip = new Rectangle(animationPaneWidth, animationPaneHeight);
+        animationPane.setClip(clip);
+
         // for testing, to be deleted
         animationPane.setBorder(Border.stroke(Color.BLACK));
-        animationPane.getChildren().addAll(controller.getObject());
+        animationPane.getChildren().addAll(controller.getObject(), base);
         for (Circle circle : trails) {
             animationPane.getChildren().add(circle);
         }
@@ -174,7 +184,7 @@ public class BaseSceneView extends BorderPane {
 
         Label initialSpeedLabel = new Label("Initial Speed");
 
-        Slider speedSlider = new Slider(0, 500, 20);
+        Slider speedSlider = new Slider(0, 130, 20);
         speedSlider.setMajorTickUnit(1);
         speedSlider.setMinorTickCount(5);
 
@@ -217,6 +227,8 @@ public class BaseSceneView extends BorderPane {
         
         themeMenuItem.setOnAction(e -> mainController.onThemeButtonPressed());
         animationMenuItem.setOnAction(e-> mainController.onAnimationButtonPressed());
+        generalMenuItem.setOnAction(event -> mainController.onGeneralSettingButtonPressed());
+
         settingsButton.getItems().addAll(themeMenuItem, animationMenuItem, generalMenuItem);
         settingsButton.setAlignment(Pos.TOP_RIGHT);
 
@@ -261,6 +273,9 @@ public class BaseSceneView extends BorderPane {
             @Override
             public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
                 controller.updateInitialHeight(newValue);
+                base.setHeight(newValue);
+                base.setY(animationPaneHeight - base.getHeight());
+                controller.getObject().setTranslateY(animationPaneHeight - newValue - 3);
             }
         });
 
@@ -275,6 +290,7 @@ public class BaseSceneView extends BorderPane {
         startButton.setOnAction(event -> controller.onStartButtonPressed());
 
         Button refreshButton = new Button();
+        refreshButton.setOnAction(event -> controller.onRefreshButtonPressed());
         Image refreshImage = new Image(this.getClass().getResource("/images/refresh.png").toExternalForm());
         ImageView refreshImageView = new ImageView(refreshImage);
         refreshImageView.setPreserveRatio(true);
@@ -283,6 +299,7 @@ public class BaseSceneView extends BorderPane {
         refreshButton.setGraphic(refreshImageView);
 
         Button stopButton = new Button("Stop");
+        stopButton.setOnAction(event -> controller.onStopButtonPressed());
 
         container.getChildren().addAll(startButton, refreshButton, stopButton);
         return container;

@@ -40,6 +40,7 @@ public class BaseScene {
     public BaseScene() {
         gravity = 9.8; // default gravity
         initialVelocity = 20; // default velocity
+        initialX = 8; // default initial x position
     }
 
     public double getInitialXVelocity() {
