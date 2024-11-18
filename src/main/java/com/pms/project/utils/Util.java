@@ -67,22 +67,22 @@ public class Util {
             double newHeight = currentWidth;
 
             // Apply new width and height to the scene
-            currentScene.getWindow().setWidth(newWidth);
+            currentScene.getWindow().setWidth(1500);
             currentScene.getWindow().setHeight(newHeight);
 
             // Calculate scale factor to fit everything and make it more zoomed out
             double scaleFactor = Math.min(newWidth / currentWidth, newHeight / currentHeight);
             
-            // Make the zoom more zoomed out by multiplying the scaleFactor with a constant factor (e.g., 0.8)
-            scaleFactor *= 0.99; // Adjust this factor to get the desired zoom level
+            
+            scaleFactor *= 1.01; 
 
-            // Apply scale to the scene
+           
             applyScale(scaleFactor);
 
-            isRotated = true; // Set rotation state to true
+            isRotated = true;
         }
 
-        // Adjust layout after rotation
+    
         adjustLayout();
     }
 

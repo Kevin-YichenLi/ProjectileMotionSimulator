@@ -20,7 +20,7 @@ public class TargetGameController extends BaseSceneController {
         this.targetGameView = targetGameView;
         this.util = util;
 
-        // Set up event listener for the projectile
+    
         targetGameView.getProjectile().setOnMouseClicked(this::onProjectileShot);
     }
 
@@ -46,16 +46,17 @@ public class TargetGameController extends BaseSceneController {
         }
     }
 
-    // Override the refresh method here to use the TargetGameController's logic
+  
+    
     @Override
     public void onRefreshButtonPressed() {
-        // Create a new TargetGameView (this is where the target scene is created)
+       
         TargetGameView newTargetGameView = new TargetGameView(primaryStage);
 
-        // Create the scene with the new TargetGameView
+
         Scene targetScene = new Scene(newTargetGameView, MainView.stageWidth, MainView.stageHeight);
 
-        // Switch to the new target scene
+        
         util.switchScene(primaryStage, targetScene);
         System.out.println("New target scene created and switched.");
     }

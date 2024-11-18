@@ -16,21 +16,15 @@ public class AnimationController {
 
     public AnimationController(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.util = new Util(primaryStage); // Pass Stage to Util
+        this.util = new Util(primaryStage);
     }
 
-    /**
-     * Adjusts the global zoom level dynamically for the current scene.
-     * @param factor The zoom factor. Values > 1 zoom in, values < 1 zoom out.
-     */
+   
     public void zoom(double factor) {
         util.zoom(factor);
     }
 
-    /**
-     * Rotates the current scene by a specified angle.
-     * @param angle The angle to rotate the scene by, in degrees.
-     */
+    
     public void rotate( ) {
         util.rotate();
     }
