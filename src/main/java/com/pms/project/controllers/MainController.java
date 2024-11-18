@@ -3,6 +3,7 @@ package com.pms.project.controllers;
 import java.util.Optional;
 
 import com.pms.project.MainApp;
+import com.pms.project.models.TargetGame;
 import com.pms.project.utils.Util;
 import com.pms.project.views.*;
 import com.sun.tools.javac.Main;
@@ -29,13 +30,17 @@ public class MainController {
     private Stage primaryStage;
     private Util util = new Util(primaryStage);
     private ThemeView themeView = new ThemeView(primaryStage,util);
+
+   
     
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     public void onTargetGameButtonPressed() {
-
+    	  TargetGameView targetGameView = new TargetGameView(primaryStage);
+          Scene scene = new Scene(targetGameView, MainView.stageWidth, MainView.stageHeight);
+          util.switchScene(primaryStage, scene);
     }
 
     // temporary method for testing, please delete at the end

@@ -30,7 +30,7 @@ public class BaseSceneView extends BorderPane {
     // the value displayed with the change of the initial speed slider
     private StringProperty speedValue = new SimpleStringProperty();
     // the instance of the model used to store data
-    private BaseScene baseScene = new BaseScene();
+    protected BaseScene baseScene = new BaseScene();
     // the Y position of "bottom" component
     private double bottomYPosition;
     private BaseSceneController controller;
@@ -38,10 +38,10 @@ public class BaseSceneView extends BorderPane {
     private MainController mainController;
     private Scale scaleTransform;
     private Rotate rotateTransform;
-    private int animationPaneHeight = 670;
-    private int animationPaneWidth = 1300;
+    protected int animationPaneHeight = 670;
+    protected int animationPaneWidth = 1300;
     // path of the animation
-    private Circle[] trails = new Circle[9];
+    protected Circle[] trails = new Circle[9];
     // base of the animation object, varying depending on the initial height
     private Rectangle base = new Rectangle();
 
@@ -62,6 +62,9 @@ public class BaseSceneView extends BorderPane {
         this.setCenter(createCenter());
         this.setBottom(createBottom());
         mainController = new MainController(primaryStage);
+    }
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     protected Region createCenter() {

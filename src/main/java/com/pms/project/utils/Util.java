@@ -1,10 +1,10 @@
-
 package com.pms.project.utils;
 
 import java.util.Optional;
 
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
+import com.pms.project.views.TargetGameView;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -168,7 +168,7 @@ public class Util {
     public void goToBaseScene(Stage primaryStage) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to the base scene?");
+        confirmationAlert.setContentText("Do you really want to  the base scene?");
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -188,4 +188,29 @@ public class Util {
             primaryStage.show();
         }
     }
+    
+    public void goToTargetScene(Stage primaryStage) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setContentText("Do you really want to  the target scene?");
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            TargetGameView targetGameView = new TargetGameView(primaryStage);
+            Scene scene = new Scene(targetGameView, MainView.stageWidth, MainView.stageHeight);
+
+            // Apply the selected font and background
+            scene.getRoot().getStyleClass().clear();
+            scene.getRoot().getStyleClass().add(selectedFont);
+            scene.getRoot().getStyleClass().add(selectedBackground);
+
+            // Apply the theme stylesheet
+            scene.getStylesheets().add(getClass().getResource("/com/pms/project/views/theme.css").toExternalForm());
+
+            // Set the scene for the primaryStage
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
+    }
+    
 }

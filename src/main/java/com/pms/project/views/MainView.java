@@ -105,6 +105,8 @@ public class MainView extends BorderPane {
         simulationButton.setPrefSize(250, 20);
         Button vectorButton = new Button("Vectors");
         vectorButton.setPrefSize(150, 20);
+        
+        targetGameButton.setOnAction(e -> mainController.onTargetGameButtonPressed());
 
         // button to base scene to test, please delete at the end
         Button test = new Button("test");
