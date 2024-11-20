@@ -2,10 +2,7 @@ package com.pms.project.controllers;
 
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
-import com.pms.project.views.ThemeView;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 public class ThemeController {
@@ -45,7 +42,7 @@ public class ThemeController {
         scene.getRoot().setStyle("-fx-font-size: " + selectedFontSize + "px;");
 
         // Apply the theme stylesheet
-        scene.getStylesheets().add(getClass().getResource("/com/pms/project/views/theme.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/theme.css").toExternalForm());
 
         // Set the scene for the primaryStage
         primaryStage.setScene(scene);

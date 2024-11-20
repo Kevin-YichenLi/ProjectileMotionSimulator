@@ -199,7 +199,7 @@ public class Util {
             scene.getRoot().getStyleClass().add(selectedBackground);
 
             // Apply the theme stylesheet
-            scene.getStylesheets().add(getClass().getResource("/com/pms/project/views/theme.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/css/theme.css").toExternalForm());
 
             // Set the scene for the primaryStage
             primaryStage.setScene(scene);
@@ -223,7 +223,7 @@ public class Util {
             scene.getRoot().getStyleClass().add(selectedBackground);
 
             // Apply the theme stylesheet
-            scene.getStylesheets().add(getClass().getResource("/com/pms/project/views/theme.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/css/theme.css").toExternalForm());
 
             // Set the scene for the primaryStage
             primaryStage.setScene(scene);
