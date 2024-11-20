@@ -21,6 +21,7 @@ public class Util {
 	private String selectedFont;
 	private String selectedBackground;
 	 private boolean isRotated = false;
+	 
     public Util(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -164,22 +165,22 @@ public class Util {
     
     public void previewFont(String fontClass) {
         this.selectedFont = fontClass;
-        // Optionally update the font preview immediately in the current scene (if needed)
-        Scene currentScene = primaryStage.getScene();
+      
+       /* Scene currentScene = primaryStage.getScene();
         if (currentScene != null) {
             currentScene.getRoot().getStyleClass().clear();
             currentScene.getRoot().getStyleClass().add(fontClass);
-        }
+        }*/
     }
 
     public void previewBackground(String backgroundClass) {
         this.selectedBackground = backgroundClass;
-        // Optionally update the background preview immediately in the current scene
-        Scene currentScene = primaryStage.getScene();
+        
+       /* Scene currentScene = primaryStage.getScene();
         if (currentScene != null) {
             currentScene.getRoot().getStyleClass().clear();
-            currentScene.getRoot().getStyleClass().add(backgroundClass);
-        }
+            currentScene.getRoot().getStyleClass().add(backgroundClass); 
+        }*/
     }
 
     public void goToBaseScene(Stage primaryStage) {

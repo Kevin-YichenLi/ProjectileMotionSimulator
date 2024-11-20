@@ -1,5 +1,6 @@
 package com.pms.project;
 
+
 import com.pms.project.views.MainView;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -18,9 +19,9 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(new MainView(primaryStage), MainView.stageWidth, MainView.stageHeight);
         
 
+        Scene scene = new Scene(new MainView(primaryStage), MainView.stageWidth, MainView.stageHeight);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Projectile Motion Simulator");
         primaryStage.show();
