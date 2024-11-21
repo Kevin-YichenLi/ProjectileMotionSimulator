@@ -32,7 +32,7 @@ public class BaseSceneView extends BorderPane {
     // the instance of the model used to store data
     protected BaseScene baseScene = new BaseScene();
     // the Y position of "bottom" component
-    private double bottomYPosition;
+    protected double bottomYPosition;
     private BaseSceneController controller;
     private Stage primaryStage;
     private MainController mainController;

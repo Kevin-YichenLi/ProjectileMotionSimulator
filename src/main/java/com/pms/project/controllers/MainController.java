@@ -26,13 +26,10 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class MainController {
-   
     private Stage primaryStage;
     private Util util = new Util(primaryStage);
     private ThemeView themeView = new ThemeView(primaryStage,util);
 
-   
-    
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -49,7 +46,6 @@ public class MainController {
         util.switchScene(primaryStage, scene);
     }
     
-    
     public void onQuitButtonPressed() {
     	Alert confirmationAlert = new Alert(AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation");
@@ -65,6 +61,7 @@ public class MainController {
             
         });
     }
+
     public void onAboutUsPressed() {
         VBox vbox1 = new VBox();
         vbox1.setPadding(new Insets(10)); 
@@ -154,6 +151,12 @@ public class MainController {
     public void onGeneralSettingButtonPressed() {
         GeneralSettingView generalSettingView = new GeneralSettingView(primaryStage);
         Scene scene = new Scene(generalSettingView, MainView.stageWidth, MainView.stageHeight);
+        util.switchScene(primaryStage, scene);
+    }
+
+    public void onSimulationButtonPressed() {
+        SimulationView simulationView = new SimulationView(primaryStage);
+        Scene scene = new Scene(simulationView, MainView.stageWidth, MainView.stageHeight);
         util.switchScene(primaryStage, scene);
     }
 }
