@@ -44,12 +44,13 @@ public class TargetGameController extends BaseSceneController {
         calculateAndSetPhysicalProperties();
 
         if (hasMotion) {
-            // Print out the final X value and target position for debugging
+        	createAnimation();
+            timeline.play();
             System.out.println("Final X: " + targetGame.getFinalX());
             System.out.println("Target X: " + targetGame.getTargetX());
             System.out.println("Target Radius: " + targetGame.getTargetRadius());
 
-            // After the projectile has completed its motion, check if it hit the target
+           
             if (targetGame.checkHit()) {
                 System.out.println("Congratulations! You hit the target!");
             } else {
