@@ -36,6 +36,8 @@ public class TargetGame extends BaseScene {
     public void setTargetRadius(double targetRadius) {
         this.targetRadius = targetRadius;
     }
+   
+    
 
     public boolean isHit() {
         return isHit;

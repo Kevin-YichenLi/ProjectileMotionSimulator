@@ -40,7 +40,6 @@ public class TargetGameView extends BaseSceneView {
         newTargetButton.setOnAction(event -> controller.onNewTargetButtonPressed());
         
       
-      
 
         
         // Create the feedback label
@@ -57,10 +56,12 @@ public class TargetGameView extends BaseSceneView {
         newTargetButton.setLayoutX(5);  
         newTargetButton.setLayoutY(350);  
         newTargetButton.setStyle("-fx-background-color: #f4cccc; -fx-text-fill: black; -fx-border-color: #b45454;");
+        
+        
     }
    
 
-    public Region createStartAndStopButton() {
+   public Region createStartAndStopButton() {
         HBox container = new HBox(20);
 
         Button startButton = new Button("Start");

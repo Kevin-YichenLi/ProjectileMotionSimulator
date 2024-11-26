@@ -38,6 +38,7 @@ public class TargetGameController extends BaseSceneController {
         targetGameView.getTarget().setCenterX(newX);
     }
     
+  
     
     @Override
     public void onStartButtonPressed() {
@@ -61,6 +62,61 @@ public class TargetGameController extends BaseSceneController {
         }
     }
 
+    @Override
+    protected void calculateAndSetPhysicalProperties() {
+        // Force the baseScene to use TargetGame-specific calculations
+        if (targetGame.getInitialVelocity() == 0.0 || targetGame.getMass() == 0.0) {
+            hasMotion = false;
+            return; // No motion takes place
+        }
+
+        if (targetGame.getInitialAngle() == 0.0) { // Horizontal projectile motion
+            if (targetGame.getInitialHeight() == 0.0) {
+                hasMotion = false;
+                return; // No motion takes place
+            }
+            targetGame.setInitialY(targetGame.getInitialHeight() + 3);
+            targetGame.setMaxHeight(targetGame.getInitialHeight());
+            targetGame.setInitialXVelocity(targetGame.getInitialVelocity());
+            targetGame.setInitialYVelocity(0);
+            double changeInHeight = targetGame.getInitialHeight() * -1;
+            targetGame.setChangeInHeight(changeInHeight);
+            double time = Math.sqrt(-1 * changeInHeight * 2 / targetGame.getGravity());
+            targetGame.setTime(time);
+            double distance = time * targetGame.getInitialXVelocity();
+            targetGame.setDistance(distance);
+            targetGame.setFinalXVelocity(targetGame.getInitialXVelocity());
+            double finalYVelocity = -1 * targetGame.getGravity() * time;
+            targetGame.setFinalYVelocity(finalYVelocity);
+            targetGame.setFinalX(targetGame.getInitialX() + distance);
+            hasMotion = true;
+        } else {
+            // Normal projectile motion
+            targetGame.setInitialY(targetGame.getInitialHeight() + 3);
+            double initialXVelocity = targetGame.getInitialVelocity() * Math.cos(Math.toRadians(targetGame.getInitialAngle()));
+            targetGame.setInitialXVelocity(initialXVelocity);
+            double initialYVelocity = targetGame.getInitialVelocity() * Math.sin(Math.toRadians(targetGame.getInitialAngle()));
+            targetGame.setInitialYVelocity(initialYVelocity);
+            double changeInHeight = targetGame.getInitialHeight() * -1;
+            targetGame.setChangeInHeight(changeInHeight);
+            double finalYVelocity = -1 * Math.sqrt(Math.pow(initialYVelocity, 2)
+                    - 2 * targetGame.getGravity() * changeInHeight);
+            targetGame.setFinalYVelocity(finalYVelocity);
+            double time = timeCalculator(-0.5 * targetGame.getGravity(), initialYVelocity, -1 * changeInHeight);
+            targetGame.setTime(time);
+            double maxHeight = targetGame.getInitialHeight()
+                    + (initialYVelocity * time / 2 - targetGame.getGravity() / 2 * Math.pow((time / 2), 2));
+            targetGame.setMaxHeight(maxHeight);
+            double distance = time * initialXVelocity;
+            targetGame.setDistance(distance);
+            targetGame.setFinalXVelocity(initialXVelocity);
+            targetGame.setFinalX(targetGame.getInitialX() + distance);
+            hasMotion = true;
+        }
+    }
+   
+    
+    
     
     @Override
     public void onRefreshButtonPressed() {

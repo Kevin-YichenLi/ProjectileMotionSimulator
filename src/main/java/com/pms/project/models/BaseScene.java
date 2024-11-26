@@ -12,7 +12,7 @@ public class BaseScene {
     double changeInHeight;
     double initialX;
     double initialY;
-    double finalX;
+    public double finalX;
     double finalY;
     double mass;
     double maxHeight;
