@@ -10,7 +10,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -52,9 +52,11 @@ public class SimulationView extends BaseSceneView{
     }
 
     private Group createDetector() {
-        Rectangle rectangle = new Rectangle(200, 100);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(Color.BLACK);
+        double detectorLayoutX = 300;
+
+        Rectangle scope = new Rectangle(200, 100);
+        scope.setFill(Color.TRANSPARENT);
+        scope.setStroke(Color.BLACK);
 
         Label timeLbl = new Label("Time:");
         Label heightLbl = new Label("Height:");
@@ -67,9 +69,28 @@ public class SimulationView extends BaseSceneView{
         VBox container = new VBox(10, new HBox(10, timeLbl, timeValue),
                 new HBox(10, heightLbl, heightValue), new HBox(10, rangeLbl, rangeValue));
 
-        Group detector = new Group(rectangle, container);
-        detector.setOnMouseClicked((MouseEvent event) -> simulationController.onDetectorClicked(event, detector));
-        detector.setOnMouseDragged((MouseEvent event) -> simulationController.onDetectorDragged(event, detector));
+        // a circle with a cross inside
+        double radius = 10;
+        Path detectiveArea = new Path(
+                new MoveTo(radius, 0),
+                new ArcTo(radius, radius, 0, -radius, 0, true, true),
+                new ArcTo(radius, radius, 0, radius, 0, true, true),
+                new MoveTo(-radius, 0),
+                new LineTo(radius, 0),
+                new MoveTo(0, -radius),
+                new LineTo(0, radius)
+        );
+        detectiveArea.setFill(Color.TRANSPARENT);
+        detectiveArea.setStroke(Color.BLACK);
+
+        Group detector = new Group(scope, container, detectiveArea);
+        detector.setLayoutX(detectorLayoutX);
+        detector.setLayoutY(0);
+
+        detectiveArea.setLayoutX(scope.getWidth() + radius - 3);
+        detectiveArea.setLayoutY(scope.getHeight() + radius - 3);
+
+        simulationController.enableDetectorDragAndDrop(detector, detector.getLayoutX(), detector.getLayoutY());
 
         return detector;
     }
