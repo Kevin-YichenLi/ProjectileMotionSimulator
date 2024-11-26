@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,6 +31,7 @@ public class BaseSceneController {
     private Timeline timeline;
     private int animationPaneWidth;
     private int animationPaneHeight;
+    private Scale scaleTransform= new Scale(1.1, 0.9);
     private Circle[] trails;
 
     public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight, Circle[] trails) {
@@ -236,5 +238,9 @@ public class BaseSceneController {
 
     public Circle getObject() {
         return object;
+    }
+    public void zoom(double factor) {
+        scaleTransform.setX(scaleTransform.getX() * factor);
+        scaleTransform.setY(scaleTransform.getY() * factor);
     }
 }

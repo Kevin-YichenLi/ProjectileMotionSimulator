@@ -6,6 +6,8 @@ import java.util.List;
 import com.pms.project.controllers.BaseSceneController;
 import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
+import com.pms.project.utils.Util;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -31,6 +33,7 @@ public class BaseSceneView extends BorderPane {
     private StringProperty speedValue = new SimpleStringProperty();
     // the instance of the model used to store data
     protected BaseScene baseScene = new BaseScene();
+    private Util util;
     // the Y position of "bottom" component
     protected double bottomYPosition;
     private BaseSceneController controller;

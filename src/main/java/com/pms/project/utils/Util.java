@@ -163,25 +163,7 @@ public class Util {
         }
     }
     
-    public void previewFont(String fontClass) {
-        this.selectedFont = fontClass;
-      
-       /* Scene currentScene = primaryStage.getScene();
-        if (currentScene != null) {
-            currentScene.getRoot().getStyleClass().clear();
-            currentScene.getRoot().getStyleClass().add(fontClass);
-        }*/
-    }
-
-    public void previewBackground(String backgroundClass) {
-        this.selectedBackground = backgroundClass;
-        
-       /* Scene currentScene = primaryStage.getScene();
-        if (currentScene != null) {
-            currentScene.getRoot().getStyleClass().clear();
-            currentScene.getRoot().getStyleClass().add(backgroundClass); 
-        }*/
-    }
+   
 
     public void goToBaseScene(Stage primaryStage) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);

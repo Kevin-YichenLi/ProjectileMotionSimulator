@@ -1,5 +1,6 @@
 package com.pms.project.views;
 
+import com.pms.project.controllers.ThemeController;
 import com.pms.project.utils.Util;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -14,12 +15,14 @@ public class ThemeView extends GridPane {
    
     private Stage primaryStage;
     private Util util;
+    private ThemeController themeController;
+
 
     // Constructor that accepts a Stage and Util
-    public ThemeView(Stage primaryStage, Util util) {
+    public ThemeView(Stage primaryStage, Util util, ThemeController themeController) {
         this.primaryStage = primaryStage;
         this.util = util;
-
+        this.themeController = themeController;
         // Set vertical and horizontal gaps for the grid
         this.setVgap(10);
         this.setHgap(10);
@@ -58,7 +61,7 @@ public class ThemeView extends GridPane {
                 darkBlue.setSelected(false);
                 sunset.setSelected(false);
                 // Preview light blue background
-                util.previewBackground("background-light-blue");
+                themeController.previewBackground("background-light-blue");
             }
         });
 
@@ -67,7 +70,7 @@ public class ThemeView extends GridPane {
                 lightBlue.setSelected(false);
                 sunset.setSelected(false);
                 // Preview dark blue background
-                util.previewBackground("background-dark-blue");
+                themeController.previewBackground("background-dark-blue");
             }
         });
 
@@ -76,7 +79,7 @@ public class ThemeView extends GridPane {
                 lightBlue.setSelected(false);
                 darkBlue.setSelected(false);
                 // Preview sunset background
-                util.previewBackground("background-sunset");
+                themeController.previewBackground("background-sunset");
             }
         });
 
@@ -86,7 +89,7 @@ public class ThemeView extends GridPane {
                 calibri.setSelected(false);
                 comicSans.setSelected(false);
                 // Set the font preview but do not apply yet
-                util.previewFont("times-font");
+                themeController.previewFont("times-font");
             }
         });
 
@@ -95,7 +98,7 @@ public class ThemeView extends GridPane {
                 times.setSelected(false);
                 comicSans.setSelected(false);
                 // Set the font preview but do not apply yet
-                util.previewFont("calibri-font");
+                themeController.previewFont("calibri-font");
             }
         });
 
@@ -104,7 +107,7 @@ public class ThemeView extends GridPane {
                 times.setSelected(false);
                 calibri.setSelected(false);
                 // Set the font preview but do not apply yet
-                util.previewFont("comic-sans-font");
+                themeController.previewFont("comic-sans-font");
             }
         });
 
@@ -114,10 +117,10 @@ public class ThemeView extends GridPane {
 
         // Create Confirm Button
         Button confirmButton = new Button("Confirm");
-        confirmButton.setOnAction(event -> util.goToBaseScene(primaryStage));
+        confirmButton.setOnAction(event -> themeController.goToBaseScene(primaryStage));
         
         Button targetButton = new Button("Target");
-        targetButton.setOnAction(event -> util.goToTargetScene(primaryStage));
+        targetButton.setOnAction(event -> themeController.goToTargetScene(primaryStage));
 
         // Add the Back and Confirm Buttons to the GridPane
         this.add(backButton, 0, 8);

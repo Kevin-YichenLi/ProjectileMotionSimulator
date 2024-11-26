@@ -28,7 +28,8 @@ import javafx.stage.Stage;
 public class MainController {
     private Stage primaryStage;
     private Util util = new Util(primaryStage);
-    private ThemeView themeView = new ThemeView(primaryStage,util);
+    private ThemeController themeController = new ThemeController(primaryStage);
+    private ThemeView themeView = new ThemeView(primaryStage,util, themeController);
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -136,7 +137,7 @@ public class MainController {
     }
 
     public void onThemeButtonPressed() {
-    	ThemeView themeView = new ThemeView(primaryStage,util);
+    	ThemeView themeView = new ThemeView(primaryStage,util,themeController);
     	Scene scene = new Scene(themeView,MainView.stageWidth,MainView.stageHeight);
     	util.switchScene(primaryStage, scene);
     	

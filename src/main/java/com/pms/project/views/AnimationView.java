@@ -41,7 +41,7 @@ public class AnimationView extends Pane {
         rotateButton.setOnAction(event -> animationController.rotate());
         
         Button targetButton =new Button("Target");
-        targetButton.setOnAction(e-> util.goToTargetScene(primaryStage));
+        targetButton.setOnAction(e-> animationController.goToTargetScene());
 
        
         backButton.setLayoutX(20);
