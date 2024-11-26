@@ -34,6 +34,7 @@ public class BaseSceneView extends BorderPane {
     // the instance of the model used to store data
     protected BaseScene baseScene = new BaseScene();
     private Util util;
+  
     // the Y position of "bottom" component
     protected double bottomYPosition;
     private BaseSceneController controller;
@@ -65,6 +66,7 @@ public class BaseSceneView extends BorderPane {
         this.setCenter(createCenter());
         this.setBottom(createBottom());
         mainController = new MainController(primaryStage);
+        
     }
     public Stage getPrimaryStage() {
         return primaryStage;
@@ -302,7 +304,7 @@ public class BaseSceneView extends BorderPane {
         return container;
     }
 
-    protected Region createStartAndStopButton() {
+    public Region createStartAndStopButton() {
         HBox container = new HBox(20);
 
         Button startButton = new Button("Start");

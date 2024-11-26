@@ -13,7 +13,6 @@ public class TargetGame extends BaseScene {
         this.isHit = false; 
     }
 
-  
     public double getTargetX() {
         return targetX;
     }
@@ -42,14 +41,20 @@ public class TargetGame extends BaseScene {
         return isHit;
     }
 
-    // Method to directly check if the projectile hit the target
-    public boolean checkHit(double projectileX, double projectileY) {
-        // Debugging: Print the target's center position
-        System.out.println("Target Position: (" + targetX + ", " + targetY + ")");
-        
-        double distance = Math.sqrt(Math.pow(projectileX - targetX, 2) + Math.pow(projectileY - targetY, 2));
-        isHit = distance <= (targetRadius + 5); 
-        return isHit;
+    // Method to check if the projectile has hit the target based only on horizontal position
+    public boolean checkHit() {
+        // Check if the final X position of the projectile is within the range of the target's X position
+        // Target's hit range is from targetX - targetRadius to targetX + targetRadius
+        if (finalX >= targetX - targetRadius && finalX <= targetX + targetRadius) {
+            isHit = true;  // If within range, it's a hit
+            return true;
+        }
+        isHit = false;  // If no hit, reset the hit status
+        return false;
     }
 
+    
+    public void setHit(boolean isHit) {
+        this.isHit = isHit;
+    }
 }

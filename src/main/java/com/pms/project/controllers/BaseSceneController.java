@@ -20,19 +20,19 @@ import javafx.util.Duration;
 import java.util.Optional;
 
 public class BaseSceneController {
-    private boolean hasMotion = false;
-    private boolean isHorizontalProjectileMotion;
-    private BaseScene baseScene;
+    protected boolean hasMotion = false;
+    protected boolean isHorizontalProjectileMotion;
+    protected BaseScene baseScene;
   
     protected Stage primaryStage;
     private Util util = new Util(primaryStage);
     // Animation related fields
-    private Circle object;
-    private Timeline timeline;
+    protected Circle object;
+    protected Timeline timeline;
     private int animationPaneWidth;
     private int animationPaneHeight;
     private Scale scaleTransform= new Scale(1.1, 0.9);
-    private Circle[] trails;
+    protected Circle[] trails;
 
     public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight, Circle[] trails) {
         object = new Circle(3);
@@ -222,7 +222,7 @@ public class BaseSceneController {
         timeline.setOnFinished(event -> timeline.getKeyFrames().clear());
     }
 
-    private double calculateCurrentHeight(double currentTime) {
+    protected double calculateCurrentHeight(double currentTime) {
         double currentChangeInHeight = baseScene.getInitialYVelocity() * currentTime - baseScene.getGravity() / 2 * Math.pow(currentTime, 2);
         return animationPaneHeight - baseScene.getInitialHeight() - currentChangeInHeight - 3;
     }
