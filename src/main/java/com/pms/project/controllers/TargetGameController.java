@@ -1,5 +1,6 @@
 package com.pms.project.controllers;
 
+import com.pms.project.AnimationStatus;
 import com.pms.project.models.TargetGame;
 import com.pms.project.utils.Util;
 import com.pms.project.views.TargetGameView;
@@ -7,6 +8,7 @@ import com.pms.project.views.MainView;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -21,8 +23,8 @@ public class TargetGameController extends BaseSceneController {
     private boolean hasMotion;
    
 
-    public TargetGameController(TargetGame targetGame, TargetGameView targetGameView) {
-        super(targetGameView.getPrimaryStage(), targetGame, 800, 600, new Circle[5]);
+    public TargetGameController(TargetGame targetGame, TargetGameView targetGameView, SimpleObjectProperty<AnimationStatus> status) {
+        super(targetGameView.getPrimaryStage(), targetGame, 800, 600, new Circle[5], status);
         this.targetGame = targetGame;
         this.targetGameView = targetGameView;
         this.util = new Util(primaryStage);

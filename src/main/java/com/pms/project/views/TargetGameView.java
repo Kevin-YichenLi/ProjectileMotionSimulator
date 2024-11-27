@@ -28,7 +28,7 @@ public class TargetGameView extends BaseSceneView {
         super(primaryStage);
 
         TargetGame targetGame = new TargetGame();
-        this.controller = new TargetGameController(targetGame, this);
+        this.controller = new TargetGameController(targetGame, this, status);
 
         // Create and set up target circle
         target = new Circle(20, Color.RED);

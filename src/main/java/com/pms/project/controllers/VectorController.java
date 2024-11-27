@@ -1,5 +1,6 @@
 package com.pms.project.controllers;
 
+import com.pms.project.AnimationStatus;
 import com.pms.project.models.BaseScene;
 import com.pms.project.utils.Util;
 import com.pms.project.views.BaseSceneView;
@@ -8,6 +9,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -24,8 +26,8 @@ public class VectorController extends BaseSceneController {
     private String customFeature;
 
     // Constructor
-    public VectorController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight, Circle[] trails, String customFeature) {
-        super(primaryStage, baseScene, animationPaneWidth, animationPaneHeight, trails);
+    public VectorController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight, Circle[] trails, String customFeature, SimpleObjectProperty<AnimationStatus> status) {
+        super(primaryStage, baseScene, animationPaneWidth, animationPaneHeight, trails, status);
         this.customFeature = customFeature;
     }
 

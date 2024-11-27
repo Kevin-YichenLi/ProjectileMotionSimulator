@@ -1,5 +1,6 @@
 package com.pms.project.controllers;
 
+import com.pms.project.AnimationStatus;
 import com.pms.project.models.BaseScene;
 import com.pms.project.utils.Util;
 import com.pms.project.views.BaseSceneView;
@@ -8,11 +9,16 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -20,6 +26,7 @@ import javafx.util.Duration;
 import java.util.Optional;
 
 public class BaseSceneController {
+    protected ObjectProperty<AnimationStatus> status;
     protected boolean hasMotion = false;
     protected boolean isHorizontalProjectileMotion;
     protected BaseScene baseScene;
@@ -34,17 +41,23 @@ public class BaseSceneController {
     private Scale scaleTransform= new Scale(1.1, 0.9);
     protected Circle[] trails;
 
-    public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth, int animationPaneHeight, Circle[] trails) {
-        object = new Circle(3);
-        object.setFill(Color.BLACK);
-        object.setTranslateX(8);
-        object.setTranslateY(animationPaneHeight - 3);
+    public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth,
+                               int animationPaneHeight, Circle[] trails, SimpleObjectProperty<AnimationStatus> status) {
+        this.status = status;
         timeline = new Timeline();
         this.primaryStage = primaryStage;
         this.baseScene = baseScene;
         this.animationPaneHeight = animationPaneHeight;
         this.animationPaneWidth = animationPaneWidth;
         this.trails = trails;
+        createObject();
+    }
+
+    protected void createObject() {
+        object = new Circle(3);
+        object.setFill(Color.BLACK);
+        object.setTranslateX(baseScene.getInitialX());
+        object.setTranslateY(animationPaneHeight - 3);
     }
 
     public void onBackToMainPressed() {
@@ -55,6 +68,42 @@ public class BaseSceneController {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             util.switchScene(primaryStage, new Scene(new MainView(primaryStage), MainView.stageWidth, MainView.stageHeight));
+        }
+    }
+
+    public void onInitialHeightValueChanged(Double newValue, Rectangle base) {
+        updateInitialHeight(newValue);
+        base.setHeight(newValue);
+        base.setY(animationPaneHeight - base.getHeight());
+        object.setTranslateY(animationPaneHeight - baseScene.getInitialHeight() - 3);
+        rearrangeToPreparedStatus();
+    }
+
+    public void onMassValueChanged(Double newValue) {
+        updateMass(newValue);
+        rearrangeToPreparedStatus();
+    }
+
+    public void onInitialSpeedValueChanged(Number newValue) {
+        updateInitialSpeed(newValue.doubleValue());
+        rearrangeToPreparedStatus();
+    }
+
+    public void onInitialAngleValueChanged(Double newValue) {
+        updateInitialAngle(newValue);
+        rearrangeToPreparedStatus();
+    }
+
+    protected void rearrangeToPreparedStatus() {
+        setTrailsInvisible();
+        status.set(AnimationStatus.PREPARED);
+        object.setTranslateX(baseScene.getInitialX());
+        object.setTranslateY(animationPaneHeight - baseScene.getInitialHeight() - 3);
+    }
+
+    protected void setTrailsInvisible() {
+        for (int i = 0; i < trails.length; i++) {
+            trails[i].setStroke(Color.TRANSPARENT);
         }
     }
 
@@ -76,18 +125,22 @@ public class BaseSceneController {
 
     public void onEarthButtonPressed() {
         baseScene.setGravity(9.8);
+        rearrangeToPreparedStatus();
     }
 
     public void onMoonButtonPressed() {
         baseScene.setGravity(1.62);
+        rearrangeToPreparedStatus();
     }
 
     public void onMarsButtonPressed() {
         baseScene.setGravity(3.73);
+        rearrangeToPreparedStatus();
     }
 
     public void onJupiterButtonPressed() {
         baseScene.setGravity(24.79);
+        rearrangeToPreparedStatus();
     }
 
     public boolean hasMotion() {
@@ -181,7 +234,13 @@ public class BaseSceneController {
     }
 
     public void onStartButtonPressed() {
+        if (status.get() == AnimationStatus.PLAYED) {
+            return;
+        }
+
+        status.set(AnimationStatus.PLAYED);
         calculateAndSetPhysicalProperties();
+
         if (hasMotion) {
             System.out.println("has motion");
             System.out.println(baseScene);
@@ -219,7 +278,13 @@ public class BaseSceneController {
             timeline.getKeyFrames().add(currentFrame);
         }
 
-        timeline.setOnFinished(event -> timeline.getKeyFrames().clear());
+        timeline.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timeline.getKeyFrames().clear();
+                status.set(AnimationStatus.FINISHED);
+            }
+        });
     }
 
     protected double calculateCurrentHeight(double currentTime) {
@@ -228,6 +293,12 @@ public class BaseSceneController {
     }
 
     public void onStopButtonPressed() {
+        if (status.get() != AnimationStatus.PLAYED) {
+            return;
+        }
+
+        status.set(AnimationStatus.STOPPED);
+
         timeline.pause();
     }
 

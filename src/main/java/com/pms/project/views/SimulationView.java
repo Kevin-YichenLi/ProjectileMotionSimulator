@@ -1,13 +1,11 @@
 package com.pms.project.views;
 
 import com.pms.project.controllers.SimulationController;
-import com.pms.project.models.Simulation;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;

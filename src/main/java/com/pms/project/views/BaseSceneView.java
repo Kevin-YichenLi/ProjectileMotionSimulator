@@ -1,19 +1,17 @@
 package com.pms.project.views;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.pms.project.AnimationStatus;
 import com.pms.project.controllers.BaseSceneController;
 import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
 import com.pms.project.utils.Util;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,6 +27,7 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 public class BaseSceneView extends BorderPane {
+    protected SimpleObjectProperty<AnimationStatus> status = new SimpleObjectProperty<>(AnimationStatus.PREPARED);
     // the value displayed with the change of the initial speed slider
     private StringProperty speedValue = new SimpleStringProperty();
     // the instance of the model used to store data
@@ -47,27 +46,38 @@ public class BaseSceneView extends BorderPane {
     // path of the animation
     protected Circle[] trails = new Circle[9];
     // base of the animation object, varying depending on the initial height
-    private Rectangle base = new Rectangle();
+    private Rectangle base;
 
     public BaseSceneView(Stage primaryStage) {
-        base.setX(0);
-        base.setWidth(15);
-        base.setFill(Color.TRANSPARENT);
-        base.setFill(Color.LIGHTGRAY);
-        // paths of the animation
-        for (int i = 0; i < 9; i++) {
-            Circle circle = new Circle(3, Color.TRANSPARENT);
-            trails[i] = circle;
-        }
-        this.getStyleClass().add("default-font");
         this.primaryStage = primaryStage;
-        controller = new BaseSceneController(primaryStage, baseScene, animationPaneWidth, animationPaneHeight, trails);
+
+        initializeBase();
+
+        createAnimationPath();
+
+        this.getStyleClass().add("default-font");
+        controller = new BaseSceneController(primaryStage, baseScene, animationPaneWidth, animationPaneHeight, trails, status);
         this.setTop(createTop());
         this.setCenter(createCenter());
         this.setBottom(createBottom());
         mainController = new MainController(primaryStage);
-        
     }
+
+    protected void createAnimationPath() {
+        for (int i = 0; i < 9; i++) {
+            Circle circle = new Circle(3, Color.TRANSPARENT);
+            trails[i] = circle;
+        }
+    }
+
+    protected void initializeBase() {
+        base = new Rectangle();
+        base.setX(0);
+        base.setWidth(15);
+        base.setFill(Color.TRANSPARENT);
+        base.setFill(Color.LIGHTGRAY);
+    }
+
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -120,12 +130,8 @@ public class BaseSceneView extends BorderPane {
 
         Label massLabel = new Label("Mass");
         Spinner<Double> spinner = createDoubleSpinner(100);
-        spinner.valueProperty().addListener(new ChangeListener<Double>() {
-            @Override
-            public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
-                controller.updateMass(newValue);
-            }
-        });
+        spinner.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
+        spinner.valueProperty().addListener((observable, oldValue, newValue) -> controller.onMassValueChanged(newValue));
 
         container.getChildren().addAll(massLabel, spinner);
         return container;
@@ -135,14 +141,22 @@ public class BaseSceneView extends BorderPane {
         VBox container = new VBox();
 
         Label gravityLabel = new Label("Gravity");
+
         Button earthButton = new Button("Earth");
         earthButton.setOnAction(event -> controller.onEarthButtonPressed());
+        earthButton.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
+
         Button moonButton = new Button("Moon");
         moonButton.setOnAction(event -> controller.onMoonButtonPressed());
+        moonButton.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
+
         Button marsButton = new Button("Mars");
         marsButton.setOnAction(event -> controller.onMarsButtonPressed());
+        marsButton.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
+
         Button jupiterButton = new Button("Jupiter");
         jupiterButton.setOnAction(event -> controller.onJupiterButtonPressed());
+        jupiterButton.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
 
         container.getChildren().addAll(gravityLabel, earthButton, moonButton, marsButton, jupiterButton);
         return container;
@@ -173,12 +187,8 @@ public class BaseSceneView extends BorderPane {
 
         Label initialAngleLabel = new Label("Initial Angle");
         Spinner<Double> spinner = createDoubleSpinner(101);
-        spinner.valueProperty().addListener(new ChangeListener<Double>() {
-            @Override
-            public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
-                controller.updateInitialAngle(newValue);
-            }
-        });
+        spinner.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
+        spinner.valueProperty().addListener(((observable, oldValue, newValue) -> controller.onInitialAngleValueChanged(newValue)));
 
         container.getChildren().addAll(initialAngleLabel, spinner);
         return container;
@@ -201,6 +211,7 @@ public class BaseSceneView extends BorderPane {
         Slider speedSlider = new Slider(0, 130, 20);
         speedSlider.setMajorTickUnit(1);
         speedSlider.setMinorTickCount(5);
+        speedSlider.disableProperty().bind(status.isEqualTo(AnimationStatus.STOPPED).or(status.isEqualTo(AnimationStatus.PLAYED)));
 
         Label speedValueLabel = new Label();
         speedValueLabel.textProperty().bind(speedValue);
@@ -214,7 +225,7 @@ public class BaseSceneView extends BorderPane {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 speedValue.set(String.format("%.2f", newValue.doubleValue()));
-                controller.updateInitialSpeed(newValue.doubleValue());
+                controller.onInitialSpeedValueChanged(newValue);
             }
         });
 
@@ -290,15 +301,9 @@ public class BaseSceneView extends BorderPane {
 
         Label initialHeightLabel = new Label("Initial Height");
         Spinner<Double> spinner = createDoubleSpinner(100);
-        spinner.valueProperty().addListener(new ChangeListener<Double>() {
-            @Override
-            public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
-                controller.updateInitialHeight(newValue);
-                base.setHeight(newValue);
-                base.setY(animationPaneHeight - base.getHeight());
-                controller.getObject().setTranslateY(animationPaneHeight - newValue - 3);
-            }
-        });
+        spinner.disableProperty().bind(status.isEqualTo(AnimationStatus.STOPPED).or(status.isEqualTo(AnimationStatus.PLAYED)));
+
+        spinner.valueProperty().addListener(((observable, oldValue, newValue) -> controller.onInitialHeightValueChanged(newValue, base)));
 
         container.getChildren().addAll(initialHeightLabel, spinner);
         return container;
@@ -326,5 +331,5 @@ public class BaseSceneView extends BorderPane {
         return container;
     }
 
-  
+
 }
