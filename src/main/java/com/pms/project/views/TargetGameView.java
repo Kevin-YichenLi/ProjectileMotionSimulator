@@ -19,39 +19,31 @@ import javafx.stage.Stage;
 
 public class TargetGameView extends BaseSceneView {
     private Button newTargetButton;
-    private Circle target;
-    private Label feedbackLabel;  // Add a label to show feedback
-
-    private TargetGameController controller;
+    private TargetGameController controller;  
 
     public TargetGameView(Stage primaryStage) {
         super(primaryStage);
 
-        TargetGame targetGame = new TargetGame();
-        this.controller = new TargetGameController(targetGame, this, status);
+        
+        this.controller = new TargetGameController(primaryStage, baseScene, animationPaneWidth, animationPaneHeight, trails, status);
 
-        // Create and set up target circle
-        target = new Circle(20, Color.RED);
-        target.setCenterX(controller.getTargetGame().getTargetX());
-        target.setCenterY(controller.getTargetGame().getTargetY());
+       
+        TargetGame targetGame = controller.getTargetGame();
+        Circle target = targetGame.getTarget();  
+
+        // Set initial position of the target
+        target.setCenterX(targetGame.getTargetX());
+        target.setCenterY(targetGame.getTargetY());
 
         // Create the button for a new target
         newTargetButton = new Button("New Target");
         newTargetButton.setOnAction(event -> controller.onNewTargetButtonPressed());
-        
-      
+     
 
-        
-        // Create the feedback label
-        feedbackLabel = new Label();
-        feedbackLabel.setLayoutX(350);  
-        feedbackLabel.setLayoutY(600);  
-        feedbackLabel.setTextFill(Color.BLACK);  
+        ((Pane) this.getCenter()).getChildren().addAll(target, newTargetButton);
 
-        ((Pane) this.getCenter()).getChildren().addAll(target, newTargetButton, feedbackLabel);
-
-        target.setLayoutX(200);  
-        target.setLayoutY(200);  
+        targetGame.getTarget().setLayoutX(200);  
+        targetGame.getTarget().setLayoutY(200);  
 
         newTargetButton.setLayoutX(5);  
         newTargetButton.setLayoutY(350);  
@@ -82,18 +74,11 @@ public class TargetGameView extends BaseSceneView {
         container.getChildren().addAll(startButton, refreshButton, stopButton);
         return container;
     }
+  
+    
+  
 
     
-    
-    public Button getNewTargetButton() {
-        return newTargetButton;
-    }
 
-    public Circle getTarget() {
-        return target;
-    }
-
-    public Label getFeedbackLabel() {
-        return feedbackLabel;  
-    }
+   
 }

@@ -37,7 +37,7 @@ public class BaseSceneView extends BorderPane {
     // the Y position of "bottom" component
     protected double bottomYPosition;
     private BaseSceneController controller;
-    private Stage primaryStage;
+    protected Stage primaryStage;
     private MainController mainController;
     private Scale scaleTransform;
     private Rotate rotateTransform;

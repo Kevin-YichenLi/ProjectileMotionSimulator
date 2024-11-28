@@ -1,18 +1,26 @@
 package com.pms.project.models;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
 public class TargetGame extends BaseScene {
+	private Circle target= new Circle(20, Color.web("#F4CCCC"));
     private double targetX;  
     private double targetY;  
-    private double targetRadius = 20;  
+    private double targetRadius = 100;  
     private boolean isHit;  
 
     public TargetGame() {
         super(); 
-        this.targetX = Math.random() * 1200;  
+        this.targetX = Math.random() * 1200 + 50;
         this.targetY = 580;  
         this.isHit = false; 
+       
+        target.setStroke(Color.web("#b45454"));
+      
     }
 
+    
     public double getTargetX() {
         return targetX;
     }
@@ -42,7 +50,13 @@ public class TargetGame extends BaseScene {
     public boolean isHit() {
         return isHit;
     }
-
+    public void setTarget(Circle target) {
+    	this.target = target;
+    }
+    
+    public Circle getTarget() {
+        return target;
+    }
     // Method to check if the projectile has hit the target based only on horizontal position
     public boolean checkHit() {
         // Check if the final X position of the projectile is within the range of the target's X position

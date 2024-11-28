@@ -32,7 +32,7 @@ public class BaseSceneController {
     protected BaseScene baseScene;
   
     protected Stage primaryStage;
-    private Util util = new Util(primaryStage);
+    protected Util util = new Util(primaryStage);
     // Animation related fields
     protected Circle object;
     protected Timeline timeline;
