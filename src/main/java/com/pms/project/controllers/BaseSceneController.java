@@ -36,9 +36,9 @@ public class BaseSceneController {
     // Animation related fields
     protected Circle object;
     protected Timeline timeline;
-    private int animationPaneWidth;
-    private int animationPaneHeight;
-    private Scale scaleTransform= new Scale(1.1, 0.9);
+    protected int animationPaneWidth;
+    protected int animationPaneHeight;
+    protected Scale scaleTransform= new Scale(1.1, 0.9);
     protected Circle[] trails;
 
     public BaseSceneController(Stage primaryStage, BaseScene baseScene, int animationPaneWidth,

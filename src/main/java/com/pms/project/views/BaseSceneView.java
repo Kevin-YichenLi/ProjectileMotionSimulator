@@ -29,24 +29,24 @@ import javafx.stage.Stage;
 public class BaseSceneView extends BorderPane {
     protected SimpleObjectProperty<AnimationStatus> status = new SimpleObjectProperty<>(AnimationStatus.PREPARED);
     // the value displayed with the change of the initial speed slider
-    private StringProperty speedValue = new SimpleStringProperty();
+    protected StringProperty speedValue = new SimpleStringProperty();
     // the instance of the model used to store data
     protected BaseScene baseScene = new BaseScene();
-    private Util util;
+    protected Util util;
   
     // the Y position of "bottom" component
     protected double bottomYPosition;
-    private BaseSceneController controller;
+    protected BaseSceneController controller;
     protected Stage primaryStage;
-    private MainController mainController;
-    private Scale scaleTransform;
-    private Rotate rotateTransform;
+    protected MainController mainController;
+    protected Scale scaleTransform;
+    protected Rotate rotateTransform;
     protected int animationPaneHeight = 670;
     protected int animationPaneWidth = 1300;
     // path of the animation
     protected Circle[] trails = new Circle[9];
     // base of the animation object, varying depending on the initial height
-    private Rectangle base;
+    protected Rectangle base;
 
     public BaseSceneView(Stage primaryStage) {
         this.primaryStage = primaryStage;

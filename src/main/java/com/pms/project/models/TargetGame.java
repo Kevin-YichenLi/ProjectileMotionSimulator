@@ -7,7 +7,7 @@ public class TargetGame extends BaseScene {
 	private Circle target= new Circle(20, Color.web("#F4CCCC"));
     private double targetX;  
     private double targetY;  
-    private double targetRadius = 100;  
+    private double targetRadius = 20;
     private boolean isHit;  
 
     public TargetGame() {
@@ -72,5 +72,33 @@ public class TargetGame extends BaseScene {
     
     public void setHit(boolean isHit) {
         this.isHit = isHit;
+    }
+
+    @Override
+    public String toString() {
+        return "TargetGame{" +
+                "target=" + target +
+                ", targetX=" + targetX +
+                ", targetY=" + targetY +
+                ", targetRadius=" + targetRadius +
+                ", isHit=" + isHit +
+                ", initialVelocity=" + initialVelocity +
+                ", initialAngle=" + initialAngle +
+                ", time=" + time +
+                ", initialHeight=" + initialHeight +
+                ", gravity=" + gravity +
+                ", distance=" + distance +
+                ", changeInHeight=" + changeInHeight +
+                ", initialX=" + initialX +
+                ", initialY=" + initialY +
+                ", finalX=" + finalX +
+                ", finalY=" + finalY +
+                ", mass=" + mass +
+                ", maxHeight=" + maxHeight +
+                ", initialXVelocity=" + initialXVelocity +
+                ", finalXVelocity=" + finalXVelocity +
+                ", initialYVelocity=" + initialYVelocity +
+                ", finalYVelocity=" + finalYVelocity +
+                '}';
     }
 }
