@@ -1,30 +1,188 @@
 package com.pms.project.models;
 
-public class Vector extends BaseScene {
-    private String sceneName;
+import com.pms.project.controllers.BaseSceneController;
+
+public class Vector {
+    double initialVelocity;
+    double initialAngle;
+    double time;
+    double initialHeight;
+    double gravity;
+    double distance;
+    double changeInHeight;
+    double initialX;
+    double initialY;
+    public double finalX;
+    double finalY;
+    double mass;
+    double maxHeight;
+    double initialXVelocity;
+    double initialYVelocity;
+    double finalXVelocity;
+    double finalYVelocity;
+
+    public double getFinalXVelocity() {
+        return finalXVelocity;
+    }
+
+    public void setFinalXVelocity(double finalXVelocity) {
+        this.finalXVelocity = finalXVelocity;
+    }
+
+    public double getFinalYVelocity() {
+        return finalYVelocity;
+    }
+
+    public void setFinalYVelocity(double finalYVelocity) {
+        this.finalYVelocity = finalYVelocity;
+    }
 
     public Vector() {
-        super(); // Calls the constructor of BaseScene
+        gravity = 9.8; // default gravity
+        initialVelocity = 20; // default velocity
+        initialX = 8; // default initial x position
     }
 
-    public Vector(String sceneName) {
-        super(); // Calls the constructor of BaseScene
-        this.sceneName = sceneName;
+    public double getInitialXVelocity() {
+        return initialXVelocity;
     }
 
-    public String getSceneName() {
-        return sceneName;
+    public void setInitialXVelocity(double initialXVelocity) {
+        this.initialXVelocity = initialXVelocity;
     }
 
-    public void setSceneName(String sceneName) {
-        this.sceneName = sceneName;
+    public double getInitialYVelocity() {
+        return initialYVelocity;
+    }
+
+    public void setInitialYVelocity(double initialYVelocity) {
+        this.initialYVelocity = initialYVelocity;
+    }
+
+    public double getMaxHeight() {
+        return maxHeight;
+    }
+
+    public void setMaxHeight(double maxHeight) {
+        this.maxHeight = maxHeight;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+
+    public double getInitialVelocity() {
+        return initialVelocity;
+    }
+
+    public void setInitialVelocity(double initialVelocity) {
+        this.initialVelocity = initialVelocity;
+    }
+
+    public double getInitialAngle() {
+        return initialAngle;
+    }
+
+    public void setInitialAngle(double initialAngle) {
+        this.initialAngle = initialAngle;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public double getInitialHeight() {
+        return initialHeight;
+    }
+
+    public double getFinalY() {
+        return finalY;
+    }
+
+    public void setFinalY(double finalY) {
+        this.finalY = finalY;
+    }
+
+    public double getFinalX() {
+        return finalX;
+    }
+
+    public void setFinalX(double finalX) {
+        this.finalX = finalX;
+    }
+
+    public double getInitialY() {
+        return initialY;
+    }
+
+    public void setInitialY(double initialY) {
+        this.initialY = initialY;
+    }
+
+    public void setInitialHeight(double initialHeight) {
+        this.initialHeight = initialHeight;
+    }
+
+    public double getGravity() {
+        return gravity;
+    }
+
+    public void setGravity(double gravity) {
+        this.gravity = gravity;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public double getChangeInHeight() {
+        return changeInHeight;
+    }
+
+    public void setChangeInHeight(double changeInHeight) {
+        this.changeInHeight = changeInHeight;
+    }
+
+    public double getInitialX() {
+        return initialX;
+    }
+
+    public void setInitialX(double initialX) {
+        this.initialX = initialX;
     }
 
     @Override
     public String toString() {
-        return "AdvancedScene{" +
-                "sceneName='" + sceneName + '\'' +
-                ", " + super.toString() +
+        return "BaseScene{" +
+                "initialVelocity=" + initialVelocity +
+                ", initialAngle=" + initialAngle +
+                ", time=" + time +
+                ", initialHeight=" + initialHeight +
+                ", gravity=" + gravity +
+                ", distance=" + distance +
+                ", changeInHeight=" + changeInHeight +
+                ", initialX=" + initialX +
+                ", initialY=" + initialY +
+                ", finalX=" + finalX +
+                ", finalY=" + finalY +
+                ", mass=" + mass +
+                ", maxHeight=" + maxHeight +
+                ", initialXVelocity=" + initialXVelocity +
+                ", initialYVelocity=" + initialYVelocity +
+                ", finalXVelocity=" + finalXVelocity +
+                ", finalYVelocity=" + finalYVelocity +
                 '}';
     }
 }

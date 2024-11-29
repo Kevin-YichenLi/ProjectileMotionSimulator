@@ -40,6 +40,12 @@ public class MainController {
           Scene scene = new Scene(targetGameView, MainView.stageWidth, MainView.stageHeight);
           util.switchScene(primaryStage, scene);
     }
+    
+    public void onVectorButtonPressed() {
+  	  VectorView vectorView = new VectorView(primaryStage);
+        Scene scene = new Scene(vectorView, MainView.stageWidth, MainView.stageHeight);
+        util.switchScene(primaryStage, scene);
+  }
 
     // temporary method for testing, please delete at the end
     public void onTestButtonPressed() {

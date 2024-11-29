@@ -106,6 +106,7 @@ public class MainView extends BorderPane {
         Button vectorButton = new Button("Vectors");
         vectorButton.setPrefSize(150, 20);
         
+        vectorButton.setOnAction(e -> mainController.onVectorButtonPressed());
         targetGameButton.setOnAction(e -> mainController.onTargetGameButtonPressed());
         simulationButton.setOnAction(event -> mainController.onSimulationButtonPressed());
 
