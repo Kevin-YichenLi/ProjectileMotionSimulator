@@ -1,10 +1,10 @@
 package com.pms.project.controllers;
 
 import com.pms.project.AnimationStatus;
-import com.pms.project.models.BaseScene;
+
 import com.pms.project.models.TargetGame;
 import com.pms.project.utils.Util;
-import com.pms.project.views.BaseSceneView;
+
 import com.pms.project.views.MainView;
 import com.pms.project.views.TargetGameView;
 
@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -43,6 +44,7 @@ public class TargetGameController {
     protected int animationPaneHeight;
     protected Scale scaleTransform= new Scale(1.1, 0.9);
     protected Circle[] trails;
+    public Label feedbackLabel = new Label() ;
 
     public TargetGameController(Stage primaryStage, TargetGame baseScene, int animationPaneWidth,
                                int animationPaneHeight, Circle[] trails, SimpleObjectProperty<AnimationStatus> status) {
@@ -268,15 +270,16 @@ public class TargetGameController {
         }
 
     
-        if (baseScene.checkHit()) {
-      
-            System.out.println("Congratulations! You've hit the target!");
+        if (checkHit()) {
+        	feedbackLabel.setLayoutX(750);
+        	feedbackLabel.setLayoutY(150);
+        	feedbackLabel.setText("Congratulations! You've hit the target!");
         } else {
-          
-            System.out.println("Try again. The target wasn't hit.");
+        	feedbackLabel.setLayoutX(750);
+        	feedbackLabel.setLayoutY(150);
+            feedbackLabel.setText("Try again. The target wasn't hit.");
         }
     }
-
     protected void createAnimation() {
         KeyFrame currentFrame;
         double x;
@@ -339,5 +342,19 @@ public class TargetGameController {
     public void zoom(double factor) {
         scaleTransform.setX(scaleTransform.getX() * factor);
         scaleTransform.setY(scaleTransform.getY() * factor);
+    }
+ // Method to check if the projectile has hit the target based only on horizontal position
+    public boolean checkHit() {
+        // Adjust for the offset in the target's position
+        double adjustedTargetX = baseScene.getTargetX() + 50;  // Apply offset to target's X
+
+        // Check horizontal overlap considering the target's adjusted position
+        if (baseScene.getFinalX() >= adjustedTargetX - baseScene.getTargetRadius() && baseScene.getFinalX() <= adjustedTargetX + baseScene.getTargetRadius()) {
+            baseScene.setHit(true);
+            return true;
+        }
+        System.out.println(adjustedTargetX);
+        baseScene.setHit(false);
+        return false;
     }
 }

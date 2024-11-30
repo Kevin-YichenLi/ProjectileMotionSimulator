@@ -1,7 +1,5 @@
 package com.pms.project.models;
 
-import com.pms.project.controllers.BaseSceneController;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -205,7 +203,7 @@ public class TargetGame {
    
     
 
-    public boolean isHit() {
+    public boolean getisHit() {
         return isHit;
     }
     public void setTarget(Circle target) {
@@ -215,17 +213,7 @@ public class TargetGame {
     public Circle getTarget() {
         return target;
     }
-    // Method to check if the projectile has hit the target based only on horizontal position
-    public boolean checkHit() {
-        // Check if the final X position of the projectile is within the range of the target's X position
-        // Target's hit range is from targetX - targetRadius to targetX + targetRadius
-        if (finalX >= targetX - targetRadius && finalX <= targetX + targetRadius) {
-            isHit = true;  // If within range, it's a hit
-            return true;
-        }
-        isHit = false;  // If no hit, reset the hit status
-        return false;
-    }
+    
 
     
     public void setHit(boolean isHit) {
@@ -235,11 +223,11 @@ public class TargetGame {
     @Override
     public String toString() {
         return "TargetGame{" +
-                "target=" + target +
-                ", targetX=" + targetX +
+                //"target=" + target +
+               // ", targetX=" + targetX +
                 ", targetY=" + targetY +
-                ", targetRadius=" + targetRadius +
-                ", isHit=" + isHit +
+               ", targetRadius=" + targetRadius +
+                //", isHit=" + isHit +
                 ", initialVelocity=" + initialVelocity +
                 ", initialAngle=" + initialAngle +
                 ", time=" + time +

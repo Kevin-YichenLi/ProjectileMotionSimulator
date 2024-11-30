@@ -1,10 +1,10 @@
 package com.pms.project.views;
 
 import com.pms.project.AnimationStatus;
-import com.pms.project.controllers.BaseSceneController;
+
 import com.pms.project.controllers.MainController;
 import com.pms.project.controllers.TargetGameController;
-import com.pms.project.models.BaseScene;
+
 import com.pms.project.models.TargetGame;
 import com.pms.project.utils.Util;
 
@@ -50,6 +50,7 @@ public class TargetGameView extends BorderPane {
     // base of the animation object, varying depending on the initial height
     protected Rectangle base;
     protected Button newTargetButton;
+   
 
     public TargetGameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -75,9 +76,11 @@ public class TargetGameView extends BorderPane {
         // Create the button for a new target
         newTargetButton = new Button("New Target");
         newTargetButton.setOnAction(event -> controller.onNewTargetButtonPressed());
+        
+        
 
 
-        ((Pane) this.getCenter()).getChildren().addAll(target, newTargetButton);
+        ((Pane) this.getCenter()).getChildren().addAll(target, newTargetButton,controller.feedbackLabel);
 
         targetGame.getTarget().setLayoutX(200);
         targetGame.getTarget().setLayoutY(200);
