@@ -54,7 +54,12 @@ public class SimulationView extends BaseSceneView{
         VBox container = new VBox(20);
 
         Button forward = new Button("Forward");
+        forward.setOnAction(event -> simulationController.onForwardPressed(controller.getObject().getTranslateX(), controller.getTimeline()));
         Button backward = new Button("Backward");
+        backward.setOnAction(event -> simulationController.onBackwardPressed(controller.getObject().getTranslateX(), controller.getTimeline()));
+
+        backward.disableProperty().bind(status.isEqualTo(AnimationStatus.PREPARED).or(status.isEqualTo(AnimationStatus.FINISHED)));
+        forward.disableProperty().bind(status.isEqualTo(AnimationStatus.PREPARED).or(status.isEqualTo(AnimationStatus.FINISHED)));
 
         container.getChildren().addAll(forward, backward);
         return container;

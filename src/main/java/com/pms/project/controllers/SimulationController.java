@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 public class SimulationController {
     private double mouseX; // the initial x position of cursor when the mouse click the detector relative to the detector
@@ -103,6 +104,38 @@ public class SimulationController {
             case "slow" -> timeline.setRate(0.5);
             case "normal" -> timeline.setRate(1);
             case "fast" -> timeline.setRate(2);
+        }
+    }
+
+    public void onForwardPressed(double objectX, Timeline timeline) {
+        for (Circle circle : trails) {
+            double trailX = circle.getCenterX();
+
+            if (objectX < trailX) {
+                double time = baseScene.getTime() * (trailX - 8) / baseScene.getDistance();
+                timeline.jumpTo(Duration.seconds(time));
+                return;
+            }
+        }
+    }
+
+    public void onBackwardPressed(double objectX, Timeline timeline) {
+        for (int i = 0; i < trails.length; i++) {
+            double trailX = trails[i].getCenterX();
+
+            if (objectX <= trailX) {
+                double previousTrailX;
+
+                if (i == 0) {
+                    previousTrailX = trails[0].getCenterX();
+                } else {
+                    previousTrailX = trails[i - 1].getCenterX();
+                }
+
+                double time = baseScene.getTime() * (previousTrailX - 8) / baseScene.getDistance();
+                timeline.jumpTo(Duration.seconds(time));
+                return;
+            }
         }
     }
 }
