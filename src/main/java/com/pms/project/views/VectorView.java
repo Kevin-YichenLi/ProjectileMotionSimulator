@@ -176,7 +176,7 @@ public class VectorView extends BorderPane {
 
         // for testing, to be deleted
         animationPane.setBorder(Border.stroke(Color.BLACK));
-        animationPane.getChildren().addAll(controller.getObject(), base);
+        animationPane.getChildren().addAll(controller.getObject(), controller.getVectorX(),controller.getVectorY(), base);
         for (Circle circle : trails) {
             animationPane.getChildren().add(circle);
         }

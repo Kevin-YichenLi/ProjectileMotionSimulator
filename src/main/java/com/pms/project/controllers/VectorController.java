@@ -3,6 +3,7 @@ package com.pms.project.controllers;
 import com.pms.project.AnimationStatus;
 import com.pms.project.models.BaseScene;
 import com.pms.project.models.Vector;
+
 import com.pms.project.utils.Util;
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
@@ -19,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -36,6 +38,8 @@ public class VectorController {
     protected Util util = new Util(primaryStage);
     // Animation related fields
     protected Circle object;
+    protected Line vectorX;
+    protected Line vectorY;
     protected Timeline timeline;
     protected int animationPaneWidth;
     protected int animationPaneHeight;
@@ -59,6 +63,13 @@ public class VectorController {
         object.setFill(Color.BLACK);
         object.setTranslateX(baseScene.getInitialX());
         object.setTranslateY(animationPaneHeight - 3);
+        
+        vectorX = new Line(baseScene.getInitialX(), animationPaneHeight - 3, baseScene.getInitialX()+30, animationPaneHeight - 3);
+        vectorX.setStroke(Color.LIGHTSTEELBLUE);
+        
+        vectorY = new Line(baseScene.getInitialX(), animationPaneHeight - 3,baseScene.getInitialX(),animationPaneHeight -30);
+        vectorY.setStroke(Color.RED);
+        
     }
 
     public void onBackToMainPressed() {
@@ -74,11 +85,25 @@ public class VectorController {
 
     public void onInitialHeightValueChanged(Double newValue, Rectangle base) {
         updateInitialHeight(newValue);
+
         base.setHeight(newValue);
         base.setY(animationPaneHeight - base.getHeight());
-        object.setTranslateY(animationPaneHeight - baseScene.getInitialHeight() - 3);
+
+        double newY = animationPaneHeight - baseScene.getInitialHeight() - 3;
+        object.setTranslateY(newY);
+
+        // Update `vectorX` position
+        vectorX.setStartY(newY);
+        vectorX.setEndY(newY);
+
+        // Update `vectorY` position
+        vectorY.setStartY(newY);
+        vectorY.setEndY(newY - 30);
+
         rearrangeToPreparedStatus();
     }
+
+
 
     public void onMassValueChanged(Double newValue) {
         updateMass(newValue);
@@ -99,7 +124,10 @@ public class VectorController {
         setTrailsInvisible();
         status.set(AnimationStatus.PREPARED);
         object.setTranslateX(baseScene.getInitialX());
+        
+        
         object.setTranslateY(animationPaneHeight - baseScene.getInitialHeight() - 3);
+        
     }
 
     protected void setTrailsInvisible() {
@@ -255,8 +283,7 @@ public class VectorController {
 
     protected void createAnimation() {
         KeyFrame currentFrame;
-        double x;
-        double y;
+        double x, y;
 
         int n = 1000;
         int[] trailIndices = {0, n / 8, n / 8 * 2, n / 8 * 3, n / 8 * 4, n / 8 * 5, n / 8 * 6, n / 8 * 7, n - 1};
@@ -264,11 +291,26 @@ public class VectorController {
         for (int i = 0; i < n; i++) {
             x = (baseScene.getDistance() * i / (n - 1)) + baseScene.getInitialX();
             y = calculateCurrentHeight(baseScene.getTime() * i / (n - 1));
+            
+        
             currentFrame = new KeyFrame(Duration.seconds(baseScene.getTime() * i / (n - 1)),
                 new KeyValue(object.translateXProperty(), x, Interpolator.LINEAR),
-                new KeyValue(object.translateYProperty(), y, Interpolator.LINEAR)
+                new KeyValue(object.translateYProperty(), y, Interpolator.LINEAR),
+                
+                // Update `vectorX` position
+                new KeyValue(vectorX.startXProperty(), x, Interpolator.LINEAR),
+                new KeyValue(vectorX.startYProperty(), y, Interpolator.LINEAR),
+                new KeyValue(vectorX.endXProperty(), x + 30, Interpolator.LINEAR),
+                new KeyValue(vectorX.endYProperty(), y, Interpolator.LINEAR),
+                
+                // Update `vectorY` position
+                new KeyValue(vectorY.startXProperty(), x, Interpolator.LINEAR),
+                new KeyValue(vectorY.startYProperty(), y, Interpolator.LINEAR),
+                new KeyValue(vectorY.endXProperty(), x, Interpolator.LINEAR),
+                new KeyValue(vectorY.endYProperty(), y - 30, Interpolator.LINEAR)
             );
 
+         
             for (int j = 0; j < trailIndices.length; j++) {
                 if (i == trailIndices[j]) {
                     trails[j].setStroke(Color.BLACK);
@@ -276,6 +318,7 @@ public class VectorController {
                     trails[j].setCenterY(y);
                 }
             }
+
             timeline.getKeyFrames().add(currentFrame);
         }
 
@@ -287,6 +330,8 @@ public class VectorController {
             }
         });
     }
+
+
 
     protected double calculateCurrentHeight(double currentTime) {
         double currentChangeInHeight = baseScene.getInitialYVelocity() * currentTime - baseScene.getGravity() / 2 * Math.pow(currentTime, 2);
@@ -311,6 +356,15 @@ public class VectorController {
     public Circle getObject() {
         return object;
     }
+    
+    public Line getVectorX() {
+    	return vectorX;
+    }
+    
+    public Line getVectorY() {
+    	return vectorY;
+    }
+    
     public void zoom(double factor) {
         scaleTransform.setX(scaleTransform.getX() * factor);
         scaleTransform.setY(scaleTransform.getY() * factor);
