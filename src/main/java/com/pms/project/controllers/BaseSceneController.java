@@ -314,4 +314,8 @@ public class BaseSceneController {
         scaleTransform.setX(scaleTransform.getX() * factor);
         scaleTransform.setY(scaleTransform.getY() * factor);
     }
+
+    public Timeline getTimeline() {
+        return timeline;
+    }
 }

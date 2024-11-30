@@ -1,6 +1,7 @@
 package com.pms.project.controllers;
 
 import com.pms.project.models.BaseScene;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -95,5 +96,13 @@ public class SimulationController {
         }
 
         return null;
+    }
+
+    public void onAnimationSpeedChanged(String selectedSpeed, Timeline timeline) {
+        switch (selectedSpeed) {
+            case "slow" -> timeline.setRate(0.5);
+            case "normal" -> timeline.setRate(1);
+            case "fast" -> timeline.setRate(2);
+        }
     }
 }

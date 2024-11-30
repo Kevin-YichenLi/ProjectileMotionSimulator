@@ -1,12 +1,10 @@
 package com.pms.project.views;
 
+import com.pms.project.AnimationStatus;
 import com.pms.project.controllers.SimulationController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -38,6 +36,15 @@ public class SimulationView extends BaseSceneView{
         slow.setToggleGroup(toggleGroup);
         normal.setToggleGroup(toggleGroup);
         fast.setToggleGroup(toggleGroup);
+
+        // Listener to detect changes in selection
+        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Retrieve the selected RadioButton's text
+                String selectedSpeed = ((RadioButton) newValue).getText().toLowerCase(); // "slow", "normal", or "fast"
+                simulationController.onAnimationSpeedChanged(selectedSpeed, controller.getTimeline()); // Pass the string to the controller
+            }
+        });
 
         container.getChildren().addAll(slow, normal, fast);
         return container;
