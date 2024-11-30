@@ -47,6 +47,8 @@ public class BaseSceneView extends BorderPane {
     protected Circle[] trails = new Circle[9];
     // base of the animation object, varying depending on the initial height
     protected Rectangle base;
+    protected double animationPaneLayoutX;
+    protected double animationPaneLayoutY;
 
     public BaseSceneView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -116,6 +118,10 @@ public class BaseSceneView extends BorderPane {
         Region animationPane = createAnimationPane();
         animationPane.setLayoutX(150);  // X position set to 0
         animationPane.setLayoutY(120);
+
+        animationPaneLayoutX = animationPane.getLayoutX();
+        animationPaneLayoutY = animationPane.getLayoutY() + 30;
+
         bottomYPosition += 120;
         bottomYPosition = MainView.stageHeight - bottomYPosition;
 

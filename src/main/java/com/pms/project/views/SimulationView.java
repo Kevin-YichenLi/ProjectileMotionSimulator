@@ -1,6 +1,7 @@
 package com.pms.project.views;
 
 import com.pms.project.controllers.SimulationController;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +14,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class SimulationView extends BaseSceneView{
-    private final SimulationController simulationController = new SimulationController();
+    private SimpleStringProperty displayedTime = new SimpleStringProperty();
+    private SimpleStringProperty displayedHeight = new SimpleStringProperty();
+    private SimpleStringProperty displayedRange = new SimpleStringProperty();
+    private SimulationController simulationController;
 
     public SimulationView(Stage primaryStage) {
         super(primaryStage);
@@ -52,7 +56,7 @@ public class SimulationView extends BaseSceneView{
     private Group createDetector() {
         double detectorLayoutX = 300;
 
-        Rectangle scope = new Rectangle(200, 100);
+        Rectangle scope = new Rectangle(100, 75);
         scope.setFill(Color.TRANSPARENT);
         scope.setStroke(Color.BLACK);
 
@@ -61,8 +65,11 @@ public class SimulationView extends BaseSceneView{
         Label rangeLbl = new Label("Range:");
 
         Text timeValue = new Text();
+        timeValue.textProperty().bind(displayedTime);
         Text heightValue = new Text();
+        heightValue.textProperty().bind(displayedHeight);
         Text rangeValue = new Text();
+        rangeValue.textProperty().bind(displayedRange);
 
         VBox container = new VBox(10, new HBox(10, timeLbl, timeValue),
                 new HBox(10, heightLbl, heightValue), new HBox(10, rangeLbl, rangeValue));
@@ -85,12 +92,25 @@ public class SimulationView extends BaseSceneView{
         detector.setLayoutX(detectorLayoutX);
         detector.setLayoutY(0);
 
-        detectiveArea.setLayoutX(scope.getWidth() + radius - 3);
-        detectiveArea.setLayoutY(scope.getHeight() + radius - 3);
+        // the coordinate for the center of the circle relative to top left corner of the detector
+        double relativeX = scope.getWidth() + radius - 3;
+        double relativeY = scope.getHeight() + radius - 3;
 
-        simulationController.enableDetectorDragAndDrop(detector, detector.getLayoutX(), detector.getLayoutY());
+        detectiveArea.setLayoutX(relativeX);
+        detectiveArea.setLayoutY(relativeY);
+
+        double centerX = detector.getLayoutX() + relativeX;
+        double centerY = detector.getLayoutY() + relativeY;
+
+        createSimulationController(centerX, centerY, relativeX, relativeY);
+        simulationController.enableDetectorDragAndDrop(detector, detector.getLayoutX(), detector.getLayoutY(),
+                displayedTime, displayedHeight, displayedRange, animationPaneLayoutX, animationPaneLayoutY);
 
         return detector;
+    }
+
+    private void createSimulationController(double detectorPointX, double detectorPointY, double relativeX, double relativeY) {
+        simulationController = new SimulationController(trails, detectorPointX, detectorPointY, relativeX, relativeY, baseScene, animationPaneWidth, animationPaneHeight);
     }
 
     @Override
