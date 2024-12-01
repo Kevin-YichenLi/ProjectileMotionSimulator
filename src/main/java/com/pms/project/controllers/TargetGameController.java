@@ -339,16 +339,11 @@ public class TargetGameController {
     public Circle getObject() {
         return object;
     }
-    public void zoom(double factor) {
-        scaleTransform.setX(scaleTransform.getX() * factor);
-        scaleTransform.setY(scaleTransform.getY() * factor);
-    }
- // Method to check if the projectile has hit the target based only on horizontal position
-    public boolean checkHit() {
-        // Adjust for the offset in the target's position
-        double adjustedTargetX = baseScene.getTargetX() + 50;  // Apply offset to target's X
+   
 
-        // Check horizontal overlap considering the target's adjusted position
+    public boolean checkHit() {
+        double adjustedTargetX = baseScene.getTargetX() + 50; 
+       
         if (baseScene.getFinalX() >= adjustedTargetX - baseScene.getTargetRadius() && baseScene.getFinalX() <= adjustedTargetX + baseScene.getTargetRadius()) {
             baseScene.setHit(true);
             return true;

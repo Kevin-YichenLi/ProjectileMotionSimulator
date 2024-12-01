@@ -44,7 +44,7 @@ public class ThemeController {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             SimulationView simulationView = new SimulationView(primaryStage);
-            Scene scene = new Scene(simulationView, MainView.stageWidth, MainView.stageHeight);
+            Scene scene = new Scene(simulationView, MainView.stageWidth, 1010);
 
             // Apply the selected font and background
             scene.getRoot().getStyleClass().clear();
@@ -67,7 +67,7 @@ public class ThemeController {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             TargetGameView targetGameView = new TargetGameView(primaryStage);
-            Scene scene = new Scene(targetGameView, MainView.stageWidth, MainView.stageHeight);
+            Scene scene = new Scene(targetGameView, MainView.stageWidth, 1010);
 
             // Apply the selected font and background
             scene.getRoot().getStyleClass().clear();
@@ -91,7 +91,7 @@ public class ThemeController {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             VectorView vectorView = new VectorView(primaryStage);
-            Scene scene = new Scene(vectorView, MainView.stageWidth, MainView.stageHeight);
+            Scene scene = new Scene(vectorView, MainView.stageWidth, 1010);
 
             // Apply the selected font and background
             scene.getRoot().getStyleClass().clear();

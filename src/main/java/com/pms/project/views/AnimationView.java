@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class AnimationView extends Pane {
+public class AnimationView extends GridPane {
     
     private Stage primaryStage;
   
@@ -25,8 +25,8 @@ public class AnimationView extends Pane {
         backButton.setOnAction(event -> util.goBack(primaryStage));
 
         // Create Confirm Button
-        Button confirmButton = new Button("Confirm");
-        confirmButton.setOnAction(event -> animationController.goToBaseScene());
+        Button simulationButton = new Button("Simulation");
+        simulationButton.setOnAction(event -> animationController.goToSimulation());
 
         // Create Zoom In Button
         Button zoomInButton = new Button("Zoom In");
@@ -42,26 +42,21 @@ public class AnimationView extends Pane {
         
         Button targetButton =new Button("Target");
         targetButton.setOnAction(e-> animationController.goToTargetScene());
-
-       
-        backButton.setLayoutX(20);
-        backButton.setLayoutY(900);
-
-        confirmButton.setLayoutX(1700);
-        confirmButton.setLayoutY(900);
         
-        targetButton.setLayoutX(1700);
-        targetButton.setLayoutY(950);
-
-        zoomInButton.setLayoutX(0);
-        zoomInButton.setLayoutY(0);
-
-        zoomOutButton.setLayoutX(70);
-        zoomOutButton.setLayoutY(0);
-
-        rotateButton.setLayoutX(150);
-        rotateButton.setLayoutY(0);
-
-        this.getChildren().addAll(backButton,confirmButton,zoomInButton,zoomOutButton,rotateButton,targetButton);
+        Button vectorButton = new Button ("Vector");
+        vectorButton.setOnAction(e -> animationController.goToVector());
+              
+        this.setVgap(10);
+        this.setHgap(10);
+        
+       this.add(zoomInButton, 0, 0);
+       this.add(zoomOutButton, 1, 0);
+       this.add(rotateButton, 2, 0);
+       
+       this.add(backButton, 0, 4);
+       
+       this.add(targetButton, 2, 4);
+       this.add(simulationButton, 2, 5);
+       this.add(vectorButton, 2, 6);
     }
 }

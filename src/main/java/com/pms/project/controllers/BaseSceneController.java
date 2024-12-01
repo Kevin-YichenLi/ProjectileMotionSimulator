@@ -310,10 +310,7 @@ public class BaseSceneController {
     public Circle getObject() {
         return object;
     }
-    public void zoom(double factor) {
-        scaleTransform.setX(scaleTransform.getX() * factor);
-        scaleTransform.setY(scaleTransform.getY() * factor);
-    }
+   
 
     public Timeline getTimeline() {
         return timeline;

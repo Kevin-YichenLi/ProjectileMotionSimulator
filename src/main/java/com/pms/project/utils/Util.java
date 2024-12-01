@@ -48,95 +48,21 @@ public class Util {
     public void rotate() {
         Scene currentScene = primaryStage.getScene();
         if (currentScene == null) return;
-
-        // Get current width and height
-        double currentWidth = currentScene.getWidth();
-        double currentHeight = currentScene.getHeight();
-
         if (isRotated) {
-            // Return to the original state (swap back width and height)
-            double newWidth = currentHeight;
-            double newHeight = currentWidth;
-
-            // Apply new width and height to the scene
-            currentScene.getWindow().setWidth(newWidth);
-            currentScene.getWindow().setHeight(newHeight);
-
-            // Reset scale to normal (no zoom)
-            applyScale(1); // Reset scaling to 100%
-
-            isRotated = false; // Reset rotation state
+            currentScene.getWindow().setWidth(1800);
+            currentScene.getWindow().setHeight(1038);
+            isRotated = false; 
         } else {
-            // Swap width and height
-            double newWidth = currentHeight;
-            double newHeight = currentWidth;
-
-            // Apply new width and height to the scene
-            currentScene.getWindow().setWidth(1500);
-            currentScene.getWindow().setHeight(newHeight);
-
-            // Calculate scale factor to fit everything and make it more zoomed out
-            double scaleFactor = Math.min(newWidth / currentWidth, newHeight / currentHeight);
-            
-            
-            scaleFactor *= 1.01; 
-
-           
-            applyScale(scaleFactor);
-
+         
+            currentScene.getWindow().setWidth(1468);
+            currentScene.getWindow().setHeight(1038);
             isRotated = true;
         }
-
     
-        adjustLayout();
     }
 
    
-    private void applyScale(double scaleFactor) {
-        Scene currentScene = primaryStage.getScene();
-        if (currentScene == null) return;
-
-        Pane root = (Pane) currentScene.getRoot();
-
-        // Apply the scaling transformation to the root
-        globalScaleTransform.setX(scaleFactor);
-        globalScaleTransform.setY(scaleFactor);
-
-        if (!root.getTransforms().contains(globalScaleTransform)) {
-            root.getTransforms().add(globalScaleTransform);
-        }
-    }
-
-    
-    private void adjustLayout() {
-        Scene currentScene = primaryStage.getScene();
-        if (currentScene == null) return;
-
-        Pane root = (Pane) currentScene.getRoot();
-        double newWidth = currentScene.getWidth();
-        double newHeight = currentScene.getHeight();
-
-        // Adjust buttons and other layout elements
-        for (Node node : root.getChildren()) {
-            if (node instanceof Button) {
-                // Adjust the layout of each button based on new dimensions
-                double newX = node.getLayoutY();
-                double newY = node.getLayoutX();
-
-                // Ensure that buttons stay within the bounds of the scene
-                double buttonWidth = node.getLayoutBounds().getWidth();
-                double buttonHeight = node.getLayoutBounds().getHeight();
-
-                newX = Math.min(newX, newWidth - buttonWidth);
-                newY = Math.min(newY, newHeight - buttonHeight);
-
-                // Update layout
-                node.setLayoutX(newX);
-                node.setLayoutY(newY);
-            }
-        }
-    }
-
+   
 
 
    

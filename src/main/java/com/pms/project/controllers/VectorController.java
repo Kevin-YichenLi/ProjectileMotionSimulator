@@ -387,8 +387,5 @@ public class VectorController {
     	return vectorY;
     }
     
-    public void zoom(double factor) {
-        scaleTransform.setX(scaleTransform.getX() * factor);
-        scaleTransform.setY(scaleTransform.getY() * factor);
-    }
+ 
 }
