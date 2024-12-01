@@ -1,51 +1,82 @@
 package com.pms.project.views;
 
+import com.pms.project.controllers.GeneralSettingController;
+import com.pms.project.models.GeneralSetting;
+import com.pms.project.utils.Util;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class GeneralSettingView extends VBox {
     private Stage primaryStage;
+    private GeneralSetting generalSetting = new GeneralSetting();
+    private final GeneralSettingController generalSettingController = new GeneralSettingController(generalSetting, primaryStage);
+    private Util util;
+
     public GeneralSettingView(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.getChildren().addAll(createResourcesPathComponent(), createLanguageComponent(), createButtons()[0], createButtons()[1]);
+        util = new Util(primaryStage);
+        this.getChildren().addAll(createResourcesPathComponent(), createVolumeComponent(), createLanguageComponent(), createBackButton());
         this.setAlignment(Pos.CENTER);
         this.setSpacing(50);
     }
 
     private Region createResourcesPathComponent() {
-        Label label = new Label("Resources Path: ");
-        TextField pathTxt = new TextField();
-        Label example = new Label("Example: /resources/images/");
 
-        HBox container = new HBox(20, label, pathTxt, example);
+        HBox container = new HBox(20);
         container.setAlignment(Pos.TOP_CENTER);
         return container;
     }
 
-    private Region createLanguageComponent() {
-        Label languageLbl = new Label("Language:");
+    private Region createVolumeComponent() {
+        Label volumeLabel = new Label("Volume");
 
-        ComboBox<String> languageComboBox = new ComboBox<>();
-        languageComboBox.setVisibleRowCount(2);
-        languageComboBox.getItems().addAll("English", "French");
+        Slider volumeSlider = new Slider(0, 100, 50); // Min=0, Max=100, Default=50
+        volumeSlider.setBlockIncrement(5); // Make step increments bigger if needed
 
-        HBox container = new HBox(20, languageLbl, languageComboBox);
-        container.setAlignment(Pos.CENTER);
-        return container;
+        volumeSlider.setShowTickLabels(true);
+        volumeSlider.setShowTickMarks(true);
+        volumeSlider.setMajorTickUnit(20);
+        volumeSlider.setMinorTickCount(4);
+
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            generalSetting.setVolume(newValue.doubleValue());
+        });
+
+        HBox volumeBox = new HBox(10, volumeLabel, volumeSlider);
+        volumeBox.setAlignment(Pos.CENTER);
+        return volumeBox;
     }
 
-    private Button[] createButtons() {
-        Button saveButton = new Button("Save");
+    private Region createLanguageComponent() {
+        Label languageLabel = new Label("Language");
 
+        ComboBox<String> languageComboBox = new ComboBox<>();
+        languageComboBox.getItems().addAll("English", "French");
+
+        languageComboBox.setValue("English");
+
+        // Handle language change
+        languageComboBox.setOnAction(event -> {
+            String selectedLanguage = languageComboBox.getValue();
+            System.out.println("Selected Language: " + selectedLanguage);
+        });
+
+        HBox languageBox = new HBox(10, languageLabel, languageComboBox);
+        languageBox.setAlignment(Pos.CENTER);
+        return languageBox;
+    }
+
+    private Region createBackButton() {
         Button backButton = new Button("Back");
-        Button[] buttons = {saveButton, backButton};
-        return buttons;
+        backButton.setOnAction(event -> util.goBack(primaryStage));
+
+        return backButton;
     }
 }
