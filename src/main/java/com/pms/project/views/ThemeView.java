@@ -116,15 +116,20 @@ public class ThemeView extends GridPane {
         backButton.setOnAction(event -> util.goBack(primaryStage));
 
         // Create Confirm Button
-        Button confirmButton = new Button("Confirm");
-        confirmButton.setOnAction(event -> themeController.goToBaseScene(primaryStage));
+        Button simulationButton = new Button("Simulation");
+        simulationButton.setOnAction(event -> themeController.goToSimulationScene(primaryStage));
         
         Button targetButton = new Button("Target");
         targetButton.setOnAction(event -> themeController.goToTargetScene(primaryStage));
+        
+        Button vectorButton = new Button("Vector");
+        vectorButton.setOnAction(event -> themeController.goToVectorScene(primaryStage));
+        
 
         // Add the Back and Confirm Buttons to the GridPane
         this.add(backButton, 0, 8);
-        this.add(confirmButton, 1, 8); 
-        this.add(targetButton, 1, 9);
+        this.add(simulationButton, 1, 9); 
+        this.add(targetButton, 1, 8);
+        this.add(vectorButton, 1, 10);
     }
 }

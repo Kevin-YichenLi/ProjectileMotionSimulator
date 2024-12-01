@@ -4,7 +4,9 @@ import java.util.Optional;
 
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
+import com.pms.project.views.SimulationView;
 import com.pms.project.views.TargetGameView;
+import com.pms.project.views.VectorView;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -34,15 +36,15 @@ public class ThemeController {
 
     
 
-    public void goToBaseScene(Stage primaryStage) {
+    public void goToSimulationScene(Stage primaryStage) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation");
         confirmationAlert.setContentText("Do you really want to  the base scene?");
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            BaseSceneView baseSceneView = new BaseSceneView(primaryStage);
-            Scene scene = new Scene(baseSceneView, MainView.stageWidth, MainView.stageHeight);
+            SimulationView simulationView = new SimulationView(primaryStage);
+            Scene scene = new Scene(simulationView, MainView.stageWidth, MainView.stageHeight);
 
             // Apply the selected font and background
             scene.getRoot().getStyleClass().clear();
@@ -66,6 +68,30 @@ public class ThemeController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             TargetGameView targetGameView = new TargetGameView(primaryStage);
             Scene scene = new Scene(targetGameView, MainView.stageWidth, MainView.stageHeight);
+
+            // Apply the selected font and background
+            scene.getRoot().getStyleClass().clear();
+            scene.getRoot().getStyleClass().add(selectedFont);
+            scene.getRoot().getStyleClass().add(selectedBackground);
+
+            // Apply the theme stylesheet
+            scene.getStylesheets().add(getClass().getResource("/css/theme.css").toExternalForm());
+
+            // Set the scene for the primaryStage
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
+    }
+    
+    public void goToVectorScene(Stage primaryStage) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setContentText("Do you really want to  the vector scene?");
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            VectorView vectorView = new VectorView(primaryStage);
+            Scene scene = new Scene(vectorView, MainView.stageWidth, MainView.stageHeight);
 
             // Apply the selected font and background
             scene.getRoot().getStyleClass().clear();

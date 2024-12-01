@@ -7,6 +7,8 @@ import com.pms.project.models.Vector;
 import com.pms.project.utils.Util;
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
+import com.pms.project.views.VectorView;
+
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -66,9 +68,11 @@ public class VectorController {
         
         vectorX = new Line(baseScene.getInitialX(), animationPaneHeight - 3, baseScene.getInitialX()+30, animationPaneHeight - 3);
         vectorX.setStroke(Color.LIGHTSTEELBLUE);
+        vectorX.setStrokeWidth(2.5);
         
         vectorY = new Line(baseScene.getInitialX(), animationPaneHeight - 3,baseScene.getInitialX(),animationPaneHeight -30);
         vectorY.setStroke(Color.RED);
+        vectorY.setStrokeWidth(2.5);
         
     }
 
@@ -291,26 +295,40 @@ public class VectorController {
         for (int i = 0; i < n; i++) {
             x = (baseScene.getDistance() * i / (n - 1)) + baseScene.getInitialX();
             y = calculateCurrentHeight(baseScene.getTime() * i / (n - 1));
-            
-        
-            currentFrame = new KeyFrame(Duration.seconds(baseScene.getTime() * i / (n - 1)),
+
+            // Calculate timeElapsed and adjust vectorY's length
+            double timeElapsed = baseScene.getTime() * i / (n - 1);
+            double halfwayTime = baseScene.getTime() / 2;
+
+            // After halfway time, the vectorY starts going from 0 to -30
+            double vectorYLength;
+            if (timeElapsed <= halfwayTime) {
+               
+                vectorYLength = 30 - (timeElapsed / halfwayTime) * 30;  
+            } else {
+                //
+                vectorYLength = -30 * (timeElapsed - halfwayTime) / (baseScene.getTime() - halfwayTime); 
+            }
+
+            // Create KeyFrame to animate the object and vectors
+            currentFrame = new KeyFrame(Duration.seconds(timeElapsed),
                 new KeyValue(object.translateXProperty(), x, Interpolator.LINEAR),
                 new KeyValue(object.translateYProperty(), y, Interpolator.LINEAR),
-                
-                // Update `vectorX` position
+
+                // Update `vectorX` position (remains constant horizontally)
                 new KeyValue(vectorX.startXProperty(), x, Interpolator.LINEAR),
                 new KeyValue(vectorX.startYProperty(), y, Interpolator.LINEAR),
                 new KeyValue(vectorX.endXProperty(), x + 30, Interpolator.LINEAR),
                 new KeyValue(vectorX.endYProperty(), y, Interpolator.LINEAR),
-                
-                // Update `vectorY` position
+
+                // Update `vectorY` position (now going from 0 to -30 after halfway point)
                 new KeyValue(vectorY.startXProperty(), x, Interpolator.LINEAR),
                 new KeyValue(vectorY.startYProperty(), y, Interpolator.LINEAR),
                 new KeyValue(vectorY.endXProperty(), x, Interpolator.LINEAR),
-                new KeyValue(vectorY.endYProperty(), y - 30, Interpolator.LINEAR)
+                new KeyValue(vectorY.endYProperty(), y - vectorYLength, Interpolator.LINEAR)  
             );
 
-         
+            
             for (int j = 0; j < trailIndices.length; j++) {
                 if (i == trailIndices[j]) {
                     trails[j].setStroke(Color.BLACK);
@@ -333,6 +351,10 @@ public class VectorController {
 
 
 
+
+
+
+
     protected double calculateCurrentHeight(double currentTime) {
         double currentChangeInHeight = baseScene.getInitialYVelocity() * currentTime - baseScene.getGravity() / 2 * Math.pow(currentTime, 2);
         return animationPaneHeight - baseScene.getInitialHeight() - currentChangeInHeight - 3;
@@ -349,7 +371,7 @@ public class VectorController {
     }
 
     public void onRefreshButtonPressed() {
-        Scene scene = new Scene(new BaseSceneView(primaryStage), MainView.stageWidth, MainView.stageHeight);
+        Scene scene = new Scene(new VectorView(primaryStage), MainView.stageWidth, MainView.stageHeight);
         util.switchScene(primaryStage, scene);
     }
 

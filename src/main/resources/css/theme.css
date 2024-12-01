@@ -26,29 +26,36 @@
     -fx-font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
-/* Button Styles */
+
 .button {
     -fx-background-color: transparent;
-    -fx-border-color: #D3D3D3;
-    -fx-border-width: 1px;
-    -fx-border-radius: 5px;
-    -fx-text-fill: black;
+    -fx-border-color: #A9A9A9;           /* Default border color */
+    -fx-border-width: 1px;               /* Border width */
+    -fx-border-radius: 5px;              /* Rounded corners */
+    -fx-text-fill: black;                /* Text color */
 }
 
 .button:hover {
     -fx-background-color: transparent;
-    -fx-border-color: #D3D3D3;
+    -fx-border-color: #D3D3D3;           /* Border color on hover */
 }
 
 .button:pressed {
     -fx-background-color: transparent;
-    -fx-border-color: #D3D3D3;
+    -fx-border-color: #ADD8E6;           /* Light blue border when pressed */
+    -fx-border-width: 2px;               /* Slightly thicker border when pressed */
+}
+
+/* Ensure that once the button is pressed, it remains selected */
+.button:selected {
+    -fx-border-color: #ADD8E6;           /* Light blue border when selected */
+    -fx-border-width: 2px;               /* Slightly thicker border when selected */
 }
 
 .button:disabled {
     -fx-background-color: transparent;
-    -fx-text-fill: #A9A9A9;
-    -fx-border-color: #D3D3D3;
+    -fx-text-fill: #A9A9A9;              /* Text color when disabled */
+    -fx-border-color: #D3D3D3;           /* Border color when disabled */
 }
 
 /* Slider Styles */
@@ -143,3 +150,16 @@
 .bottom-green-grass {
     -fx-background-color: #D0E8C5; /* LawnGreen */
 }
+/* Ensuring visibility of RadioButton */
+.radio-button {
+    -fx-text-fill: black;              /* Ensures text is visible */
+    -fx-background-color: transparent; /* Keeps background transparent */
+    -fx-border-color: #D3D3D3;         /* Light border color for visibility */
+    -fx-border-width: 1px;             /* Border width around the RadioButton */
+    -fx-padding: 5px;                  /* Padding around the RadioButton */
+    -fx-font-size: 14px;               /* Optional: Set a font size for better visibility */
+}
+
+
+
+

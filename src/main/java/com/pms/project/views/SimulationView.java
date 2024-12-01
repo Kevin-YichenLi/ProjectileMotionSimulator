@@ -4,6 +4,7 @@ import com.pms.project.AnimationStatus;
 import com.pms.project.controllers.SimulationController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -26,29 +27,27 @@ public class SimulationView extends BaseSceneView{
     private Region createAnimationSpeedControlComponent() {
         VBox container = new VBox(20);
 
-        RadioButton slow = new RadioButton("Slow");
-        RadioButton normal = new RadioButton("Normal");
-        normal.setSelected(true);
-        RadioButton fast = new RadioButton("Fast");
+        Button slow = new Button("Slow");
+        Button normal = new Button("Normal");
+       
+        Button fast = new Button("Fast");
 
-        ToggleGroup toggleGroup = new ToggleGroup();
-
-        slow.setToggleGroup(toggleGroup);
-        normal.setToggleGroup(toggleGroup);
-        fast.setToggleGroup(toggleGroup);
-
-        // Listener to detect changes in selection
-        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                // Retrieve the selected RadioButton's text
-                String selectedSpeed = ((RadioButton) newValue).getText().toLowerCase(); // "slow", "normal", or "fast"
-                simulationController.onAnimationSpeedChanged(selectedSpeed, controller.getTimeline()); // Pass the string to the controller
-            }
-        });
+        // Add event handlers to simulate toggle behavior
+        slow.setOnAction(event -> onSpeedButtonClicked(slow, "slow"));
+        normal.setOnAction(event -> onSpeedButtonClicked(normal, "normal"));
+        fast.setOnAction(event -> onSpeedButtonClicked(fast, "fast"));
 
         container.getChildren().addAll(slow, normal, fast);
         return container;
     }
+
+    private void onSpeedButtonClicked(Button selectedButton, String speed) {
+      
+        // Notify the controller with the selected speed
+        simulationController.onAnimationSpeedChanged(speed, controller.getTimeline());
+    }
+
+    
 
     private Region createBackwardAndForwardButton() {
         VBox container = new VBox(20);
@@ -66,7 +65,7 @@ public class SimulationView extends BaseSceneView{
     }
 
     private Group createDetector() {
-        double detectorLayoutX = 300;
+        double detectorLayoutX = 0;
 
         Rectangle scope = new Rectangle(100, 75);
         scope.setFill(Color.TRANSPARENT);
@@ -102,7 +101,7 @@ public class SimulationView extends BaseSceneView{
 
         Group detector = new Group(scope, container, detectiveArea);
         detector.setLayoutX(detectorLayoutX);
-        detector.setLayoutY(0);
+        detector.setLayoutY(40);
 
         // the coordinate for the center of the circle relative to top left corner of the detector
         double relativeX = scope.getWidth() + radius - 3;
