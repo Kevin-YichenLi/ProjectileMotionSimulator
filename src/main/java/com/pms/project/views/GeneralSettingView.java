@@ -61,12 +61,10 @@ public class GeneralSettingView extends VBox {
         languageComboBox.getItems().addAll("English", "French");
 
         languageComboBox.setValue("English");
+        languageComboBox.setVisibleRowCount(2);
 
         // Handle language change
-        languageComboBox.setOnAction(event -> {
-            String selectedLanguage = languageComboBox.getValue();
-            System.out.println("Selected Language: " + selectedLanguage);
-        });
+        languageComboBox.setOnAction(event -> generalSettingController.onLanguageChanged(languageComboBox.getValue()));
 
         HBox languageBox = new HBox(10, languageLabel, languageComboBox);
         languageBox.setAlignment(Pos.CENTER);

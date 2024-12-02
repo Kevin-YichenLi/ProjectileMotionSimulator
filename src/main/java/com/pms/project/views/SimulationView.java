@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -46,8 +48,6 @@ public class SimulationView extends BaseSceneView{
         // Notify the controller with the selected speed
         simulationController.onAnimationSpeedChanged(speed, controller.getTimeline());
     }
-
-    
 
     private Region createBackwardAndForwardButton() {
         VBox container = new VBox(20);
@@ -143,5 +143,28 @@ public class SimulationView extends BaseSceneView{
         hBox.getChildren().addAll(createInitialHeightComponent(), spacer1, createAnimationSpeedControlComponent(),
                 createBackwardAndForwardButton(), spacer2, createStartAndStopButton());
         return hBox;
+    }
+
+    @Override
+    public Region createStartAndStopButton() {
+        HBox container = new HBox(20);
+
+        Button startButton = new Button("Start");
+        startButton.setOnAction(event -> controller.onStartButtonPressed());
+
+        Button refreshButton = new Button();
+        refreshButton.setOnAction(event -> simulationController.onRefreshButtonPressed(primaryStage));
+        Image refreshImage = new Image(this.getClass().getResource("/images/refresh.png").toExternalForm());
+        ImageView refreshImageView = new ImageView(refreshImage);
+        refreshImageView.setPreserveRatio(true);
+        refreshImageView.setFitWidth(30);
+        refreshImageView.setFitHeight(30);
+        refreshButton.setGraphic(refreshImageView);
+
+        Button stopButton = new Button("Stop");
+        stopButton.setOnAction(event -> controller.onStopButtonPressed());
+
+        container.getChildren().addAll(startButton, refreshButton, stopButton);
+        return container;
     }
 }

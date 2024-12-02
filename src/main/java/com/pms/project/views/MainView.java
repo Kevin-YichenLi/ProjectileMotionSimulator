@@ -3,6 +3,7 @@ package com.pms.project.views;
 import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
 
+import com.pms.project.models.GeneralSetting;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -39,19 +40,19 @@ public class MainView extends BorderPane {
      */
     private MenuBar createMenu() {
         MenuBar menuBar = new MenuBar();
-        Menu fileMenu = new Menu("File");
-        MenuItem quit = new MenuItem("Quit");
-        MenuItem aboutUs = new MenuItem("About us");
-        MenuItem help = new MenuItem("Help");
-        Menu settings = new Menu("Settings");
+        Menu fileMenu = new Menu(GeneralSetting.getString("menu.file"));
+        MenuItem quit = new MenuItem(GeneralSetting.getString("menuItem.quit"));
+        MenuItem aboutUs = new MenuItem(GeneralSetting.getString("menuItem.aboutUs"));
+        MenuItem help = new MenuItem(GeneralSetting.getString("menuItem.help"));
+        Menu settings = new Menu(GeneralSetting.getString("menu.settings"));
         
         quit.setOnAction(e -> mainController.onQuitButtonPressed());
         aboutUs.setOnAction(e ->mainController.onAboutUsPressed());
         help.setOnAction(e -> mainController.onHelpPressed());
 
-        MenuItem theme = new MenuItem("Theme");
-        MenuItem animation = new MenuItem("Animation");
-        MenuItem general = new MenuItem("General");
+        MenuItem theme = new MenuItem(GeneralSetting.getString("menuItem.themeSetting"));
+        MenuItem animation = new MenuItem(GeneralSetting.getString("menuItem.animationSetting"));
+        MenuItem general = new MenuItem(GeneralSetting.getString("menuItem.generalSetting"));
         
         theme.setOnAction(e -> mainController.onThemeButtonPressed());
         animation.setOnAction(e-> mainController.onAnimationButtonPressed());
@@ -73,7 +74,7 @@ public class MainView extends BorderPane {
      */
     private Region createContent() {
         VBox container = new VBox(10);
-        Label title = new Label("Projectile Motion Simulation");
+        Label title = new Label(GeneralSetting.getString("label.title"));
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
         title.setPadding(new Insets(0, 0, 200, 0));
 
@@ -99,23 +100,19 @@ public class MainView extends BorderPane {
         sceneImages.getChildren().addAll(targetGameImageView, simulationImageView, vectorImageView);
         sceneImages.setAlignment(Pos.CENTER);
 
-        Button targetGameButton = new Button("Target Game");
+        Button targetGameButton = new Button(GeneralSetting.getString("button.targetGame"));
         targetGameButton.setPrefSize(150, 20);
-        Button simulationButton = new Button("Projectile Motion Simulation");
+        Button simulationButton = new Button(GeneralSetting.getString("button.simulation"));
         simulationButton.setPrefSize(250, 20);
-        Button vectorButton = new Button("Vectors");
+        Button vectorButton = new Button(GeneralSetting.getString("button.vector"));
         vectorButton.setPrefSize(150, 20);
         
         vectorButton.setOnAction(e -> mainController.onVectorButtonPressed());
         targetGameButton.setOnAction(e -> mainController.onTargetGameButtonPressed());
         simulationButton.setOnAction(event -> mainController.onSimulationButtonPressed());
 
-        // button to base scene to test, please delete at the end
-        Button test = new Button("test");
-        test.setOnAction(event -> mainController.onTestButtonPressed());
-
         HBox buttons = new HBox(20);
-        buttons.getChildren().addAll(targetGameButton, simulationButton, vectorButton, test);
+        buttons.getChildren().addAll(targetGameButton, simulationButton, vectorButton);
         buttons.setAlignment(Pos.CENTER);
 
         container.getChildren().addAll(title, sceneImages, buttons);

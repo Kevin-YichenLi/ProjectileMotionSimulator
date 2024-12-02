@@ -1,12 +1,17 @@
 package com.pms.project.controllers;
 
 import com.pms.project.models.BaseScene;
+import com.pms.project.utils.Util;
+import com.pms.project.views.MainView;
+import com.pms.project.views.SimulationView;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class SimulationController {
@@ -137,5 +142,11 @@ public class SimulationController {
                 return;
             }
         }
+    }
+
+    public void onRefreshButtonPressed(Stage primaryStage) {
+        SimulationView simulationView = new SimulationView(primaryStage);
+        Scene scene = new Scene(simulationView, MainView.stageWidth, MainView.stageHeight);
+        new Util(primaryStage).switchScene(primaryStage, scene);
     }
 }

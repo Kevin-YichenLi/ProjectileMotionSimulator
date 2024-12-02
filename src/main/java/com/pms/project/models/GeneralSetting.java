@@ -1,11 +1,17 @@
 package com.pms.project.models;
 
+import com.pms.project.Language;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class GeneralSetting {
     private static DoubleProperty volume = new SimpleDoubleProperty(50);
-    private String language;
+    private static Locale currentLocale = Locale.ENGLISH;
+    private static ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n.messages", currentLocale);
 
     public static DoubleProperty volumeProperty() {
         return volume;
@@ -19,11 +25,16 @@ public class GeneralSetting {
         volume.set(newValue);
     }
 
-    public String getLanguage() {
-        return language;
+    public static void setLocale(Locale locale) {
+        currentLocale = locale;
+        resourceBundle = ResourceBundle.getBundle("i18n.messages", currentLocale);
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public static Locale getCurrentLocale() {
+        return currentLocale;
+    }
+
+    public static String getString(String key) {
+        return resourceBundle.getString(key);
     }
 }

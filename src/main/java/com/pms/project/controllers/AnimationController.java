@@ -1,5 +1,6 @@
 package com.pms.project.controllers;
 
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.utils.Util;
 import com.pms.project.views.MainView;
 import com.pms.project.views.SimulationView;
@@ -38,7 +39,7 @@ public class AnimationController {
 
     public void goToSimulation() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
         confirmationAlert.setContentText("Do you really want to go back to the simulation scene?");
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
