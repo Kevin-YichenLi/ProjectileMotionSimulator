@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class GeneralSettingView extends VBox {
     private Stage primaryStage;
@@ -60,7 +61,6 @@ public class GeneralSettingView extends VBox {
         ComboBox<String> languageComboBox = new ComboBox<>();
         languageComboBox.getItems().addAll(GeneralSetting.getString("comboBoxItem.english"), GeneralSetting.getString("comboBoxItem.french"));
 
-        languageComboBox.setValue("English");
         languageComboBox.setVisibleRowCount(2);
 
         // Handle language change

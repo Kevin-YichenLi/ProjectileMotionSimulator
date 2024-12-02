@@ -16,11 +16,15 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -59,6 +63,30 @@ public class VectorController {
         this.animationPaneWidth = animationPaneWidth;
         this.trails = trails;
         createObject();
+        addAudioWhenStartAndFinish();
+    }
+
+    protected void addAudioWhenStartAndFinish() {
+        status.addListener(new ChangeListener<AnimationStatus>() {
+            @Override
+            public void changed(ObservableValue<? extends AnimationStatus> observable, AnimationStatus oldValue, AnimationStatus newValue) {
+                if (newValue == AnimationStatus.PLAYED) {
+                    Media media = new Media(this.getClass().getResource("/audio/start_audio.mp3").toExternalForm());
+                    MediaPlayer mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.setCycleCount(1);
+                    mediaPlayer.setVolume(GeneralSetting.getVolume() * 0.01);
+                    mediaPlayer.play();
+                }
+
+                if (newValue == AnimationStatus.FINISHED) {
+                    Media media = new Media(this.getClass().getResource("/audio/finished_audio.mp3").toExternalForm());
+                    MediaPlayer mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.setCycleCount(1);
+                    mediaPlayer.setVolume(GeneralSetting.getVolume() * 0.01);
+                    mediaPlayer.play();
+                }
+            }
+        });
     }
 
     protected void createObject() {
@@ -283,10 +311,10 @@ public class VectorController {
             return;
         }
 
-        status.set(AnimationStatus.PLAYED);
         calculateAndSetPhysicalProperties();
 
         if (hasMotion) {
+            status.set(AnimationStatus.PLAYED);
             System.out.println("has motion");
             System.out.println(baseScene);
             createAnimation();
