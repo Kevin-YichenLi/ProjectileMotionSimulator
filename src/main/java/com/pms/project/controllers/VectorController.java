@@ -127,11 +127,22 @@ public class VectorController {
     protected void rearrangeToPreparedStatus() {
         setTrailsInvisible();
         status.set(AnimationStatus.PREPARED);
+
+        // Reset object's position
         object.setTranslateX(baseScene.getInitialX());
-        
-        
         object.setTranslateY(animationPaneHeight - baseScene.getInitialHeight() - 3);
-        
+
+        // Reset vectorX position and length
+        vectorX.setStartX(baseScene.getInitialX());
+        vectorX.setStartY(animationPaneHeight - baseScene.getInitialHeight() - 3);
+        vectorX.setEndX(baseScene.getInitialX() + 30); // Constant horizontal length
+        vectorX.setEndY(animationPaneHeight - baseScene.getInitialHeight() - 3);
+
+        // Reset vectorY position and length
+        vectorY.setStartX(baseScene.getInitialX());
+        vectorY.setStartY(animationPaneHeight - baseScene.getInitialHeight() - 3);
+        vectorY.setEndX(baseScene.getInitialX()); // Constant vertical alignment
+        vectorY.setEndY(animationPaneHeight - baseScene.getInitialHeight() - 33); // 30px length upwards
     }
 
     protected void setTrailsInvisible() {
