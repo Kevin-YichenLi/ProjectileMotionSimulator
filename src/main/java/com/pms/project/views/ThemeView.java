@@ -1,6 +1,7 @@
 package com.pms.project.views;
 
 import com.pms.project.controllers.ThemeController;
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.utils.Util;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -28,17 +29,17 @@ public class ThemeView extends GridPane {
         this.setHgap(10);
 
         // Title labels
-        Label backgroundLabel = new Label("Change Background");
-        Label fontLabel = new Label("Change Font");
+        Label backgroundLabel = new Label(GeneralSetting.getString("menuItem.themeSetting.label.background"));
+        Label fontLabel = new Label(GeneralSetting.getString("menuItem.themeSetting.label.font"));
 
         // Add labels to the GridPane
         this.add(backgroundLabel, 0, 0);
         this.add(fontLabel, 0, 4);
 
         // Create checkboxes for Background
-        CheckBox lightBlue = new CheckBox("Light blue");
-        CheckBox darkBlue = new CheckBox("Dark blue");
-        CheckBox sunset = new CheckBox("Sunset");
+        CheckBox lightBlue = new CheckBox(GeneralSetting.getString("menuItem.themeSetting.label.lightBlue"));
+        CheckBox darkBlue = new CheckBox(GeneralSetting.getString("menuItem.themeSetting.label.darkBlue"));
+        CheckBox sunset = new CheckBox(GeneralSetting.getString("menuItem.themeSetting.label.sunset"));
 
         // Add Background checkboxes to the GridPane
         this.add(lightBlue, 1, 1);
@@ -46,9 +47,9 @@ public class ThemeView extends GridPane {
         this.add(sunset, 1, 3);
 
         // Create checkboxes for Font
-        CheckBox times = new CheckBox("Times");
-        CheckBox calibri = new CheckBox("Calibri");
-        CheckBox comicSans = new CheckBox("Comic Sans");
+        CheckBox times = new CheckBox(GeneralSetting.getString("menuItem.themeSetting.label.times"));
+        CheckBox calibri = new CheckBox(GeneralSetting.getString("menuItem.themeSetting.label.calibri"));
+        CheckBox comicSans = new CheckBox(GeneralSetting.getString("menuItem.themeSetting.label.comicSans"));
 
         // Add Font checkboxes to the GridPane
         this.add(times, 1, 5);
@@ -112,17 +113,17 @@ public class ThemeView extends GridPane {
         });
 
         // Create Back Button
-        Button backButton = new Button("Back");
+        Button backButton = new Button(GeneralSetting.getString("button.back"));
         backButton.setOnAction(event -> util.goBack(primaryStage));
 
         // Create Confirm Button
-        Button simulationButton = new Button("Simulation");
+        Button simulationButton = new Button(GeneralSetting.getString("button.simulation"));
         simulationButton.setOnAction(event -> themeController.goToSimulationScene(primaryStage));
         
-        Button targetButton = new Button("Target");
+        Button targetButton = new Button(GeneralSetting.getString("button.targetGame"));
         targetButton.setOnAction(event -> themeController.goToTargetScene(primaryStage));
         
-        Button vectorButton = new Button("Vector");
+        Button vectorButton = new Button(GeneralSetting.getString("button.vector"));
         vectorButton.setOnAction(event -> themeController.goToVectorScene(primaryStage));
         
 

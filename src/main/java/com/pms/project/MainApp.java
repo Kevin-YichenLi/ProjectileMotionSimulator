@@ -1,6 +1,7 @@
 package com.pms.project;
 
 
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.views.MainView;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -23,7 +24,7 @@ public class MainApp extends Application {
 
         Scene scene = new Scene(new MainView(primaryStage), MainView.stageWidth, MainView.stageHeight);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Projectile Motion Simulator");
+        primaryStage.setTitle(GeneralSetting.getString("label.title"));
         primaryStage.show();
     }
 }
