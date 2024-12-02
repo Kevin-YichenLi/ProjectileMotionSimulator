@@ -37,7 +37,7 @@ public class GeneralSettingView extends VBox {
     private Region createVolumeComponent() {
         Label volumeLabel = new Label("Volume");
 
-        Slider volumeSlider = new Slider(0, 100, 50); // Min=0, Max=100, Default=50
+        Slider volumeSlider = new Slider(0, 100, GeneralSetting.getVolume() * 100);
         volumeSlider.setBlockIncrement(5); // Make step increments bigger if needed
 
         volumeSlider.setShowTickLabels(true);
@@ -45,9 +45,9 @@ public class GeneralSettingView extends VBox {
         volumeSlider.setMajorTickUnit(20);
         volumeSlider.setMinorTickCount(4);
 
-        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            generalSetting.setVolume(newValue.doubleValue());
-        });
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> generalSettingController.onVolumeChanged(newValue.doubleValue()));
+
+        volumeSlider.valueProperty().bindBidirectional(GeneralSetting.volumeProperty());
 
         HBox volumeBox = new HBox(10, volumeLabel, volumeSlider);
         volumeBox.setAlignment(Pos.CENTER);
