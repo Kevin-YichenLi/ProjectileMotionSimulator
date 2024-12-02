@@ -92,8 +92,8 @@ public class BaseSceneController {
 
     public void onBackToMainPressed() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to main scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toMain"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {

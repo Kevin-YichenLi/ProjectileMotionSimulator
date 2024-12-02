@@ -5,6 +5,7 @@ import com.pms.project.AnimationStatus;
 import com.pms.project.controllers.MainController;
 import com.pms.project.controllers.TargetGameController;
 
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.models.TargetGame;
 import com.pms.project.utils.Util;
 
@@ -74,7 +75,7 @@ public class TargetGameView extends BorderPane {
         target.setCenterY(targetGame.getTargetY());
 
         // Create the button for a new target
-        newTargetButton = new Button("New Target");
+        newTargetButton = new Button(GeneralSetting.getString("button.newTarget"));
         newTargetButton.setOnAction(event -> controller.onNewTargetButtonPressed());
         
         

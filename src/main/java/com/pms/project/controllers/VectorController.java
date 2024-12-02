@@ -2,6 +2,7 @@ package com.pms.project.controllers;
 
 import com.pms.project.AnimationStatus;
 import com.pms.project.models.BaseScene;
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.models.Vector;
 
 import com.pms.project.utils.Util;
@@ -78,8 +79,8 @@ public class VectorController {
 
     public void onBackToMainPressed() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to main scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toMain"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {

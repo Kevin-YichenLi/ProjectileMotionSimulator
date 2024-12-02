@@ -35,7 +35,7 @@ public class GeneralSettingView extends VBox {
     }
 
     private Region createVolumeComponent() {
-        Label volumeLabel = new Label("Volume");
+        Label volumeLabel = new Label(GeneralSetting.getString("label.volume"));
 
         Slider volumeSlider = new Slider(0, 100, GeneralSetting.getVolume() * 100);
         volumeSlider.setBlockIncrement(5); // Make step increments bigger if needed
@@ -55,10 +55,10 @@ public class GeneralSettingView extends VBox {
     }
 
     private Region createLanguageComponent() {
-        Label languageLabel = new Label("Language");
+        Label languageLabel = new Label(GeneralSetting.getString("label.language"));
 
         ComboBox<String> languageComboBox = new ComboBox<>();
-        languageComboBox.getItems().addAll("English", "French");
+        languageComboBox.getItems().addAll(GeneralSetting.getString("comboBoxItem.english"), GeneralSetting.getString("comboBoxItem.french"));
 
         languageComboBox.setValue("English");
         languageComboBox.setVisibleRowCount(2);
@@ -72,7 +72,7 @@ public class GeneralSettingView extends VBox {
     }
 
     private Region createBackButton() {
-        Button backButton = new Button("Back");
+        Button backButton = new Button(GeneralSetting.getString("button.back"));
         backButton.setOnAction(event -> util.goBack(primaryStage));
 
         return backButton;

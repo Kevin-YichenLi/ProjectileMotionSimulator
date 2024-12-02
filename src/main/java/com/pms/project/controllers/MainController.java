@@ -3,6 +3,7 @@ package com.pms.project.controllers;
 import java.util.Optional;
 
 import com.pms.project.MainApp;
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.models.TargetGame;
 import com.pms.project.utils.Util;
 import com.pms.project.views.*;
@@ -55,11 +56,10 @@ public class MainController {
     
     public void onQuitButtonPressed() {
     	Alert confirmationAlert = new Alert(AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText("Exit Application");
-        confirmationAlert.setContentText("Are you sure you want to quit?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setHeaderText(GeneralSetting.getString("text.confirmation.exitHeaderText"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.exit"));
 
-    
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                
@@ -75,22 +75,14 @@ public class MainController {
         vbox1.setSpacing(10); 
 
        
-        Text aboutUsText = new Text("Lorem ipsum odor amet, consectetuer adipiscing elit. Tempus eu massa scelerisque augue libero nisl maecenas. Litora fringilla inceptos turpis tristique sit ut. Euismod per lacus, ante lacus tempor cubilia. Lobortis mi risus volutpat egestas suspendisse sem dis dis. Nostra sapien euismod integer volutpat egestas. Malesuada vivamus libero parturient blandit class egestas est mattis.\r\n"
-        		+ "\r\n"
-        		+ "Commodo facilisis porta quisque ridiculus netus rutrum suspendisse risus. Posuere metus felis justo quis nascetur natoque potenti urna. Volutpat tristique ut cubilia fermentum accumsan tincidunt laoreet hendrerit. Tempor suscipit elit ullamcorper luctus ornare senectus. Pulvinar tristique blandit curabitur proin semper efficitur congue consectetur! Placerat dis feugiat lorem sodales neque mauris dis. Mus fames dis ante sollicitudin justo justo vulputate aenean finibus. Adipiscing suscipit morbi felis fringilla feugiat aliquet magnis dis platea. Dapibus id facilisi purus dapibus nascetur et quam posuere.\r\n"
-        		+ "\r\n"
-        		+ "Laoreet leo eleifend etiam vivamus quam faucibus ex. Et bibendum adipiscing imperdiet nullam semper curae eleifend eros. Ullamcorper magna est mollis commodo cras primis justo curabitur. Gravida netus metus conubia malesuada leo odio rhoncus. Rhoncus potenti maximus sodales nisi aliquet elit feugiat dolor. In sapien ornare non amet inceptos dolor; habitasse vitae. Pellentesque egestas suspendisse volutpat neque rhoncus adipiscing. Ipsum purus bibendum vitae ridiculus integer.\r\n"
-        		+ "\r\n"
-        		+ "Porttitor imperdiet phasellus ac, mi velit natoque euismod. Ex etiam fermentum sit semper rutrum metus feugiat taciti nostra. Bibendum placerat dignissim pellentesque viverra purus; litora rutrum curabitur. Erat nostra dictumst eleifend congue sociosqu ac laoreet tortor nunc? Dui metus feugiat felis phasellus suspendisse fringilla. Potenti imperdiet torquent vel inceptos, laoreet libero. Orci enim duis suspendisse purus himenaeos quam tempor netus inceptos. Sed nostra dis ullamcorper laoreet vehicula vivamus?\r\n"
-        		+ "\r\n"
-        		+ "Faucibus risus lectus feugiat et feugiat. Hac etiam velit sodales nibh fermentum congue blandit. Curae volutpat proin amet parturient posuere. Ipsum nisi porta aenean lacus mi. Lobortis ad tempor dignissim cras per auctor. Suspendisse natoque curabitur netus ullamcorper luctus est fringilla etiam. Viverra molestie quisque vivamus dolor, hac mattis. Consectetur facilisis sollicitudin turpis ligula ipsum mi neque ante. Erat odio nec enim nascetur venenatis augue. Penatibus magna maecenas consequat morbi urna rutrum magna ornare.");
+        Text aboutUsText = new Text(GeneralSetting.getString("menuItem.aboutUs.content"));
 
         // Wrap the text within a TextFlow to handle line breaks automatically
         TextFlow textFlow = new TextFlow(aboutUsText);
         textFlow.setPrefWidth(MainView.stageWidth - 20); 
 
       
-        Button backButton = new Button("Back");
+        Button backButton = new Button(GeneralSetting.getString("button.back"));
         backButton.setOnAction(e -> util.goBack(primaryStage));
         
         VBox.setMargin(backButton, new Insets(10, 0, 10, 0)); 

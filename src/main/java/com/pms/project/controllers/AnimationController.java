@@ -40,7 +40,7 @@ public class AnimationController {
     public void goToSimulation() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
-        confirmationAlert.setContentText("Do you really want to go back to the simulation scene?");
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toSimulation"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -51,8 +51,8 @@ public class AnimationController {
     }
     public void goToTargetScene() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to the base scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toTargetGame"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -64,8 +64,8 @@ public class AnimationController {
     
     public void goToVector() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to the base scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toVector"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {

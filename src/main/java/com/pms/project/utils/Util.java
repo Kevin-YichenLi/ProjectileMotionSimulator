@@ -6,6 +6,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Optional;
 
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
 import com.pms.project.views.TargetGameView;
@@ -29,7 +30,6 @@ public class Util {
     public Util(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-
     
     public void zoom(double factor) {
         globalScaleTransform.setX(globalScaleTransform.getX() * factor);
@@ -43,7 +43,6 @@ public class Util {
             }
         }
     }
-
    
     public void rotate() {
         Scene currentScene = primaryStage.getScene();
@@ -60,11 +59,6 @@ public class Util {
         }
     
     }
-
-   
-   
-
-
    
     public void switchScene(Stage primaryStage, Scene scene) {
         Pane root = (Pane) scene.getRoot();
@@ -78,12 +72,10 @@ public class Util {
         primaryStage.centerOnScreen();
     }
 
-
-
     public void goBack(Stage primaryStage) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to the main scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toMain"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -93,36 +85,10 @@ public class Util {
         }
     }
     
-   
-
-    public void goToBaseScene(Stage primaryStage) {
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to  the base scene?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            BaseSceneView baseSceneView = new BaseSceneView(primaryStage);
-            Scene scene = new Scene(baseSceneView, MainView.stageWidth, MainView.stageHeight);
-
-            // Apply the selected font and background
-            scene.getRoot().getStyleClass().clear();
-            scene.getRoot().getStyleClass().add(selectedFont);
-            scene.getRoot().getStyleClass().add(selectedBackground);
-
-            // Apply the theme stylesheet
-            scene.getStylesheets().add(getClass().getResource("/css/theme.css").toExternalForm());
-
-            // Set the scene for the primaryStage
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        }
-    }
-    
     public void goToTargetScene(Stage primaryStage) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to  the target scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toTargetGame"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {

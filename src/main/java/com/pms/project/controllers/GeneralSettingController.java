@@ -22,7 +22,7 @@ public class GeneralSettingController {
     }
 
     public void onLanguageChanged(String language) {
-        if (language.equalsIgnoreCase("French")) {
+        if (language.equalsIgnoreCase("French") || language.equalsIgnoreCase("Français")) {
             GeneralSetting.setLocale(Locale.FRENCH);
         } else {
             GeneralSetting.setLocale(Locale.ENGLISH);

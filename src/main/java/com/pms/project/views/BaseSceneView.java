@@ -4,6 +4,7 @@ import com.pms.project.AnimationStatus;
 import com.pms.project.controllers.BaseSceneController;
 import com.pms.project.controllers.MainController;
 import com.pms.project.models.BaseScene;
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.utils.Util;
 
 import javafx.beans.property.SimpleObjectProperty;
@@ -134,7 +135,7 @@ public class BaseSceneView extends BorderPane {
     protected Region createMassComponent() {
         VBox container = new VBox();
 
-        Label massLabel = new Label("Mass");
+        Label massLabel = new Label(GeneralSetting.getString("label.mass"));
         Spinner<Double> spinner = createDoubleSpinner(100);
         spinner.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
         spinner.valueProperty().addListener((observable, oldValue, newValue) -> controller.onMassValueChanged(newValue));
@@ -146,21 +147,21 @@ public class BaseSceneView extends BorderPane {
     protected Region createGravityComponent() {
         VBox container = new VBox();
 
-        Label gravityLabel = new Label("Gravity");
+        Label gravityLabel = new Label(GeneralSetting.getString("label.gravity"));
 
-        Button earthButton = new Button("Earth");
+        Button earthButton = new Button(GeneralSetting.getString("button.earth"));
         earthButton.setOnAction(event -> controller.onEarthButtonPressed());
         earthButton.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
 
-        Button moonButton = new Button("Moon");
+        Button moonButton = new Button(GeneralSetting.getString("button.moon"));
         moonButton.setOnAction(event -> controller.onMoonButtonPressed());
         moonButton.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
 
-        Button marsButton = new Button("Mars");
+        Button marsButton = new Button(GeneralSetting.getString("button.mars"));
         marsButton.setOnAction(event -> controller.onMarsButtonPressed());
         marsButton.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
 
-        Button jupiterButton = new Button("Jupiter");
+        Button jupiterButton = new Button(GeneralSetting.getString("button.jupiter"));
         jupiterButton.setOnAction(event -> controller.onJupiterButtonPressed());
         jupiterButton.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
 
@@ -191,7 +192,7 @@ public class BaseSceneView extends BorderPane {
     protected Region createInitialAngleComponent() {
         VBox container = new VBox();
 
-        Label initialAngleLabel = new Label("Initial Angle");
+        Label initialAngleLabel = new Label(GeneralSetting.getString("label.initialAngle"));
         Spinner<Double> spinner = createDoubleSpinner(101);
         spinner.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
         spinner.valueProperty().addListener(((observable, oldValue, newValue) -> controller.onInitialAngleValueChanged(newValue)));
@@ -212,7 +213,7 @@ public class BaseSceneView extends BorderPane {
     protected Region createInitialSpeedComponent() {
         VBox container = new VBox();
 
-        Label initialSpeedLabel = new Label("Initial Speed");
+        Label initialSpeedLabel = new Label(GeneralSetting.getString("label.initialSpeed"));
 
         Slider speedSlider = new Slider(0, 130, 20);
         speedSlider.setMajorTickUnit(1);
@@ -245,17 +246,17 @@ public class BaseSceneView extends BorderPane {
         HBox topBar = new HBox();
 
         // Buttons and Menu setup
-        Button backButton = new Button("Back to Main");
+        Button backButton = new Button(GeneralSetting.getString("button.back"));
         backButton.setOnAction(event -> controller.onBackToMainPressed());
-        Button zoomInButton = new Button("Zoom in");
-        Button zoomOutButton = new Button("Zoom out");
+        Button zoomInButton = new Button(GeneralSetting.getString("button.zoomIn"));
+        Button zoomOutButton = new Button(GeneralSetting.getString("button.zoomOut"));
         zoomInButton.setOnAction(event -> zoom(1.1));
         zoomOutButton.setOnAction(event -> zoom(0.9));
 
-        MenuButton settingsButton = new MenuButton("Settings");
-        MenuItem themeMenuItem = new MenuItem("Theme");
-        MenuItem animationMenuItem = new MenuItem("Animation");
-        MenuItem generalMenuItem = new MenuItem("General");
+        MenuButton settingsButton = new MenuButton(GeneralSetting.getString("menu.settings"));
+        MenuItem themeMenuItem = new MenuItem(GeneralSetting.getString("menuItem.themeSetting"));
+        MenuItem animationMenuItem = new MenuItem(GeneralSetting.getString("menuItem.animationSetting"));
+        MenuItem generalMenuItem = new MenuItem(GeneralSetting.getString("menuItem.generalSetting"));
 
         themeMenuItem.setOnAction(e -> mainController.onThemeButtonPressed());
         animationMenuItem.setOnAction(e-> mainController.onAnimationButtonPressed());
@@ -305,7 +306,7 @@ public class BaseSceneView extends BorderPane {
     protected Region createInitialHeightComponent() {
         HBox container = new HBox(20);
 
-        Label initialHeightLabel = new Label("Initial Height");
+        Label initialHeightLabel = new Label(GeneralSetting.getString("label.initialHeight"));
         Spinner<Double> spinner = createDoubleSpinner(100);
         spinner.disableProperty().bind(status.isEqualTo(AnimationStatus.STOPPED).or(status.isEqualTo(AnimationStatus.PLAYED)));
 
@@ -318,7 +319,7 @@ public class BaseSceneView extends BorderPane {
     public Region createStartAndStopButton() {
         HBox container = new HBox(20);
 
-        Button startButton = new Button("Start");
+        Button startButton = new Button(GeneralSetting.getString("button.start"));
         startButton.setOnAction(event -> controller.onStartButtonPressed());
 
         Button refreshButton = new Button();
@@ -330,7 +331,7 @@ public class BaseSceneView extends BorderPane {
         refreshImageView.setFitHeight(30);
         refreshButton.setGraphic(refreshImageView);
 
-        Button stopButton = new Button("Stop");
+        Button stopButton = new Button(GeneralSetting.getString("button.stop"));
         stopButton.setOnAction(event -> controller.onStopButtonPressed());
 
         container.getChildren().addAll(startButton, refreshButton, stopButton);

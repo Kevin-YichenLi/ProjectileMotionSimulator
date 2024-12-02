@@ -2,6 +2,7 @@ package com.pms.project.controllers;
 
 import com.pms.project.AnimationStatus;
 
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.models.TargetGame;
 import com.pms.project.utils.Util;
 
@@ -78,8 +79,8 @@ public class TargetGameController {
 
     public void onBackToMainPressed() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to go back to main scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toMain"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -273,11 +274,11 @@ public class TargetGameController {
         if (checkHit()) {
         	feedbackLabel.setLayoutX(750);
         	feedbackLabel.setLayoutY(150);
-        	feedbackLabel.setText("Congratulations! You've hit the target!");
+        	feedbackLabel.setText(GeneralSetting.getString("label.hit"));
         } else {
         	feedbackLabel.setLayoutX(750);
         	feedbackLabel.setLayoutY(150);
-            feedbackLabel.setText("Try again. The target wasn't hit.");
+            feedbackLabel.setText(GeneralSetting.getString("label.missed"));
         }
     }
     protected void createAnimation() {

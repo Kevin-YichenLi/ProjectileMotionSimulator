@@ -2,6 +2,7 @@ package com.pms.project.views;
 
 import com.pms.project.AnimationStatus;
 import com.pms.project.controllers.SimulationController;
+import com.pms.project.models.GeneralSetting;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -29,10 +30,10 @@ public class SimulationView extends BaseSceneView{
     private Region createAnimationSpeedControlComponent() {
         VBox container = new VBox(20);
 
-        Button slow = new Button("Slow");
-        Button normal = new Button("Normal");
+        Button slow = new Button(GeneralSetting.getString("button.slow"));
+        Button normal = new Button(GeneralSetting.getString("button.normal"));
        
-        Button fast = new Button("Fast");
+        Button fast = new Button(GeneralSetting.getString("button.fast"));
 
         // Add event handlers to simulate toggle behavior
         slow.setOnAction(event -> onSpeedButtonClicked(slow, "slow"));
@@ -52,9 +53,9 @@ public class SimulationView extends BaseSceneView{
     private Region createBackwardAndForwardButton() {
         VBox container = new VBox(20);
 
-        Button forward = new Button("Forward");
+        Button forward = new Button(GeneralSetting.getString("button.forward"));
         forward.setOnAction(event -> simulationController.onForwardPressed(controller.getObject().getTranslateX(), controller.getTimeline()));
-        Button backward = new Button("Backward");
+        Button backward = new Button(GeneralSetting.getString("button.backward"));
         backward.setOnAction(event -> simulationController.onBackwardPressed(controller.getObject().getTranslateX(), controller.getTimeline()));
 
         backward.disableProperty().bind(status.isEqualTo(AnimationStatus.PREPARED).or(status.isEqualTo(AnimationStatus.FINISHED)));
@@ -71,9 +72,9 @@ public class SimulationView extends BaseSceneView{
         scope.setFill(Color.TRANSPARENT);
         scope.setStroke(Color.BLACK);
 
-        Label timeLbl = new Label("Time:");
-        Label heightLbl = new Label("Height:");
-        Label rangeLbl = new Label("Range:");
+        Label timeLbl = new Label(GeneralSetting.getString("label.time"));
+        Label heightLbl = new Label(GeneralSetting.getString("label.height"));
+        Label rangeLbl = new Label(GeneralSetting.getString("label.range"));
 
         Text timeValue = new Text();
         timeValue.textProperty().bind(displayedTime);
@@ -149,7 +150,7 @@ public class SimulationView extends BaseSceneView{
     public Region createStartAndStopButton() {
         HBox container = new HBox(20);
 
-        Button startButton = new Button("Start");
+        Button startButton = new Button(GeneralSetting.getString("button.start"));
         startButton.setOnAction(event -> controller.onStartButtonPressed());
 
         Button refreshButton = new Button();
@@ -161,7 +162,7 @@ public class SimulationView extends BaseSceneView{
         refreshImageView.setFitHeight(30);
         refreshButton.setGraphic(refreshImageView);
 
-        Button stopButton = new Button("Stop");
+        Button stopButton = new Button(GeneralSetting.getString("button.stop"));
         stopButton.setOnAction(event -> controller.onStopButtonPressed());
 
         container.getChildren().addAll(startButton, refreshButton, stopButton);

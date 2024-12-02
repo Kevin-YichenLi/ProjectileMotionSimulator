@@ -2,6 +2,7 @@ package com.pms.project.controllers;
 
 import java.util.Optional;
 
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.views.BaseSceneView;
 import com.pms.project.views.MainView;
 import com.pms.project.views.SimulationView;
@@ -38,8 +39,8 @@ public class ThemeController {
 
     public void goToSimulationScene(Stage primaryStage) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to  the base scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toSimulation"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -61,8 +62,8 @@ public class ThemeController {
     }
     public void goToTargetScene(Stage primaryStage) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to  the target scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toTargetGame"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -85,8 +86,8 @@ public class ThemeController {
     
     public void goToVectorScene(Stage primaryStage) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setContentText("Do you really want to  the vector scene?");
+        confirmationAlert.setTitle(GeneralSetting.getString("label.confirmationTitle"));
+        confirmationAlert.setContentText(GeneralSetting.getString("text.confirmation.toVector"));
         Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {

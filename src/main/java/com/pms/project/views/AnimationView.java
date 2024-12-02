@@ -1,6 +1,7 @@
 package com.pms.project.views;
 
 import com.pms.project.controllers.AnimationController;
+import com.pms.project.models.GeneralSetting;
 import com.pms.project.utils.Util;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,29 +22,29 @@ public class AnimationView extends GridPane {
         animationController = new AnimationController(primaryStage);
 
         // Create Back Button
-        Button backButton = new Button("Back");
+        Button backButton = new Button(GeneralSetting.getString("button.back"));
         backButton.setOnAction(event -> util.goBack(primaryStage));
 
         // Create Confirm Button
-        Button simulationButton = new Button("Simulation");
+        Button simulationButton = new Button(GeneralSetting.getString("button.simulation"));
         simulationButton.setOnAction(event -> animationController.goToSimulation());
 
         // Create Zoom In Button
-        Button zoomInButton = new Button("Zoom In");
+        Button zoomInButton = new Button(GeneralSetting.getString("button.zoomIn"));
         zoomInButton.setOnAction(event -> animationController.zoom(1.1));
 
         // Create Zoom Out Button
-        Button zoomOutButton = new Button("Zoom Out");
+        Button zoomOutButton = new Button(GeneralSetting.getString("button.zoomOut"));
         zoomOutButton.setOnAction(event -> animationController.zoom(0.9));
 
         // Create Rotate Button
-        Button rotateButton = new Button("Rotate");
+        Button rotateButton = new Button(GeneralSetting.getString("button.rotate"));
         rotateButton.setOnAction(event -> animationController.rotate());
         
-        Button targetButton =new Button("Target");
+        Button targetButton =new Button(GeneralSetting.getString("button.targetGame"));
         targetButton.setOnAction(e-> animationController.goToTargetScene());
         
-        Button vectorButton = new Button ("Vector");
+        Button vectorButton = new Button (GeneralSetting.getString("button.vector"));
         vectorButton.setOnAction(e -> animationController.goToVector());
               
         this.setVgap(10);
