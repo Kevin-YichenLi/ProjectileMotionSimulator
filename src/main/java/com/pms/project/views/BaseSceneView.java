@@ -193,7 +193,7 @@ public class BaseSceneView extends BorderPane {
         VBox container = new VBox();
 
         Label initialAngleLabel = new Label(GeneralSetting.getString("label.initialAngle"));
-        Spinner<Double> spinner = createDoubleSpinner(101);
+        Spinner<Double> spinner = createDoubleSpinner(90);
         spinner.disableProperty().bind(status.isEqualTo(AnimationStatus.PLAYED).or(status.isEqualTo(AnimationStatus.STOPPED)));
         spinner.valueProperty().addListener(((observable, oldValue, newValue) -> controller.onInitialAngleValueChanged(newValue)));
 
@@ -294,8 +294,6 @@ public class BaseSceneView extends BorderPane {
         // Set the background color of the bottom section to a green grass color
         hBox.setStyle("-fx-background-color: #D0E8C5;");  // Green grass color (LawnGreen)
 
-        hBox.setBorder(Border.stroke(Color.BLACK));
-
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
@@ -307,7 +305,7 @@ public class BaseSceneView extends BorderPane {
         HBox container = new HBox(20);
 
         Label initialHeightLabel = new Label(GeneralSetting.getString("label.initialHeight"));
-        Spinner<Double> spinner = createDoubleSpinner(100);
+        Spinner<Double> spinner = createDoubleSpinner(300);
         spinner.disableProperty().bind(status.isEqualTo(AnimationStatus.STOPPED).or(status.isEqualTo(AnimationStatus.PLAYED)));
 
         spinner.valueProperty().addListener(((observable, oldValue, newValue) -> controller.onInitialHeightValueChanged(newValue, base)));

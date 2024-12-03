@@ -38,7 +38,7 @@ public class AnimationView extends GridPane {
         zoomOutButton.setOnAction(event -> animationController.zoom(0.9));
 
         // Create Rotate Button
-        Button rotateButton = new Button(GeneralSetting.getString("button.rotate"));
+        Button rotateButton = new Button(GeneralSetting.getString("button.changeTheWidth"));
         rotateButton.setOnAction(event -> animationController.rotate());
         
         Button targetButton =new Button(GeneralSetting.getString("button.targetGame"));
